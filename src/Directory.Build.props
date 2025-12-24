@@ -1,0 +1,30 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <LangVersion>latest</LangVersion>
+        <AnalysisLevel>latest</AnalysisLevel>
+        <SolutionDir>$(MSBuildThisFileDirectory)</SolutionDir>
+        <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+        <WarningsAsErrors>MSB3277;NU1603;RT0000;RT0001;RT0003;NU1504;TR001;TR002;TR003;</WarningsAsErrors>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <IsPackable>false</IsPackable>
+        <NuGetAudit>true</NuGetAudit>
+        <NuGetAuditMode>direct</NuGetAuditMode>
+        <NuGetAuditLevel>moderate</NuGetAuditLevel>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <OptimizeImplicitlyTriggeredBuild>true</OptimizeImplicitlyTriggeredBuild>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="StyleCop.Analyzers" PrivateAssets="all"/>
+        <PackageReference Include="SonarAnalyzer.CSharp" PrivateAssets="all"/>
+        <PackageReference Include="NSubstitute.Analyzers.CSharp" PrivateAssets="all"/>
+        <PackageReference Include="FluentAssertions.Analyzers" PrivateAssets="all"/>
+
+        <PackageReference Include="JetBrains.Annotations" PrivateAssets="all" NoWarn="RT0003"/>
+        <PackageReference Include="ReferenceTrimmer" PrivateAssets="all"/>
+    </ItemGroup>
+
+</Project>

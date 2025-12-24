@@ -1,0 +1,1433 @@
+[*.cs]
+
+### Align
+
+# Align multiline constructs
+resharper_align_first_arg_by_paren = false
+
+# Align even if the resulting indentation is too large
+resharper_csharp_allow_far_alignment = false
+resharper_allow_far_alignment = false
+
+resharper_csharp_alignment_tab_fill_style = optimal_fill
+resharper_alignment_tab_fill_style = optimal_fill
+
+resharper_csharp_align_multiline_parameter = false
+resharper_align_multiline_parameter = false
+resharper_csharp_align_multiline_calls_chain = false
+resharper_align_multiline_calls_chain = false
+resharper_csharp_align_multiline_argument = false
+resharper_align_multiline_argument = true
+
+# XML Indent
+resharper_xmldoc_indent_text = zero_indent
+
+### BRACES
+
+# Block under "case" label
+resharper_csharp_case_block_braces = next_line
+
+#### NEW LINES
+
+# attribute always on new line
+resharper_place_attribute_on_same_line = false
+
+# After statements with child blocks
+resharper_blank_lines_after_block_statements = 1
+
+# Before multiline statements
+resharper_csharp_blank_lines_before_multiline_statements = 1
+resharper_blank_lines_before_multiline_statements = 1
+
+# After multiline statements
+resharper_csharp_blank_lines_after_multiline_statements = 1
+resharper_blank_lines_after_multiline_statements = 1
+
+# Blank lines in declarations
+resharper_csharp_keep_blank_lines_in_declarations = 1
+resharper_keep_blank_lines_in_declarations = 1
+
+# new line before if
+resharper_csharp_blank_lines_before_control_transfer_statements = 1
+# new line after if
+resharper_csharp_blank_lines_after_control_transfer_statements = 1
+
+# new line before block of code
+resharper_csharp_blank_lines_before_block_statements = 1
+# new line after block of code
+resharper_csharp_blank_lines_after_block_statements = 1
+
+# Around multiline 'case' section in switch statement
+resharper_csharp_blank_lines_around_multiline_case_section = 1
+
+# Around single line property/event
+resharper_csharp_blank_lines_around_single_line_property = 1
+resharper_blank_lines_around_single_line_property = 1
+resharper_csharp_blank_lines_around_property = 1
+resharper_csharp_blank_lines_around_auto_property = 1
+resharper_csharp_blank_lines_around_single_line_auto_property = 1
+
+### LINE BREAKS
+
+# Allow type constraints on the same line
+resharper_csharp_place_type_constraints_on_same_line = false
+
+# Place 'while' on a new line
+resharper_csharp_new_line_before_while = true
+
+# Place simple method on single line
+resharper_place_simple_method_on_single_line = false
+resharper_place_simple_blocks_on_single_line = false
+resharper_place_simple_declaration_blocks_on_single_line = false
+
+# Place simple embedded statement on the same line
+resharper_place_simple_embedded_statement_on_same_line = false
+
+# Wrap invocation arguments
+resharper_csharp_wrap_arguments_style = chop_if_long
+resharper_wrap_arguments_style = chop_if_long
+
+# Max invocation arguments on a single line
+resharper_csharp_max_invocation_arguments_on_line = 5
+resharper_max_invocation_arguments_on_line = 5
+
+# Prefer to wrap after '(' in invocation
+resharper_csharp_wrap_after_invocation_lpar = false
+resharper_wrap_after_invocation_lpar = false
+
+
+# Prefer wrap before '=>' followed by expressions
+resharper_csharp_wrap_before_arrow_with_expressions = true
+resharper_wrap_before_arrow_with_expressions = true
+
+## Arrangement of method signatures
+resharper_csharp_wrap_parameters_style = chop_if_long
+
+# Max formal parameters on a single line
+resharper_csharp_max_formal_parameters_on_line = 5
+resharper_max_formal_parameters_on_line = 5
+
+# refer to wrap after '(' in declaration
+resharper_csharp_wrap_after_declaration_lpar = true
+
+# Wrap chained method calls
+resharper_csharp_wrap_chained_method_calls = chop_if_long
+
+# Prefer wrap before '?' and ':' in ternary expressions
+resharper_csharp_wrap_before_ternary_opsigns = true
+
+# Wrap ternary expression
+resharper_wrap_ternary_expr_style = chop_always
+
+# After file header comment
+resharper_csharp_blank_lines_after_start_comment = 0
+
+# Keep max blank lines in code
+resharper_csharp_keep_blank_lines_in_code = 1
+
+# blank line before comment
+resharper_blank_lines_before_single_line_comment = 1
+
+# csharp_style_var_for_built_in_types=true:silent
+# csharp_style_var_when_type_is_apparent=true:silent
+# csharp_style_var_elsewhere=true:silent
+
+#############
+# Analyzers #
+#############
+
+# Automatically sort and remove usings
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+
+# general settings applied to all source files
+# Source folder contains additional .editorconfig with overrides
+#
+# enable all analyzers by default
+# https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/
+dotnet_analyzer_diagnostic.severity = error
+dotnet_code_quality.api_surface = all
+dotnet_code_quality.enable_platform_analyzer_on_pre_net5_target = true
+
+# Parameter names should match base declaration
+dotnet_diagnostic.CA1725.severity = warning
+
+# Инициализируйте статические поля ссылочных типов при объявлении
+dotnet_diagnostic.ca1810.severity = error
+
+# Пометьте члены как статические
+dotnet_diagnostic.ca1822.severity = error
+
+# Do not declare visible instance fields
+dotnet_diagnostic.CA1051.severity = error
+
+# Package not found
+dotnet_diagnostic.NU1603.severity = error
+
+# "Exists" method should be used instead of the "Any"
+dotnet_diagnostic.S6605.severity = error
+
+# "Find" method should be used instead of the "FirstOrDefault"
+dotnet_diagnostic.S6602.severity = error
+
+# "TrueForAll" method should be used instead of the "All"
+dotnet_diagnostic.S6603.severity = error
+
+# Тип может быть запечатанным, так как у него нет подтипов в содержащей его сборке и он невидим извне
+dotnet_diagnostic.CA1852.severity = error
+
+# Private classes which are not derived in the current assembly should be marked as 'sealed'
+dotnet_diagnostic.S3260.severity = error
+
+# Unused route parameter
+dotnet_diagnostic.ASP0018.severity = error
+
+# Change return type to 'void'; not a single caller uses the returned value
+dotnet_diagnostic.S3241.severity = error
+
+# Code analysis suppression should have justification
+dotnet_diagnostic.SA1404.severity = error
+
+# ToDateTime should specify DateTimeKind
+dotnet_diagnostic.QC001.severity = error
+
+# Fix this implementation of 'IDisposable' to conform to the dispose pattern
+dotnet_diagnostic.S3881.severity = error
+
+# Complete the assertion
+dotnet_diagnostic.S2970.severity = error
+
+# Поля, не являющиеся константами, не должны быть видимыми
+dotnet_diagnostic.CA2211.severity = error
+
+# Перегрузка метода "XmlSerializer.Deserialize" потенциально небезопасна
+dotnet_diagnostic.CA5369.severity = error
+
+# Use an immutable collection or reduce the accessibility of the non-private readonly field 'Dict'
+dotnet_diagnostic.S3887.severity = error
+
+# Экземпляры ValueTask, возвращаемые из вызовов методов, необходимо непосредственно ожидать
+dotnet_diagnostic.CA2012.severity = error
+
+# Test methods should not be skipped
+dotnet_diagnostic.xUnit1004.severity = none
+
+# The member referenced by the MemberData attribute returns untyped data rows, such as object[]
+dotnet_diagnostic.xUnit1042.severity = error
+
+# Operator should not appear at the end of a line
+dotnet_diagnostic.SA1003.severity = none
+
+#should not raise for overridden property with base getter
+dotnet_diagnostic.S2376.severity = error
+
+# Identifiers should not have incorrect suffix
+dotnet_diagnostic.CA1711.severity = none
+
+# T is not used in the interface
+dotnet_diagnostic.S2326.severity = error
+
+# Remove deprecated rule
+dotnet_diagnostic.S2353.severity = error
+
+# Fields must be declared with private access. Use properties to expose fields
+dotnet_diagnostic.SA1401.severity = error
+
+# Implicit parameterless constructor widens the scope of the base class constructor
+dotnet_diagnostic.S2094.severity = error
+
+# Method overloads should be grouped together we see some false positives
+dotnet_diagnostic.S4136.severity = error
+
+# Deprecated code should be removed
+dotnet_diagnostic.S1133.severity = error
+
+# Logging in a catch clause should pass the caught exception as a parameter
+dotnet_diagnostic.S6667.severity = error
+
+dotnet_diagnostic.S127.severity = error
+
+dotnet_diagnostic.S1075.severity = error
+
+# when using ?? with an empty string
+dotnet_diagnostic.S2583.severity = error
+
+# This nested ternary operation can be converted into a tuple
+dotnet_diagnostic.S3358.severity = error
+
+# Method calls should not resolve ambiguously to overloads with "params"
+dotnet_diagnostic.S3220.severity = error
+
+# Specify StringComparison for correctness
+dotnet_diagnostic.CA1310.severity = none
+
+# укажите StringComparison для ясности
+dotnet_diagnostic.SA1307.severity = error
+
+# Specify a culture or use an invariant version
+dotnet_diagnostic.SA1311.severity = error
+
+#  Use concrete types when possible for improved performance
+dotnet_diagnostic.CA1859.severity = error
+
+# Template should be a static expression is a warning that the log message doesn't have a consistent structure due to being interpolated or concatenated
+dotnet_diagnostic.CA2254.severity = error
+
+dotnet_diagnostic.S1117.severity = error
+
+dotnet_diagnostic.S3267.severity = error
+
+dotnet_diagnostic.xUnit1026.severity = error
+
+# Use ordinal StringComparison
+dotnet_diagnostic.CA1309.severity = none
+
+# Either log this exception and handle it, or rethrow it with some contextual information
+dotnet_diagnostic.S2139.severity = none
+
+# Update this logger to use its enclosing type
+dotnet_diagnostic.S6672.severity = error
+
+# Provide the "DateTimeKind" when creating this object
+dotnet_diagnostic.S6562.severity = error
+
+# Use a format provider when parsing date and time
+dotnet_diagnostic.S6580.severity = error
+
+# Use an immutable collection or reduce the accessibility of the public static field
+dotnet_diagnostic.S2386.severity = error
+
+# Member Should can not be intercepted. Only interface members and virtual, overriding, and abstract members can be intercepted
+dotnet_diagnostic.NS1000.severity = error
+
+# Value type property used as input in a controller action should be nullable, required or annotated with the JsonRequiredAttribute to avoid under-posting
+dotnet_diagnostic.S6964.severity = error
+
+# Use .Should() instead of ?.Should()
+dotnet_diagnostic.FAA0001.severity = error
+
+##
+## StyleCop.Analyzers
+##
+
+
+# CA1716: Identifiers should not match keywords
+dotnet_diagnostic.CA1716.severity = none
+
+# Use the LoggerMessage delegates
+dotnet_diagnostic.ca1848.severity = none
+
+# Using directive should appear within a namespace declaration
+dotnet_diagnostic.sa1200.severity = none
+
+# XML comment analysis is disabled due to project configuration
+dotnet_diagnostic.sa0001.severity = none
+
+# The file header is missing or not located at the top of the file
+dotnet_diagnostic.sa1633.severity = none
+
+# Use string.Empty for empty strings
+dotnet_diagnostic.sa1122.severity = none
+
+# Variable '_' should begin with lower-case letter
+dotnet_diagnostic.sa1312.severity = none
+
+# CS1591 Missing XML comment for publicly visible type or member 'TestController'
+dotnet_diagnostic.cs1591.severity = none
+
+# Parameter '_' should begin with lower-case letter
+dotnet_diagnostic.sa1313.severity = none
+
+# Elements should be documented
+dotnet_diagnostic.sa1600.severity = none
+
+# Prefix local calls with this
+dotnet_diagnostic.sa1101.severity = none
+
+# 'public' members should come before 'private' members
+dotnet_diagnostic.sa1202.severity = none
+
+# Comments should contain text
+dotnet_diagnostic.sa1120.severity = none
+
+dotnet_diagnostic.sa1028.severity = error
+
+# Constant fields should appear before non-constant fields
+dotnet_diagnostic.sa1203.severity = none
+
+# Field '_blah' should not begin with an underscore
+dotnet_diagnostic.sa1309.severity = none
+
+# Use trailing comma in multi-line initializers
+dotnet_diagnostic.sa1413.severity = none
+
+# A method should not follow a class
+dotnet_diagnostic.sa1201.severity = none
+
+# Elements should be separated by blank line
+dotnet_diagnostic.sa1516.severity = none
+
+# The parameter spans multiple lines
+dotnet_diagnostic.sa1118.severity = none
+
+# Static members should appear before non-static members
+dotnet_diagnostic.sa1204.severity = none
+
+# Put constructor initializers on their own line
+dotnet_diagnostic.sa1128.severity = none
+
+# Opening braces should not be preceded by blank line
+dotnet_diagnostic.sa1509.severity = none
+
+# The parameter should begin on the line after the previous parameter
+dotnet_diagnostic.sa1115.severity = none
+
+# File name should match first type name
+dotnet_diagnostic.sa1649.severity = none
+
+# File may only contain a single type
+dotnet_diagnostic.sa1402.severity = warning
+
+# Enumeration items should be documented
+dotnet_diagnostic.sa1602.severity = none
+
+# Element should not be on a single line
+dotnet_diagnostic.sa1502.severity = error
+
+# Closing parenthesis should not be preceded by a space
+dotnet_diagnostic.sa1009.severity = none
+
+# Closing parenthesis should be on line of last parameter
+dotnet_diagnostic.sa1111.severity = none
+
+# Braces should not be ommitted
+dotnet_diagnostic.sa1503.severity = none
+
+##
+## SonarAnalyzers.CSharp
+##
+
+#SA1601: Partial elements should be documented
+dotnet_diagnostic.SA1601.severity = none
+
+#CA1707: Remove the underscores from member name
+dotnet_diagnostic.CA1707.severity = none
+
+#[CA1716]  Using a reserved keyword as the name of a namespace makes it harder for consumers in other languages to use the namespace.
+dotnet_diagnostic.CA1716.severity = none
+
+# Update this method so that its implementation is not identical to 'blah'
+dotnet_diagnostic.s4144.severity = none
+
+# Update this implementation of 'ISerializable' to conform to the recommended serialization pattern
+dotnet_diagnostic.s3925.severity = none
+
+# Rename class 'IOCActivator' to match pascal case naming rules, consider using 'IocActivator'
+dotnet_diagnostic.s101.severity = none
+
+# Extract this nested code block into a separate method
+dotnet_diagnostic.s1199.severity = none
+
+# Remove unassigned auto-property 'Blah', or set its value
+dotnet_diagnostic.s3459.severity = none
+
+# Remove the unused private set accessor in property 'Version'
+dotnet_diagnostic.s1144.severity = none
+
+# Remove this commented out code
+dotnet_diagnostic.s125.severity = none
+
+# 'System.Exception' should not be thrown by user code
+dotnet_diagnostic.s112.severity = none
+
+# Remove unneccessary boolean literal
+dotnet_diagnostic.s1125.severity = none
+
+# Do not use regions
+dotnet_diagnostic.sa1124.severity = warning
+
+# The XML documentation header for a C# constructor does not contain the appropriate summary text.
+dotnet_diagnostic.sa1642.severity = none
+
+# [S4035] Seal class 'EntityEnumValue' or implement 'IEqualityComparer<T>' instead.
+dotnet_diagnostic.s4035.severity = warning
+
+# Complete TO-DO
+dotnet_diagnostic.s1135.severity = warning
+
+# [CS8618] Non-nullable property must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
+dotnet_diagnostic.cs8618.severity = none
+
+# Obsolete method
+dotnet_diagnostic.cs0618.severity = error
+
+# Nullable
+dotnet_diagnostic.cs0407.severity = error
+
+# The property's documentation summary text should begin with: 'Gets'
+dotnet_diagnostic.sa1623.severity = none
+
+# Closing brace should be followed by blank line
+dotnet_diagnostic.sa1513.severity = none
+
+# XML Comments for public members
+dotnet_diagnostic.sa1591.severity = none
+
+# [SA1507] Code should not contain multiple blank lines in a row
+dotnet_diagnostic.sa1507.severity = error
+
+# [S2190] Add a way to break out of this property accessor's recursion.
+dotnet_diagnostic.s2190.severity = error
+
+# [SA1116] The parameters should begin on the line after the declaration, whenever the parameter span across multiple lines
+dotnet_diagnostic.sa1116.severity = silent
+
+# [SA1000] The keyword 'new' should not be followed by a space
+dotnet_diagnostic.sa1000.severity = error
+
+# [SA1127] Generic type constraints should be on their own line
+dotnet_diagnostic.sa1127.severity = error
+
+# Remove unused variables
+dotnet_diagnostic.s1481.severity = error
+
+# Documentation text should end with a period
+dotnet_diagnostic.sa1629.severity = none
+
+# The documentation for type parameter 'TId' is missing
+dotnet_diagnostic.sa1618.severity = none
+
+# The documentation for parameter 'logger' is missing
+dotnet_diagnostic.sa1611.severity = none
+
+# Element return value should be documented
+dotnet_diagnostic.sa1615.severity = none
+
+#CS5001: exe does not contain a static 'Main' method suitable for an entry point
+dotnet_diagnostic.cs5001.severity = none
+
+#S1135 Complete the task associated to this 'TODO' comment.
+dotnet_diagnostic.S1135.severity = suggestion
+
+#CA1720 Property name is same name of type
+dotnet_diagnostic.CA1720.severity = none
+
+dotnet_diagnostic.CA1304.severity = none
+dotnet_diagnostic.CA1311.severity = none
+
+# Remove unnecessary expression value
+dotnet_diagnostic.IDE0058.severity = none
+
+# Remove unnecessary equality operator
+dotnet_diagnostic.IDE0100.severity = none
+
+# Fill switch
+dotnet_diagnostic.IDE0072.severity = none
+dotnet_diagnostic.IDE0010.severity = none
+
+# tests
+dotnet_diagnostic.xUnit1033.severity = none
+
+
+dotnet_diagnostic.sa1408.severity = error
+dotnet_diagnostic.s1147.severity = error
+dotnet_diagnostic.s2222.severity = error
+dotnet_diagnostic.s2551.severity = error
+dotnet_diagnostic.s2357.severity = error
+dotnet_diagnostic.s1104.severity = error
+dotnet_diagnostic.sa1012.severity = error
+dotnet_diagnostic.sa1010.severity = none
+dotnet_diagnostic.sa1505.severity = error
+dotnet_diagnostic.s2933.severity = error
+dotnet_diagnostic.sa1508.severity = error
+dotnet_diagnostic.sa1400.severity = error
+dotnet_diagnostic.sa1117.severity = error
+dotnet_diagnostic.sa1024.severity = error
+dotnet_diagnostic.sa1025.severity = error
+dotnet_diagnostic.sa1026.severity = error
+dotnet_diagnostic.SA1206.severity = none
+dotnet_diagnostic.CA2213.severity = error
+
+csharp_indent_labels = one_less_than_current
+csharp_using_directive_placement = outside_namespace:silent
+csharp_prefer_simple_using_statement = true:error
+csharp_prefer_braces = true:silent
+csharp_style_namespace_declarations = file_scoped:error
+csharp_style_prefer_method_group_conversion = true:silent
+csharp_style_prefer_top_level_statements = true:silent
+csharp_style_expression_bodied_methods = when_on_single_line:silent
+csharp_style_expression_bodied_constructors = false:silent
+csharp_style_expression_bodied_operators = false:silent
+csharp_style_expression_bodied_properties = true:silent
+csharp_style_expression_bodied_indexers = true:silent
+csharp_style_expression_bodied_accessors = true:silent
+csharp_style_expression_bodied_lambdas = true:silent
+csharp_style_expression_bodied_local_functions = false:silent
+csharp_space_around_binary_operators = before_and_after
+csharp_style_throw_expression = true:suggestion
+csharp_style_prefer_null_check_over_type_check = true:suggestion
+csharp_style_prefer_local_over_anonymous_function = true:suggestion
+csharp_prefer_simple_default_expression = true:suggestion
+csharp_style_prefer_index_operator = true:suggestion
+csharp_style_prefer_range_operator = true:suggestion
+csharp_style_implicit_object_creation_when_type_is_apparent = true:suggestion
+csharp_style_prefer_tuple_swap = true:suggestion
+csharp_style_prefer_utf8_string_literals = true:suggestion
+csharp_style_inlined_variable_declaration = true:suggestion
+csharp_style_deconstructed_variable_declaration = true:suggestion
+csharp_style_unused_value_assignment_preference = discard_variable:suggestion
+csharp_style_unused_value_expression_statement_preference = discard_variable:silent
+csharp_style_prefer_readonly_struct = true:suggestion
+csharp_prefer_static_local_function = true:suggestion
+csharp_style_allow_embedded_statements_on_same_line_experimental = true:silent
+csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true:silent
+csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true:silent
+csharp_style_conditional_delegate_call = true:suggestion
+csharp_style_prefer_switch_expression = true:suggestion
+csharp_style_prefer_pattern_matching = true:silent
+csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
+csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
+csharp_style_prefer_not_pattern = true:suggestion
+csharp_style_prefer_extended_property_pattern = true:suggestion
+csharp_style_var_for_built_in_types = true:silent
+csharp_style_var_when_type_is_apparent = true:silent
+csharp_style_var_elsewhere = true:silent
+
+
+# Microsoft .NET properties
+csharp_preserve_single_line_blocks = true
+
+# ReSharper properties
+resharper_keep_existing_declaration_block_arrangement = false
+resharper_keep_existing_embedded_block_arrangement = false
+resharper_keep_existing_enum_arrangement = false
+resharper_place_abstract_accessorholder_on_single_line = true
+
+[*.{props, csproj}]
+tab_width = 4
+indent_size = 4
+
+[*.{cs,vb}]
+#### Naming styles ####
+
+# Naming rules
+
+dotnet_naming_rule.interface_should_be_begins_with_i.severity = suggestion
+dotnet_naming_rule.interface_should_be_begins_with_i.symbols = interface
+dotnet_naming_rule.interface_should_be_begins_with_i.style = begins_with_i
+
+dotnet_naming_rule.types_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.types_should_be_pascal_case.symbols = types
+dotnet_naming_rule.types_should_be_pascal_case.style = pascal_case
+
+dotnet_naming_rule.non_field_members_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.non_field_members_should_be_pascal_case.symbols = non_field_members
+dotnet_naming_rule.non_field_members_should_be_pascal_case.style = pascal_case
+
+# Symbol specifications
+
+dotnet_naming_symbols.interface.applicable_kinds = interface
+dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
+dotnet_naming_symbols.interface.required_modifiers =
+
+dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum
+dotnet_naming_symbols.types.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
+dotnet_naming_symbols.types.required_modifiers =
+
+dotnet_naming_symbols.non_field_members.applicable_kinds = property, event, method
+dotnet_naming_symbols.non_field_members.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
+dotnet_naming_symbols.non_field_members.required_modifiers =
+
+# Naming styles
+
+dotnet_naming_style.begins_with_i.required_prefix = I
+dotnet_naming_style.begins_with_i.required_suffix =
+dotnet_naming_style.begins_with_i.word_separator =
+dotnet_naming_style.begins_with_i.capitalization = pascal_case
+
+dotnet_naming_style.pascal_case.required_prefix =
+dotnet_naming_style.pascal_case.required_suffix =
+dotnet_naming_style.pascal_case.word_separator =
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+
+dotnet_naming_style.pascal_case.required_prefix =
+dotnet_naming_style.pascal_case.required_suffix =
+dotnet_naming_style.pascal_case.word_separator =
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+tab_width = 4
+indent_size = 4
+end_of_line = crlf
+max_line_length = 160
+dotnet_style_coalesce_expression = true:suggestion
+dotnet_style_null_propagation = true:suggestion
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
+dotnet_style_prefer_auto_properties = true:silent
+dotnet_style_object_initializer = true:suggestion
+dotnet_style_collection_initializer = true:suggestion
+dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
+dotnet_style_prefer_conditional_expression_over_assignment = true:silent
+dotnet_style_prefer_conditional_expression_over_return = true:silent
+dotnet_style_explicit_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_tuple_names = true:suggestion
+dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
+dotnet_style_prefer_compound_assignment = true:suggestion
+dotnet_style_prefer_simplified_interpolation = true:suggestion
+dotnet_diagnostic.CA1002.severity = suggestion
+dotnet_diagnostic.ca1861.severity = suggestion
+dotnet_diagnostic.ca1862.severity = suggestion
+dotnet_diagnostic.ca1860.severity = suggestion
+dotnet_diagnostic.ca1000.severity = warning
+dotnet_diagnostic.ca1305.severity = suggestion
+dotnet_style_namespace_match_folder = true:suggestion
+dotnet_style_readonly_field = true:suggestion
+dotnet_style_predefined_type_for_member_access = true:silent
+dotnet_style_predefined_type_for_locals_parameters_members = true:silent
+dotnet_style_require_accessibility_modifiers = always:silent
+dotnet_style_allow_multiple_blank_lines_experimental = true:silent
+dotnet_style_allow_statement_immediately_after_block_experimental = true:silent
+dotnet_code_quality_unused_parameters = all:suggestion
+dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:silent
+dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:silent
+dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:silent
+dotnet_style_parentheses_in_other_operators = never_if_unnecessary:silent
+dotnet_style_qualification_for_field = false:silent
+dotnet_style_qualification_for_property = false:silent
+dotnet_style_qualification_for_method = false:silent
+dotnet_style_qualification_for_event = false:silent
+
+[*.razor]
+dotnet_diagnostic.rz10012.severity = error
+dotnet_diagnostic.cs1591.severity = none
+resharper_place_attribute_on_same_line = never
+
+[*]
+charset = utf-8-bom
+end_of_line = crlf
+indent_size = 4
+indent_style = space
+insert_final_newline = false
+max_line_length = 160
+tab_width = 4
+trim_trailing_whitespace = true
+ij_continuation_indent_size = 8
+ij_formatter_off_tag = @formatter:off
+ij_formatter_on_tag = @formatter:on
+ij_formatter_tags_enabled = true
+ij_smart_tabs = false
+ij_visual_guides =
+ij_wrap_on_typing = false
+
+[*.css]
+ij_css_align_closing_brace_with_properties = false
+ij_css_blank_lines_around_nested_selector = 1
+ij_css_blank_lines_between_blocks = 1
+ij_css_block_comment_add_space = false
+ij_css_brace_placement = end_of_line
+ij_css_enforce_quotes_on_format = false
+ij_css_hex_color_long_format = false
+ij_css_hex_color_lower_case = false
+ij_css_hex_color_short_format = false
+ij_css_hex_color_upper_case = false
+ij_css_keep_blank_lines_in_code = 2
+ij_css_keep_indents_on_empty_lines = false
+ij_css_keep_single_line_blocks = false
+ij_css_properties_order = font, font-family, font-size, font-weight, font-style, font-variant, font-size-adjust, font-stretch, line-height, position, z-index, top, right, bottom, left, display, visibility, float, clear, overflow, overflow-x, overflow-y, clip, zoom, align-content, align-items, align-self, flex, flex-flow, flex-basis, flex-direction, flex-grow, flex-shrink, flex-wrap, justify-content, order, box-sizing, width, min-width, max-width, height, min-height, max-height, margin, margin-top, margin-right, margin-bottom, margin-left, padding, padding-top, padding-right, padding-bottom, padding-left, table-layout, empty-cells, caption-side, border-spacing, border-collapse, list-style, list-style-position, list-style-type, list-style-image, content, quotes, counter-reset, counter-increment, resize, cursor, user-select, nav-index, nav-up, nav-right, nav-down, nav-left, transition, transition-delay, transition-timing-function, transition-duration, transition-property, transform, transform-origin, animation, animation-name, animation-duration, animation-play-state, animation-timing-function, animation-delay, animation-iteration-count, animation-direction, text-align, text-align-last, vertical-align, white-space, text-decoration, text-emphasis, text-emphasis-color, text-emphasis-style, text-emphasis-position, text-indent, text-justify, letter-spacing, word-spacing, text-outline, text-transform, text-wrap, text-overflow, text-overflow-ellipsis, text-overflow-mode, word-wrap, word-break, tab-size, hyphens, pointer-events, opacity, color, border, border-width, border-style, border-color, border-top, border-top-width, border-top-style, border-top-color, border-right, border-right-width, border-right-style, border-right-color, border-bottom, border-bottom-width, border-bottom-style, border-bottom-color, border-left, border-left-width, border-left-style, border-left-color, border-radius, border-top-left-radius, border-top-right-radius, border-bottom-right-radius, border-bottom-left-radius, border-image, border-image-source, border-image-slice, border-image-width, border-image-outset, border-image-repeat, outline, outline-width, outline-style, outline-color, outline-offset, background, background-color, background-image, background-repeat, background-attachment, background-position, background-position-x, background-position-y, background-clip, background-origin, background-size, box-decoration-break, box-shadow, text-shadow
+ij_css_space_after_colon = true
+ij_css_space_before_opening_brace = true
+ij_css_use_double_quotes = true
+ij_css_value_alignment = do_not_align
+
+[*.less]
+indent_size = 2
+ij_less_align_closing_brace_with_properties = false
+ij_less_blank_lines_around_nested_selector = 1
+ij_less_blank_lines_between_blocks = 1
+ij_less_block_comment_add_space = false
+ij_less_brace_placement = 0
+ij_less_enforce_quotes_on_format = false
+ij_less_hex_color_long_format = false
+ij_less_hex_color_lower_case = false
+ij_less_hex_color_short_format = false
+ij_less_hex_color_upper_case = false
+ij_less_keep_blank_lines_in_code = 2
+ij_less_keep_indents_on_empty_lines = false
+ij_less_keep_single_line_blocks = false
+ij_less_line_comment_add_space = false
+ij_less_line_comment_at_first_column = false
+ij_less_properties_order = font, font-family, font-size, font-weight, font-style, font-variant, font-size-adjust, font-stretch, line-height, position, z-index, top, right, bottom, left, display, visibility, float, clear, overflow, overflow-x, overflow-y, clip, zoom, align-content, align-items, align-self, flex, flex-flow, flex-basis, flex-direction, flex-grow, flex-shrink, flex-wrap, justify-content, order, box-sizing, width, min-width, max-width, height, min-height, max-height, margin, margin-top, margin-right, margin-bottom, margin-left, padding, padding-top, padding-right, padding-bottom, padding-left, table-layout, empty-cells, caption-side, border-spacing, border-collapse, list-style, list-style-position, list-style-type, list-style-image, content, quotes, counter-reset, counter-increment, resize, cursor, user-select, nav-index, nav-up, nav-right, nav-down, nav-left, transition, transition-delay, transition-timing-function, transition-duration, transition-property, transform, transform-origin, animation, animation-name, animation-duration, animation-play-state, animation-timing-function, animation-delay, animation-iteration-count, animation-direction, text-align, text-align-last, vertical-align, white-space, text-decoration, text-emphasis, text-emphasis-color, text-emphasis-style, text-emphasis-position, text-indent, text-justify, letter-spacing, word-spacing, text-outline, text-transform, text-wrap, text-overflow, text-overflow-ellipsis, text-overflow-mode, word-wrap, word-break, tab-size, hyphens, pointer-events, opacity, color, border, border-width, border-style, border-color, border-top, border-top-width, border-top-style, border-top-color, border-right, border-right-width, border-right-style, border-right-color, border-bottom, border-bottom-width, border-bottom-style, border-bottom-color, border-left, border-left-width, border-left-style, border-left-color, border-radius, border-top-left-radius, border-top-right-radius, border-bottom-right-radius, border-bottom-left-radius, border-image, border-image-source, border-image-slice, border-image-width, border-image-outset, border-image-repeat, outline, outline-width, outline-style, outline-color, outline-offset, background, background-color, background-image, background-repeat, background-attachment, background-position, background-position-x, background-position-y, background-clip, background-origin, background-size, box-decoration-break, box-shadow, text-shadow
+ij_less_space_after_colon = true
+ij_less_space_before_opening_brace = true
+ij_less_use_double_quotes = true
+ij_less_value_alignment = 0
+
+[*.properties]
+ij_properties_align_group_field_declarations = false
+ij_properties_keep_blank_lines = false
+ij_properties_key_value_delimiter = equals
+ij_properties_spaces_around_key_value_delimiter = false
+
+[*.proto]
+indent_size = 2
+tab_width = 2
+ij_continuation_indent_size = 4
+ij_protobuf_keep_blank_lines_in_code = 2
+ij_protobuf_keep_indents_on_empty_lines = false
+ij_protobuf_keep_line_breaks = true
+ij_protobuf_space_after_comma = true
+ij_protobuf_space_before_comma = false
+ij_protobuf_spaces_around_assignment_operators = true
+ij_protobuf_spaces_within_braces = false
+ij_protobuf_spaces_within_brackets = false
+
+[*.sass]
+indent_size = 2
+ij_sass_align_closing_brace_with_properties = false
+ij_sass_blank_lines_around_nested_selector = 1
+ij_sass_blank_lines_between_blocks = 1
+ij_sass_brace_placement = 0
+ij_sass_enforce_quotes_on_format = false
+ij_sass_hex_color_long_format = false
+ij_sass_hex_color_lower_case = false
+ij_sass_hex_color_short_format = false
+ij_sass_hex_color_upper_case = false
+ij_sass_keep_blank_lines_in_code = 2
+ij_sass_keep_indents_on_empty_lines = false
+ij_sass_keep_single_line_blocks = false
+ij_sass_line_comment_add_space = false
+ij_sass_line_comment_at_first_column = false
+ij_sass_properties_order = font, font-family, font-size, font-weight, font-style, font-variant, font-size-adjust, font-stretch, line-height, position, z-index, top, right, bottom, left, display, visibility, float, clear, overflow, overflow-x, overflow-y, clip, zoom, align-content, align-items, align-self, flex, flex-flow, flex-basis, flex-direction, flex-grow, flex-shrink, flex-wrap, justify-content, order, box-sizing, width, min-width, max-width, height, min-height, max-height, margin, margin-top, margin-right, margin-bottom, margin-left, padding, padding-top, padding-right, padding-bottom, padding-left, table-layout, empty-cells, caption-side, border-spacing, border-collapse, list-style, list-style-position, list-style-type, list-style-image, content, quotes, counter-reset, counter-increment, resize, cursor, user-select, nav-index, nav-up, nav-right, nav-down, nav-left, transition, transition-delay, transition-timing-function, transition-duration, transition-property, transform, transform-origin, animation, animation-name, animation-duration, animation-play-state, animation-timing-function, animation-delay, animation-iteration-count, animation-direction, text-align, text-align-last, vertical-align, white-space, text-decoration, text-emphasis, text-emphasis-color, text-emphasis-style, text-emphasis-position, text-indent, text-justify, letter-spacing, word-spacing, text-outline, text-transform, text-wrap, text-overflow, text-overflow-ellipsis, text-overflow-mode, word-wrap, word-break, tab-size, hyphens, pointer-events, opacity, color, border, border-width, border-style, border-color, border-top, border-top-width, border-top-style, border-top-color, border-right, border-right-width, border-right-style, border-right-color, border-bottom, border-bottom-width, border-bottom-style, border-bottom-color, border-left, border-left-width, border-left-style, border-left-color, border-radius, border-top-left-radius, border-top-right-radius, border-bottom-right-radius, border-bottom-left-radius, border-image, border-image-source, border-image-slice, border-image-width, border-image-outset, border-image-repeat, outline, outline-width, outline-style, outline-color, outline-offset, background, background-color, background-image, background-repeat, background-attachment, background-position, background-position-x, background-position-y, background-clip, background-origin, background-size, box-decoration-break, box-shadow, text-shadow
+ij_sass_space_after_colon = true
+ij_sass_space_before_opening_brace = true
+ij_sass_use_double_quotes = true
+ij_sass_value_alignment = 0
+
+[*.scss]
+indent_size = 2
+ij_scss_align_closing_brace_with_properties = false
+ij_scss_blank_lines_around_nested_selector = 1
+ij_scss_blank_lines_between_blocks = 1
+ij_scss_block_comment_add_space = false
+ij_scss_brace_placement = 0
+ij_scss_enforce_quotes_on_format = false
+ij_scss_hex_color_long_format = false
+ij_scss_hex_color_lower_case = false
+ij_scss_hex_color_short_format = false
+ij_scss_hex_color_upper_case = false
+ij_scss_keep_blank_lines_in_code = 2
+ij_scss_keep_indents_on_empty_lines = false
+ij_scss_keep_single_line_blocks = false
+ij_scss_line_comment_add_space = false
+ij_scss_line_comment_at_first_column = false
+ij_scss_properties_order = font, font-family, font-size, font-weight, font-style, font-variant, font-size-adjust, font-stretch, line-height, position, z-index, top, right, bottom, left, display, visibility, float, clear, overflow, overflow-x, overflow-y, clip, zoom, align-content, align-items, align-self, flex, flex-flow, flex-basis, flex-direction, flex-grow, flex-shrink, flex-wrap, justify-content, order, box-sizing, width, min-width, max-width, height, min-height, max-height, margin, margin-top, margin-right, margin-bottom, margin-left, padding, padding-top, padding-right, padding-bottom, padding-left, table-layout, empty-cells, caption-side, border-spacing, border-collapse, list-style, list-style-position, list-style-type, list-style-image, content, quotes, counter-reset, counter-increment, resize, cursor, user-select, nav-index, nav-up, nav-right, nav-down, nav-left, transition, transition-delay, transition-timing-function, transition-duration, transition-property, transform, transform-origin, animation, animation-name, animation-duration, animation-play-state, animation-timing-function, animation-delay, animation-iteration-count, animation-direction, text-align, text-align-last, vertical-align, white-space, text-decoration, text-emphasis, text-emphasis-color, text-emphasis-style, text-emphasis-position, text-indent, text-justify, letter-spacing, word-spacing, text-outline, text-transform, text-wrap, text-overflow, text-overflow-ellipsis, text-overflow-mode, word-wrap, word-break, tab-size, hyphens, pointer-events, opacity, color, border, border-width, border-style, border-color, border-top, border-top-width, border-top-style, border-top-color, border-right, border-right-width, border-right-style, border-right-color, border-bottom, border-bottom-width, border-bottom-style, border-bottom-color, border-left, border-left-width, border-left-style, border-left-color, border-radius, border-top-left-radius, border-top-right-radius, border-bottom-right-radius, border-bottom-left-radius, border-image, border-image-source, border-image-slice, border-image-width, border-image-outset, border-image-repeat, outline, outline-width, outline-style, outline-color, outline-offset, background, background-color, background-image, background-repeat, background-attachment, background-position, background-position-x, background-position-y, background-clip, background-origin, background-size, box-decoration-break, box-shadow, text-shadow
+ij_scss_space_after_colon = true
+ij_scss_space_before_opening_brace = true
+ij_scss_use_double_quotes = true
+ij_scss_value_alignment = 0
+
+[*.vue]
+indent_size = 2
+tab_width = 2
+ij_continuation_indent_size = 4
+ij_vue_indent_children_of_top_level = template
+ij_vue_interpolation_new_line_after_start_delimiter = true
+ij_vue_interpolation_new_line_before_end_delimiter = true
+ij_vue_interpolation_wrap = off
+ij_vue_keep_indents_on_empty_lines = false
+ij_vue_spaces_within_interpolation_expressions = true
+
+[.editorconfig]
+ij_editorconfig_align_group_field_declarations = false
+ij_editorconfig_space_after_colon = false
+ij_editorconfig_space_after_comma = true
+ij_editorconfig_space_before_colon = false
+ij_editorconfig_space_before_comma = false
+ij_editorconfig_spaces_around_assignment_operators = true
+
+[{*.ant,*.appxmanifest,*.axml,*.cscfg,*.csdef,*.disco,*.dotsettings,*.filelayout,*.fxml,*.jhm,*.jnlp,*.jrxml,*.manifest,*.myapp,*.nuspec,*.rng,*.stylecop,*.svcmap,*.tld,*.wadcfgx,*.webref,*.wsdl,*.xml,*.xsd,*.xsl,*.xslt,*.xul,StyleCop.Cache,*.props}]
+ij_xml_align_attributes = true
+ij_xml_align_text = false
+ij_xml_attribute_wrap = normal
+ij_xml_block_comment_add_space = false
+ij_xml_block_comment_at_first_column = true
+ij_xml_keep_blank_lines = 2
+ij_xml_keep_indents_on_empty_lines = false
+ij_xml_keep_line_breaks = true
+ij_xml_keep_line_breaks_in_text = true
+ij_xml_keep_whitespaces = false
+ij_xml_keep_whitespaces_around_cdata = preserve
+ij_xml_keep_whitespaces_inside_cdata = false
+ij_xml_line_comment_at_first_column = true
+ij_xml_space_after_tag_name = false
+ij_xml_space_around_equals_in_attribute = false
+ij_xml_space_inside_empty_tag = false
+ij_xml_text_wrap = normal
+
+[{*.ats,*.cts,*.mts,*.ts}]
+ij_continuation_indent_size = 4
+ij_typescript_align_imports = false
+ij_typescript_align_multiline_array_initializer_expression = false
+ij_typescript_align_multiline_binary_operation = false
+ij_typescript_align_multiline_chained_methods = false
+ij_typescript_align_multiline_extends_list = false
+ij_typescript_align_multiline_for = true
+ij_typescript_align_multiline_parameters = true
+ij_typescript_align_multiline_parameters_in_calls = false
+ij_typescript_align_multiline_ternary_operation = false
+ij_typescript_align_object_properties = 0
+ij_typescript_align_union_types = false
+ij_typescript_align_var_statements = 0
+ij_typescript_array_initializer_new_line_after_left_brace = false
+ij_typescript_array_initializer_right_brace_on_new_line = false
+ij_typescript_array_initializer_wrap = off
+ij_typescript_assignment_wrap = off
+ij_typescript_binary_operation_sign_on_next_line = false
+ij_typescript_binary_operation_wrap = off
+ij_typescript_blacklist_imports = rxjs/Rx, node_modules/**, **/node_modules/**, @angular/material, @angular/material/typings/**
+ij_typescript_blank_lines_after_imports = 1
+ij_typescript_blank_lines_around_class = 1
+ij_typescript_blank_lines_around_field = 0
+ij_typescript_blank_lines_around_field_in_interface = 0
+ij_typescript_blank_lines_around_function = 1
+ij_typescript_blank_lines_around_method = 1
+ij_typescript_blank_lines_around_method_in_interface = 1
+ij_typescript_block_brace_style = end_of_line
+ij_typescript_block_comment_add_space = false
+ij_typescript_block_comment_at_first_column = true
+ij_typescript_call_parameters_new_line_after_left_paren = false
+ij_typescript_call_parameters_right_paren_on_new_line = false
+ij_typescript_call_parameters_wrap = off
+ij_typescript_catch_on_new_line = false
+ij_typescript_chained_call_dot_on_new_line = true
+ij_typescript_class_brace_style = end_of_line
+ij_typescript_class_decorator_wrap = split_into_lines
+ij_typescript_class_field_decorator_wrap = off
+ij_typescript_class_method_decorator_wrap = off
+ij_typescript_comma_on_new_line = false
+ij_typescript_do_while_brace_force = never
+ij_typescript_else_on_new_line = false
+ij_typescript_enforce_trailing_comma = keep
+ij_typescript_enum_constants_wrap = on_every_item
+ij_typescript_extends_keyword_wrap = off
+ij_typescript_extends_list_wrap = off
+ij_typescript_field_prefix = _
+ij_typescript_file_name_style = relaxed
+ij_typescript_finally_on_new_line = false
+ij_typescript_for_brace_force = never
+ij_typescript_for_statement_new_line_after_left_paren = false
+ij_typescript_for_statement_right_paren_on_new_line = false
+ij_typescript_for_statement_wrap = off
+ij_typescript_force_quote_style = false
+ij_typescript_force_semicolon_style = false
+ij_typescript_function_expression_brace_style = end_of_line
+ij_typescript_function_parameter_decorator_wrap = off
+ij_typescript_if_brace_force = never
+ij_typescript_import_merge_members = global
+ij_typescript_import_prefer_absolute_path = global
+ij_typescript_import_sort_members = true
+ij_typescript_import_sort_module_name = false
+ij_typescript_import_use_node_resolution = true
+ij_typescript_imports_wrap = on_every_item
+ij_typescript_indent_case_from_switch = true
+ij_typescript_indent_chained_calls = true
+ij_typescript_indent_package_children = 0
+ij_typescript_jsdoc_include_types = false
+ij_typescript_jsx_attribute_value = braces
+ij_typescript_keep_blank_lines_in_code = 2
+ij_typescript_keep_first_column_comment = true
+ij_typescript_keep_indents_on_empty_lines = false
+ij_typescript_keep_line_breaks = true
+ij_typescript_keep_simple_blocks_in_one_line = false
+ij_typescript_keep_simple_methods_in_one_line = false
+ij_typescript_line_comment_add_space = true
+ij_typescript_line_comment_at_first_column = false
+ij_typescript_method_brace_style = end_of_line
+ij_typescript_method_call_chain_wrap = off
+ij_typescript_method_parameters_new_line_after_left_paren = false
+ij_typescript_method_parameters_right_paren_on_new_line = false
+ij_typescript_method_parameters_wrap = off
+ij_typescript_object_literal_wrap = on_every_item
+ij_typescript_object_types_wrap = on_every_item
+ij_typescript_parentheses_expression_new_line_after_left_paren = false
+ij_typescript_parentheses_expression_right_paren_on_new_line = false
+ij_typescript_place_assignment_sign_on_next_line = false
+ij_typescript_prefer_as_type_cast = false
+ij_typescript_prefer_explicit_types_function_expression_returns = false
+ij_typescript_prefer_explicit_types_function_returns = false
+ij_typescript_prefer_explicit_types_vars_fields = false
+ij_typescript_prefer_parameters_wrap = false
+ij_typescript_property_prefix =
+ij_typescript_reformat_c_style_comments = false
+ij_typescript_space_after_colon = true
+ij_typescript_space_after_comma = true
+ij_typescript_space_after_dots_in_rest_parameter = false
+ij_typescript_space_after_generator_mult = true
+ij_typescript_space_after_property_colon = true
+ij_typescript_space_after_quest = true
+ij_typescript_space_after_type_colon = true
+ij_typescript_space_after_unary_not = false
+ij_typescript_space_before_async_arrow_lparen = true
+ij_typescript_space_before_catch_keyword = true
+ij_typescript_space_before_catch_left_brace = true
+ij_typescript_space_before_catch_parentheses = true
+ij_typescript_space_before_class_lbrace = true
+ij_typescript_space_before_class_left_brace = true
+ij_typescript_space_before_colon = true
+ij_typescript_space_before_comma = false
+ij_typescript_space_before_do_left_brace = true
+ij_typescript_space_before_else_keyword = true
+ij_typescript_space_before_else_left_brace = true
+ij_typescript_space_before_finally_keyword = true
+ij_typescript_space_before_finally_left_brace = true
+ij_typescript_space_before_for_left_brace = true
+ij_typescript_space_before_for_parentheses = true
+ij_typescript_space_before_for_semicolon = false
+ij_typescript_space_before_function_left_parenth = true
+ij_typescript_space_before_generator_mult = false
+ij_typescript_space_before_if_left_brace = true
+ij_typescript_space_before_if_parentheses = true
+ij_typescript_space_before_method_call_parentheses = false
+ij_typescript_space_before_method_left_brace = true
+ij_typescript_space_before_method_parentheses = false
+ij_typescript_space_before_property_colon = false
+ij_typescript_space_before_quest = true
+ij_typescript_space_before_switch_left_brace = true
+ij_typescript_space_before_switch_parentheses = true
+ij_typescript_space_before_try_left_brace = true
+ij_typescript_space_before_type_colon = false
+ij_typescript_space_before_unary_not = false
+ij_typescript_space_before_while_keyword = true
+ij_typescript_space_before_while_left_brace = true
+ij_typescript_space_before_while_parentheses = true
+ij_typescript_spaces_around_additive_operators = true
+ij_typescript_spaces_around_arrow_function_operator = true
+ij_typescript_spaces_around_assignment_operators = true
+ij_typescript_spaces_around_bitwise_operators = true
+ij_typescript_spaces_around_equality_operators = true
+ij_typescript_spaces_around_logical_operators = true
+ij_typescript_spaces_around_multiplicative_operators = true
+ij_typescript_spaces_around_relational_operators = true
+ij_typescript_spaces_around_shift_operators = true
+ij_typescript_spaces_around_unary_operator = false
+ij_typescript_spaces_within_array_initializer_brackets = false
+ij_typescript_spaces_within_brackets = false
+ij_typescript_spaces_within_catch_parentheses = false
+ij_typescript_spaces_within_for_parentheses = false
+ij_typescript_spaces_within_if_parentheses = false
+ij_typescript_spaces_within_imports = false
+ij_typescript_spaces_within_interpolation_expressions = false
+ij_typescript_spaces_within_method_call_parentheses = false
+ij_typescript_spaces_within_method_parentheses = false
+ij_typescript_spaces_within_object_literal_braces = false
+ij_typescript_spaces_within_object_type_braces = true
+ij_typescript_spaces_within_parentheses = false
+ij_typescript_spaces_within_switch_parentheses = false
+ij_typescript_spaces_within_type_assertion = false
+ij_typescript_spaces_within_union_types = true
+ij_typescript_spaces_within_while_parentheses = false
+ij_typescript_special_else_if_treatment = true
+ij_typescript_ternary_operation_signs_on_next_line = false
+ij_typescript_ternary_operation_wrap = off
+ij_typescript_union_types_wrap = on_every_item
+ij_typescript_use_chained_calls_group_indents = false
+ij_typescript_use_double_quotes = true
+ij_typescript_use_explicit_js_extension = auto
+ij_typescript_use_import_type = auto
+ij_typescript_use_path_mapping = always
+ij_typescript_use_public_modifier = false
+ij_typescript_use_semicolon_after_statement = true
+ij_typescript_var_declaration_wrap = normal
+ij_typescript_while_brace_force = never
+ij_typescript_while_on_new_line = false
+ij_typescript_wrap_comments = false
+
+[{*.bash,*.sh,*.zsh}]
+indent_size = 2
+tab_width = 2
+ij_shell_binary_ops_start_line = false
+ij_shell_keep_column_alignment_padding = false
+ij_shell_minify_program = false
+ij_shell_redirect_followed_by_space = false
+ij_shell_switch_cases_indented = false
+ij_shell_use_unix_line_separator = true
+
+[{*.cjs,*.es6,*.js,*.mjs}]
+ij_continuation_indent_size = 4
+ij_javascript_align_imports = false
+ij_javascript_align_multiline_array_initializer_expression = false
+ij_javascript_align_multiline_binary_operation = false
+ij_javascript_align_multiline_chained_methods = false
+ij_javascript_align_multiline_extends_list = false
+ij_javascript_align_multiline_for = true
+ij_javascript_align_multiline_parameters = true
+ij_javascript_align_multiline_parameters_in_calls = false
+ij_javascript_align_multiline_ternary_operation = false
+ij_javascript_align_object_properties = 0
+ij_javascript_align_union_types = false
+ij_javascript_align_var_statements = 0
+ij_javascript_array_initializer_new_line_after_left_brace = false
+ij_javascript_array_initializer_right_brace_on_new_line = false
+ij_javascript_array_initializer_wrap = off
+ij_javascript_assignment_wrap = off
+ij_javascript_binary_operation_sign_on_next_line = false
+ij_javascript_binary_operation_wrap = off
+ij_javascript_blacklist_imports = rxjs/Rx, node_modules/**, **/node_modules/**, @angular/material, @angular/material/typings/**
+ij_javascript_blank_lines_after_imports = 1
+ij_javascript_blank_lines_around_class = 1
+ij_javascript_blank_lines_around_field = 0
+ij_javascript_blank_lines_around_function = 1
+ij_javascript_blank_lines_around_method = 1
+ij_javascript_block_brace_style = end_of_line
+ij_javascript_block_comment_add_space = false
+ij_javascript_block_comment_at_first_column = true
+ij_javascript_call_parameters_new_line_after_left_paren = false
+ij_javascript_call_parameters_right_paren_on_new_line = false
+ij_javascript_call_parameters_wrap = off
+ij_javascript_catch_on_new_line = false
+ij_javascript_chained_call_dot_on_new_line = true
+ij_javascript_class_brace_style = end_of_line
+ij_javascript_class_decorator_wrap = split_into_lines
+ij_javascript_class_field_decorator_wrap = off
+ij_javascript_class_method_decorator_wrap = off
+ij_javascript_comma_on_new_line = false
+ij_javascript_do_while_brace_force = never
+ij_javascript_else_on_new_line = false
+ij_javascript_enforce_trailing_comma = keep
+ij_javascript_extends_keyword_wrap = off
+ij_javascript_extends_list_wrap = off
+ij_javascript_field_prefix = _
+ij_javascript_file_name_style = relaxed
+ij_javascript_finally_on_new_line = false
+ij_javascript_for_brace_force = never
+ij_javascript_for_statement_new_line_after_left_paren = false
+ij_javascript_for_statement_right_paren_on_new_line = false
+ij_javascript_for_statement_wrap = off
+ij_javascript_force_quote_style = false
+ij_javascript_force_semicolon_style = false
+ij_javascript_function_expression_brace_style = end_of_line
+ij_javascript_function_parameter_decorator_wrap = off
+ij_javascript_if_brace_force = never
+ij_javascript_import_merge_members = global
+ij_javascript_import_prefer_absolute_path = global
+ij_javascript_import_sort_members = true
+ij_javascript_import_sort_module_name = false
+ij_javascript_import_use_node_resolution = true
+ij_javascript_imports_wrap = on_every_item
+ij_javascript_indent_case_from_switch = true
+ij_javascript_indent_chained_calls = true
+ij_javascript_indent_package_children = 0
+ij_javascript_jsx_attribute_value = braces
+ij_javascript_keep_blank_lines_in_code = 2
+ij_javascript_keep_first_column_comment = true
+ij_javascript_keep_indents_on_empty_lines = false
+ij_javascript_keep_line_breaks = true
+ij_javascript_keep_simple_blocks_in_one_line = false
+ij_javascript_keep_simple_methods_in_one_line = false
+ij_javascript_line_comment_add_space = true
+ij_javascript_line_comment_at_first_column = false
+ij_javascript_method_brace_style = end_of_line
+ij_javascript_method_call_chain_wrap = off
+ij_javascript_method_parameters_new_line_after_left_paren = false
+ij_javascript_method_parameters_right_paren_on_new_line = false
+ij_javascript_method_parameters_wrap = off
+ij_javascript_object_literal_wrap = on_every_item
+ij_javascript_object_types_wrap = on_every_item
+ij_javascript_parentheses_expression_new_line_after_left_paren = false
+ij_javascript_parentheses_expression_right_paren_on_new_line = false
+ij_javascript_place_assignment_sign_on_next_line = false
+ij_javascript_prefer_as_type_cast = false
+ij_javascript_prefer_explicit_types_function_expression_returns = false
+ij_javascript_prefer_explicit_types_function_returns = false
+ij_javascript_prefer_explicit_types_vars_fields = false
+ij_javascript_prefer_parameters_wrap = false
+ij_javascript_property_prefix =
+ij_javascript_reformat_c_style_comments = false
+ij_javascript_space_after_colon = true
+ij_javascript_space_after_comma = true
+ij_javascript_space_after_dots_in_rest_parameter = false
+ij_javascript_space_after_generator_mult = true
+ij_javascript_space_after_property_colon = true
+ij_javascript_space_after_quest = true
+ij_javascript_space_after_type_colon = true
+ij_javascript_space_after_unary_not = false
+ij_javascript_space_before_async_arrow_lparen = true
+ij_javascript_space_before_catch_keyword = true
+ij_javascript_space_before_catch_left_brace = true
+ij_javascript_space_before_catch_parentheses = true
+ij_javascript_space_before_class_lbrace = true
+ij_javascript_space_before_class_left_brace = true
+ij_javascript_space_before_colon = true
+ij_javascript_space_before_comma = false
+ij_javascript_space_before_do_left_brace = true
+ij_javascript_space_before_else_keyword = true
+ij_javascript_space_before_else_left_brace = true
+ij_javascript_space_before_finally_keyword = true
+ij_javascript_space_before_finally_left_brace = true
+ij_javascript_space_before_for_left_brace = true
+ij_javascript_space_before_for_parentheses = true
+ij_javascript_space_before_for_semicolon = false
+ij_javascript_space_before_function_left_parenth = true
+ij_javascript_space_before_generator_mult = false
+ij_javascript_space_before_if_left_brace = true
+ij_javascript_space_before_if_parentheses = true
+ij_javascript_space_before_method_call_parentheses = false
+ij_javascript_space_before_method_left_brace = true
+ij_javascript_space_before_method_parentheses = false
+ij_javascript_space_before_property_colon = false
+ij_javascript_space_before_quest = true
+ij_javascript_space_before_switch_left_brace = true
+ij_javascript_space_before_switch_parentheses = true
+ij_javascript_space_before_try_left_brace = true
+ij_javascript_space_before_type_colon = false
+ij_javascript_space_before_unary_not = false
+ij_javascript_space_before_while_keyword = true
+ij_javascript_space_before_while_left_brace = true
+ij_javascript_space_before_while_parentheses = true
+ij_javascript_spaces_around_additive_operators = true
+ij_javascript_spaces_around_arrow_function_operator = true
+ij_javascript_spaces_around_assignment_operators = true
+ij_javascript_spaces_around_bitwise_operators = true
+ij_javascript_spaces_around_equality_operators = true
+ij_javascript_spaces_around_logical_operators = true
+ij_javascript_spaces_around_multiplicative_operators = true
+ij_javascript_spaces_around_relational_operators = true
+ij_javascript_spaces_around_shift_operators = true
+ij_javascript_spaces_around_unary_operator = false
+ij_javascript_spaces_within_array_initializer_brackets = false
+ij_javascript_spaces_within_brackets = false
+ij_javascript_spaces_within_catch_parentheses = false
+ij_javascript_spaces_within_for_parentheses = false
+ij_javascript_spaces_within_if_parentheses = false
+ij_javascript_spaces_within_imports = false
+ij_javascript_spaces_within_interpolation_expressions = false
+ij_javascript_spaces_within_method_call_parentheses = false
+ij_javascript_spaces_within_method_parentheses = false
+ij_javascript_spaces_within_object_literal_braces = false
+ij_javascript_spaces_within_object_type_braces = true
+ij_javascript_spaces_within_parentheses = false
+ij_javascript_spaces_within_switch_parentheses = false
+ij_javascript_spaces_within_type_assertion = false
+ij_javascript_spaces_within_union_types = true
+ij_javascript_spaces_within_while_parentheses = false
+ij_javascript_special_else_if_treatment = true
+ij_javascript_ternary_operation_signs_on_next_line = false
+ij_javascript_ternary_operation_wrap = off
+ij_javascript_union_types_wrap = on_every_item
+ij_javascript_use_chained_calls_group_indents = false
+ij_javascript_use_double_quotes = true
+ij_javascript_use_explicit_js_extension = auto
+ij_javascript_use_import_type = auto
+ij_javascript_use_path_mapping = always
+ij_javascript_use_public_modifier = false
+ij_javascript_use_semicolon_after_statement = true
+ij_javascript_var_declaration_wrap = normal
+ij_javascript_while_brace_force = never
+ij_javascript_while_on_new_line = false
+ij_javascript_wrap_comments = false
+
+[{*.har,*.jsb2,*.jsb3,*.json,*.jsonc,*.postman_collection,*.postman_collection.json,*.postman_environment,*.postman_environment.json,.babelrc,.eslintrc,.prettierrc,.stylelintrc,.ws-context,jest.config}]
+indent_size = 2
+ij_json_array_wrapping = split_into_lines
+ij_json_keep_blank_lines_in_code = 0
+ij_json_keep_indents_on_empty_lines = false
+ij_json_keep_line_breaks = true
+ij_json_keep_trailing_comma = false
+ij_json_object_wrapping = split_into_lines
+ij_json_property_alignment = do_not_align
+ij_json_space_after_colon = true
+ij_json_space_after_comma = true
+ij_json_space_before_colon = false
+ij_json_space_before_comma = false
+ij_json_spaces_within_braces = false
+ij_json_spaces_within_brackets = false
+ij_json_wrap_long_lines = false
+
+[{*.htm,*.html,*.sht,*.shtm,*.shtml}]
+ij_html_add_new_line_before_tags = body, div, p, form, h1, h2, h3
+ij_html_align_attributes = true
+ij_html_align_text = false
+ij_html_attribute_wrap = normal
+ij_html_block_comment_add_space = false
+ij_html_block_comment_at_first_column = true
+ij_html_do_not_align_children_of_min_lines = 0
+ij_html_do_not_break_if_inline_tags = title, h1, h2, h3, h4, h5, h6, p
+ij_html_do_not_indent_children_of_tags = html, body, thead, tbody, tfoot
+ij_html_enforce_quotes = false
+ij_html_inline_tags = a, abbr, acronym, b, basefont, bdo, big, br, cite, cite, code, dfn, em, font, i, img, input, kbd, label, q, s, samp, select, small, span, strike, strong, sub, sup, textarea, tt, u, var
+ij_html_keep_blank_lines = 2
+ij_html_keep_indents_on_empty_lines = false
+ij_html_keep_line_breaks = true
+ij_html_keep_line_breaks_in_text = true
+ij_html_keep_whitespaces = false
+ij_html_keep_whitespaces_inside = span, pre, textarea
+ij_html_line_comment_at_first_column = true
+ij_html_new_line_after_last_attribute = never
+ij_html_new_line_before_first_attribute = never
+ij_html_quote_style = double
+ij_html_remove_new_line_before_tags = br
+ij_html_space_after_tag_name = false
+ij_html_space_around_equality_in_attribute = false
+ij_html_space_inside_empty_tag = false
+ij_html_text_wrap = normal
+
+[{*.http,*.rest}]
+ij_continuation_indent_size = 4
+ij_http-request_call_parameters_wrap = normal
+ij_http-request_method_parameters_wrap = split_into_lines
+ij_http-request_space_before_comma = true
+ij_http-request_spaces_around_assignment_operators = true
+
+[{*.markdown,*.md}]
+ij_markdown_force_one_space_after_blockquote_symbol = true
+ij_markdown_force_one_space_after_header_symbol = true
+ij_markdown_force_one_space_after_list_bullet = true
+ij_markdown_force_one_space_between_words = true
+ij_markdown_format_tables = true
+ij_markdown_insert_quote_arrows_on_wrap = true
+ij_markdown_keep_indents_on_empty_lines = false
+ij_markdown_keep_line_breaks_inside_text_blocks = true
+ij_markdown_max_lines_around_block_elements = 1
+ij_markdown_max_lines_around_header = 1
+ij_markdown_max_lines_between_paragraphs = 1
+ij_markdown_min_lines_around_block_elements = 1
+ij_markdown_min_lines_around_header = 1
+ij_markdown_min_lines_between_paragraphs = 1
+ij_markdown_wrap_text_if_long = true
+ij_markdown_wrap_text_inside_blockquotes = true
+
+[{*.pb,*.textproto,*.txtpb}]
+indent_size = 2
+tab_width = 2
+ij_continuation_indent_size = 4
+ij_prototext_keep_blank_lines_in_code = 2
+ij_prototext_keep_indents_on_empty_lines = false
+ij_prototext_keep_line_breaks = true
+ij_prototext_space_after_colon = true
+ij_prototext_space_after_comma = true
+ij_prototext_space_before_colon = false
+ij_prototext_space_before_comma = false
+ij_prototext_spaces_within_braces = true
+ij_prototext_spaces_within_brackets = false
+
+[{*.ps1,*.psd1,*.psm1}]
+max_line_length = 115
+ij_powershell_align_multiline_attribute_argument = false
+ij_powershell_align_multiline_binary_operation = false
+ij_powershell_align_multiline_block_parameters = false
+ij_powershell_align_multiline_catch_type_list = false
+ij_powershell_align_multiline_chained_methods = false
+ij_powershell_align_multiline_for = true
+ij_powershell_align_multiline_parameters = true
+ij_powershell_align_multiline_parameters_in_calls = false
+ij_powershell_align_multiline_pipeline_statement = false
+ij_powershell_attribute_argument_wrap = 0
+ij_powershell_binary_operation_wrap = off
+ij_powershell_block_brace_style = next_line
+ij_powershell_block_parameter_clause_wrap = 0
+ij_powershell_block_parameters_lparen_on_next_line = false
+ij_powershell_block_parameters_rparen_on_next_line = true
+ij_powershell_call_parameters_new_line_after_left_paren = false
+ij_powershell_call_parameters_right_paren_on_new_line = false
+ij_powershell_call_parameters_wrap = off
+ij_powershell_catch_on_new_line = true
+ij_powershell_catch_type_list_wrap = 0
+ij_powershell_class_annotation_wrap = split_into_lines
+ij_powershell_class_brace_style = next_line
+ij_powershell_else_on_new_line = true
+ij_powershell_field_annotation_wrap = off
+ij_powershell_finally_on_new_line = true
+ij_powershell_for_statement_new_line_after_left_paren = false
+ij_powershell_for_statement_right_paren_on_new_line = false
+ij_powershell_for_statement_wrap = off
+ij_powershell_keep_blank_lines_in_code = 2
+ij_powershell_keep_first_column_comment = true
+ij_powershell_keep_line_breaks = true
+ij_powershell_keep_simple_blocks_in_one_line = false
+ij_powershell_keep_simple_classes_in_one_line = false
+ij_powershell_keep_simple_hash_literal_in_one_line = true
+ij_powershell_keep_simple_lambdas_in_one_line = true
+ij_powershell_keep_simple_methods_in_one_line = false
+ij_powershell_method_annotation_wrap = split_into_lines
+ij_powershell_method_brace_style = next_line
+ij_powershell_method_call_chain_wrap = off
+ij_powershell_method_parameters_new_line_after_left_paren = false
+ij_powershell_method_parameters_right_paren_on_new_line = false
+ij_powershell_method_parameters_wrap = off
+ij_powershell_parameter_annotation_wrap = off
+ij_powershell_parentheses_expression_new_line_after_left_paren = false
+ij_powershell_parentheses_expression_right_paren_on_new_line = false
+ij_powershell_pipeline_tail_wrap = 0
+ij_powershell_space_after_colon = true
+ij_powershell_space_after_comma = true
+ij_powershell_space_after_for_semicolon = true
+ij_powershell_space_after_type_cast = false
+ij_powershell_space_before_annotation_parameter_list = false
+ij_powershell_space_before_array_initializer_left_brace = true
+ij_powershell_space_before_catch_keyword = true
+ij_powershell_space_before_catch_left_brace = true
+ij_powershell_space_before_class_left_brace = true
+ij_powershell_space_before_colon = false
+ij_powershell_space_before_comma = false
+ij_powershell_space_before_data_lbrace = true
+ij_powershell_space_before_do_left_brace = true
+ij_powershell_space_before_else_keyword = true
+ij_powershell_space_before_else_left_brace = true
+ij_powershell_space_before_finally_keyword = true
+ij_powershell_space_before_finally_left_brace = true
+ij_powershell_space_before_for_left_brace = true
+ij_powershell_space_before_for_parentheses = true
+ij_powershell_space_before_for_semicolon = false
+ij_powershell_space_before_if_left_brace = true
+ij_powershell_space_before_if_parentheses = true
+ij_powershell_space_before_method_call_parentheses = false
+ij_powershell_space_before_method_left_brace = true
+ij_powershell_space_before_method_parentheses = false
+ij_powershell_space_before_switch_left_brace = true
+ij_powershell_space_before_switch_parentheses = true
+ij_powershell_space_before_trap_lbrace = true
+ij_powershell_space_before_try_left_brace = true
+ij_powershell_space_before_while_keyword = true
+ij_powershell_space_before_while_left_brace = true
+ij_powershell_space_before_while_parentheses = true
+ij_powershell_space_within_empty_method_call_parentheses = false
+ij_powershell_space_within_empty_method_parentheses = false
+ij_powershell_spaces_around_additive_operators = true
+ij_powershell_spaces_around_assignment_operators = true
+ij_powershell_spaces_around_bitwise_operators = true
+ij_powershell_spaces_around_logical_operators = true
+ij_powershell_spaces_around_method_ref_dbl_colon = false
+ij_powershell_spaces_around_multiplicative_operators = true
+ij_powershell_spaces_around_relational_operators = true
+ij_powershell_spaces_around_unary_operator = false
+ij_powershell_spaces_within_annotation_parentheses = false
+ij_powershell_spaces_within_braces = true
+ij_powershell_spaces_within_brackets = false
+ij_powershell_spaces_within_cast_parentheses = false
+ij_powershell_spaces_within_for_parentheses = false
+ij_powershell_spaces_within_if_parentheses = false
+ij_powershell_spaces_within_method_call_parentheses = false
+ij_powershell_spaces_within_method_parentheses = false
+ij_powershell_spaces_within_parentheses = false
+ij_powershell_spaces_within_sub_expression_parentheses = true
+ij_powershell_spaces_within_switch_parentheses = false
+ij_powershell_spaces_within_while_parentheses = false
+ij_powershell_special_else_if_treatment = true
+ij_powershell_while_on_new_line = false
+ij_powershell_wrap_first_method_in_call_chain = false
+ij_powershell_wrap_long_lines = false
+
+[{*.yaml,*.yml}]
+indent_size = 2
+ij_yaml_align_values_properties = do_not_align
+ij_yaml_autoinsert_sequence_marker = true
+ij_yaml_block_mapping_on_new_line = false
+ij_yaml_indent_sequence_value = true
+ij_yaml_keep_indents_on_empty_lines = false
+ij_yaml_keep_line_breaks = true
+ij_yaml_line_comment_add_space = false
+ij_yaml_line_comment_add_space_on_reformat = false
+ij_yaml_line_comment_at_first_column = true
+ij_yaml_sequence_on_new_line = false
+ij_yaml_space_before_colon = false
+ij_yaml_spaces_within_braces = true
+ij_yaml_spaces_within_brackets = true

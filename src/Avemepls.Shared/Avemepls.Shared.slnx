@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Auth/">
+    <Project Path="Avemepls.Auth.Bearer/Avemepls.Auth.Bearer.csproj" />
+    <Project Path="Avemepls.Auth.Password/Avemepls.Auth.Password.csproj" />
+  </Folder>
+  <Folder Name="/Core/">
+    <Project Path="Avemepls.Core.DataAccess/Avemepls.Core.DataAccess.csproj" />
+    <Project Path="Avemepls.Core/Avemepls.Core.csproj" />
+    <Project Path="Avemepls.Tests/Avemepls.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Identity/">
+    <Project Path="Avemepls.Identity.Abstraction/Avemepls.Identity.Abstraction.csproj" />
+    <Project Path="Avemepls.Identity.DataAccess/Avemepls.Identity.DataAccess.csproj" />
+    <Project Path="Avemepls.Identity.Domain/Avemepls.Identity.Domain.csproj" />
+  </Folder>
+</Solution>

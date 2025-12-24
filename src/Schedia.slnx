@@ -1,0 +1,24 @@
+<Solution>
+    <Folder Name="/.other/">
+        <File Path="../TODO.txt" />
+        <File Path="Directory.Build.props" />
+        <File Path="Directory.Packages.props" />
+    </Folder>
+    <Folder Name="/Shared/" />
+    <Folder Name="/Shared/Auth/">
+        <Project Path="Avemepls.Shared/Avemepls.Auth.Bearer/Avemepls.Auth.Bearer.csproj" />
+        <Project Path="Avemepls.Shared/Avemepls.Auth.Password/Avemepls.Auth.Password.csproj" />
+    </Folder>
+    <Folder Name="/Shared/Core/">
+        <Project Path="Avemepls.Shared/Avemepls.Core.DataAccess/Avemepls.Core.DataAccess.csproj" />
+        <Project Path="Avemepls.Shared/Avemepls.Core/Avemepls.Core.csproj" />
+        <Project Path="Avemepls.Shared/Avemepls.Tests/Avemepls.Tests.csproj" />
+    </Folder>
+    <Folder Name="/Shared/Identity/">
+        <Project Path="Avemepls.Shared/Avemepls.Identity.Abstraction/Avemepls.Identity.Abstraction.csproj" />
+        <Project Path="Avemepls.Shared/Avemepls.Identity.DataAccess/Avemepls.Identity.DataAccess.csproj" />
+        <Project Path="Avemepls.Shared/Avemepls.Identity.Domain/Avemepls.Identity.Domain.csproj" />
+    </Folder>
+    <Project Path="Schedia.Web/Schedia.Web.csproj" />
+    <Project Path="Tests/Tests.csproj" />
+</Solution>
