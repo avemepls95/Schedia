@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
+        <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" />
+        <PackageReference Include="Namotion.Reflection" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Avemepls.Security\Avemepls.Security.csproj" />
+      <ProjectReference Include="..\Avemepls.Shared\Avemepls.Core\Avemepls.Core.csproj" />
+    </ItemGroup>
+
+</Project>

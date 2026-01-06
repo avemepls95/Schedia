@@ -2,5 +2,5 @@
 
 public interface IHasDateCreated
 {
-    DateTime DateCreated { get; set; }
+    DateTimeOffset DateCreated { get; set; }
 }

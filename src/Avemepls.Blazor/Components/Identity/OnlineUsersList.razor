@@ -1,0 +1,30 @@
+﻿@using Avemepls.Infrastructure.Identity
+@inject OnlineUsersStore UsersStore
+
+<Table TItem="OnlineUser"
+       Loading="Users is null"
+       DataSource="Users">
+    <PropertyColumn Property="u => u.IsAuthenticated"></PropertyColumn>
+    <PropertyColumn Property="u => u.Name"></PropertyColumn>
+    <PropertyColumn Property="u => u.AuthenticationType"></PropertyColumn>
+    <PropertyColumn Property="u => u.OnlineSince"></PropertyColumn>
+    <PropertyColumn Property="u => u.IpAddress"></PropertyColumn>
+</Table>
+
+@code {
+
+    /// <summary>
+    /// Список онлайн-пользователей
+    /// </summary>
+    protected ICollection<OnlineUser>? Users { get; private set; }
+
+    /// <summary>
+    /// Инициализация компонента
+    /// </summary>
+    protected override void OnInitialized()
+    {
+        Users = UsersStore.OnlineUsers.ToList();
+        base.OnInitialized();
+    }
+
+}

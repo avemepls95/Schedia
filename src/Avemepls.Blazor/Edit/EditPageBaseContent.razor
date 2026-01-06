@@ -1,0 +1,76 @@
+﻿<PageHeader Ghost="false"
+            OnBack="@OnBack">
+    <PageHeaderTags>
+        @if (Tags is not null)
+        {
+            @if (IsLoading)
+            {
+                <SkeletonElement Type="SkeletonElementType.Input"/>
+            }
+            else
+            {
+                @Tags
+            }
+        }
+    </PageHeaderTags>
+    <PageHeaderExtra>
+        @if (HeaderExtra is not null)
+        {
+            @if (IsLoading)
+            {
+                <SkeletonElement Type="SkeletonElementType.Input"/>
+            }
+            else
+            {
+                @HeaderExtra
+            }
+        }
+    </PageHeaderExtra>
+    <PageHeaderTitle>
+        @if (IsLoading)
+        {
+            <SkeletonElement Type="SkeletonElementType.Input"/>
+        }
+        else
+        {
+            @Title
+        }
+    </PageHeaderTitle>
+</PageHeader>
+<Content Class="edit-page-content">
+    <Skeleton Loading="@IsLoading" Class="edit-page-content-loading">
+        <Spin Spinning="@IsSaving">
+            @ChildContent
+        </Spin>
+    </Skeleton>
+</Content>
+
+@* ReSharper disable CSharpWarnings::CS1591 *@
+
+@code {
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+    [Parameter]
+    public string? GoBackRoute { get; set; }
+
+    [Parameter]
+    public RenderFragment? Tags { get; set; }
+
+    [Parameter]
+    public RenderFragment? HeaderExtra { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback OnBack { get; set; }
+
+    [Parameter]
+    public bool IsSaving { get; set; }
+
+}

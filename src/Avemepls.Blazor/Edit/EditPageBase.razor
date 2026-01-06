@@ -1,0 +1,105 @@
+@using Avemepls.Blazor.Navigation;
+
+@if (!string.IsNullOrEmpty(Title))
+{
+    <PageTitle>@Title</PageTitle>
+}
+
+@if (string.IsNullOrEmpty(Permission))
+{
+    <EditPageBaseContent IsLoading="@IsLoading"
+                         IsSaving="@IsSaving"
+                         GoBackRoute="@GoBackRoute"
+                         OnBack="OnBackAsync"
+                         Tags="@Tags"
+                         HeaderExtra="@HeaderExtra"
+                         Title="@Title"
+                         ChildContent="@ChildContent"/>
+}
+else
+{
+    <AuthorizeView Policy=@Permission>
+        <Authorized>
+            <EditPageBaseContent IsLoading="@IsLoading"
+                                 IsSaving="@IsSaving"
+                                 GoBackRoute="@GoBackRoute"
+                                 OnBack="OnBackAsync"
+                                 Tags="@Tags"
+                                 HeaderExtra="@HeaderExtra"
+                                 Title="@Title"
+                                 ChildContent="@ChildContent"/>
+        </Authorized>
+        <NotAuthorized>
+            Отказано в доступе.
+        </NotAuthorized>
+    </AuthorizeView>
+}
+
+@* ReSharper disable CSharpWarnings::CS1591 *@
+@* ReSharper disable CSharpWarnings::CS8618 *@
+@code {
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+    [Parameter]
+    public bool IsSaving { get; set; }
+
+    [Parameter]
+    public string? GoBackRoute { get; set; }
+
+    [Parameter]
+    public RenderFragment? SubTitle { get; set; }
+
+    [Parameter]
+    public RenderFragment? Tags { get; set; }
+
+    [Parameter]
+    public RenderFragment? HeaderExtra { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Permission { get; set; }
+
+    [Inject]
+    public NavigationManager? NavigationManager { get; set; }
+
+    [Inject]
+    public NavigationHistoryManager? NavigationHistoryManager { get; set; }
+
+    [CascadingParameter(Name = "PageType")]
+    public Type? PageType { get; set; }
+
+    private async Task OnBackAsync()
+    {
+        if (NavigationHistoryManager != null && await NavigationHistoryManager.CanGoBack())
+        {
+            var prevPage = await NavigationHistoryManager.GoToPreviousPage();
+            NavigationManager!.NavigateTo(prevPage.Url);
+        }
+        else
+        {
+            NavigationManager!.NavigateTo(GoBackRoute ?? NavigationManager.BaseUri);
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            if (PageType != null && NavigationHistoryManager != null)
+            {
+                await NavigationHistoryManager.AddPageToHistory(new NavigationHistoryRecord(PageType.FullName!, NavigationManager!.Uri));
+            }
+        }
+    }
+
+}
+

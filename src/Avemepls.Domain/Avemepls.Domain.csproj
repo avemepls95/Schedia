@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" />
+      <PackageReference Include="FluentValidation" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" />
+      <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Avemepls.Infrastructure\Avemepls.Infrastructure.csproj" />
+      <ProjectReference Include="..\Avemepls.Security\Avemepls.Security.csproj" />
+      <ProjectReference Include="..\Avemepls.Shared\Avemepls.Core\Avemepls.Core.csproj" />
+      <ProjectReference Include="..\Avemepls.Shared\Avemepls.DataAccess\Avemepls.DataAccess.csproj" />
+    </ItemGroup>
+
+</Project>

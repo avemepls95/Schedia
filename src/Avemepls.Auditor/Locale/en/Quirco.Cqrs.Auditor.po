@@ -1,0 +1,13 @@
+﻿"PO-Revision-Date: 09.09.2024\n"
+
+msgid "Логи"
+msgstr "Logs"
+
+msgid "Аудит"
+msgstr "Audit"
+
+msgid "Просмотр"
+msgstr "Preview"
+
+msgid "Изменено {0}: {1} -> {2}"
+msgstr "Modified {0}: {1} -> {2}"

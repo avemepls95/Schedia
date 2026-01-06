@@ -1,0 +1,110 @@
+﻿@typeparam TId
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<BaseEntityActionsControl<TId>> Loc;
+
+<FormItem WrapperColOffset="6" WrapperColSpan="8">
+    @if (DateDeleted is null)
+        {
+            <AuthorizeView Policy="@CurrentActionPermission" Context="ctx">
+                <Authorized>
+                    <Button HtmlType="@SaveButtonHtmlType"
+                            OnClick="@Submit"
+                            Type="@ButtonType.Primary">
+                            @(IsCreating
+                                ? "Создать".Loc(Loc)
+                                : "Сохранить".Loc(Loc))
+                    </Button>
+                </Authorized>
+            </AuthorizeView>
+        }
+    @if (!IsCreating)
+    {
+        @if (DateDeleted is null)
+        {
+            <AuthorizeView Policy="@DeletePermission" Context="ctx">
+                <Authorized>
+                    <Popconfirm Placement="@Placement.TopLeft"
+                                Title=@("Вы уверены, что хотите удалить '{0}'".Loc(Loc, EntityName))
+                                OkText="@("Удалить".Loc(Loc))"
+                                CancelText="@("Отмена".Loc(Loc))"
+                                OnConfirm="@OnDelete">
+                        <Button Danger Type="@ButtonType.Dashed">@("Удалить".Loc(Loc))</Button>
+                    </Popconfirm>
+                </Authorized>
+            </AuthorizeView>
+        }
+        else
+        {
+            <AuthorizeView Policy="@RestorePermission" Context="ctx">
+                <Authorized>
+                    <Popconfirm Placement="@Placement.TopLeft"
+                                Title=@("Вы уверены, что хотите восстановить '{0}'".Loc(Loc, EntityName))
+                                OkText="@("Восстановить".Loc(Loc))"
+                                CancelText="@("Отмена".Loc(Loc))"
+                                OnConfirm="@OnRestore">
+                        <Button Color="Color.Green6">@("Восстановить".Loc(Loc))</Button>
+                    </Popconfirm>
+                </Authorized>
+            </AuthorizeView>
+        }
+    }
+</FormItem>
+
+@code
+{
+    @* ReSharper disable CSharpWarnings::CS8618 *@
+    @* ReSharper disable CSharpWarnings::CS1591 *@
+
+    [CascadingParameter(Name = "Form")]
+    public IForm Form { get; set; }
+
+    [Parameter]
+    public TId? Id { get; set; }
+
+    private bool IsCreating =>
+        Id == null ||
+        EqualityComparer<TId>.Default.Equals(Id, default) ||
+        (Id is string strId && string.IsNullOrEmpty(strId));
+
+    [Parameter]
+    public string? EntityName { get; set; }
+
+    [Parameter]
+    public DateTime? DateDeleted { get; set; }
+
+    [Parameter]
+    public string? CurrentActionPermission { get; set; }
+
+    [Parameter]
+    public string? DeletePermission { get; set; }
+
+    [Parameter]
+    public string? RestorePermission { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnDelete { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnRestore { get; set; }
+
+    private bool _disableSubmitForm = false;
+
+    [Parameter]
+    public bool DisableSubmitForm
+    {
+        get => _disableSubmitForm;
+        set
+        {
+            SaveButtonHtmlType = "button";
+
+            _disableSubmitForm = value;
+        }
+    }
+
+    private string SaveButtonHtmlType { get; set; } = "submit";
+
+    private void Submit()
+    {
+        if (DisableSubmitForm) Form.Submit();
+    }
+}

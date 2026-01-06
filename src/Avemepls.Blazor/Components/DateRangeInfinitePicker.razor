@@ -1,0 +1,106 @@
+﻿@using Avemepls.Core.Extensions
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<DateRangeInfinitePicker> Loc
+
+<Space>
+    <SpaceItem>
+        <ExtendedDatePicker TValue="DateTime?" @bind-Value="@StartDate"
+                            Picker="DatePickerType.Date"
+                            AllowClear
+                            Mask="@BlazorGlobalConfiguration.DatePickerFormat"
+                            OnChange="@(async a => await StartDateChanged.InvokeAsync(a.Date))"
+                            Placeholder="@Placeholders?.FirstOrDefault()"
+                            ChangeOnClose
+                            DisabledDate="DisableStartDate"
+                            OnOpenChange="OpenChangedStartDate"/>
+    </SpaceItem>
+    <SpaceItem>
+        <ExtendedDatePicker TValue="DateTime?" @bind-Value="@EndDate"
+                            Picker="DatePickerType.Date"
+                            OnChange="@(async a => await EndDateChanged.InvokeAsync(a.Date))"
+                            AllowClear
+                            ChangeOnClose
+                            Mask="@BlazorGlobalConfiguration.DatePickerFormat"
+                            Placeholder="@Placeholders?.LastOrDefault()"
+                            DisabledDate="DisableEndDate"
+                            @ref="_endDatePicker"/>
+    </SpaceItem>
+</Space>
+
+@* ReSharper disable CSharpWarnings::CS1591 *@
+
+@code {
+
+    private ExtendedDatePicker<DateTime?>? _endDatePicker;
+    private DateTime? _endDate;
+    private DateTime? _startDate;
+
+    [Parameter]
+    public DateTime? StartDate
+    {
+        get => _startDate;
+        set
+        {
+            if (value > _endDate)
+            {
+                return;
+            }
+
+            _startDate = value;
+        }
+    }
+
+    [Parameter]
+    public EventCallback<DateTime?> StartDateChanged { get; set; }
+
+    [Parameter]
+    public DateTime? EndDate
+    {
+        get => _endDate;
+        set
+        {
+            if (_startDate is not null && value < _startDate)
+            {
+                return;
+            }
+
+            _endDate = value;
+        }
+    }
+
+    [Parameter]
+    public EventCallback<DateTime?> EndDateChanged { get; set; }
+
+    [Parameter]
+    public string[]? Placeholders { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        if (Placeholders is null || Placeholders.IsEmpty())
+        {
+            Placeholders = ["С".Loc(Loc), "По".Loc(Loc)];
+        }
+    }
+
+    private bool DisableStartDate(DateTime currentViewDate)
+    {
+        return _endDate is not null && currentViewDate > _endDate;
+    }
+
+    private bool DisableEndDate(DateTime currentViewDate)
+    {
+        return _startDate is not null && currentViewDate < _startDate;
+    }
+
+    private async Task OpenChangedStartDate(bool arg)
+    {
+        if (!arg)
+        {
+            await _endDatePicker!.DatePickerClick();
+            await _endDatePicker.FocusAsync();
+        }
+    }
+
+}

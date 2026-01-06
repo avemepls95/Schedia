@@ -25,7 +25,7 @@ public abstract class DependencyTestsBase
     /// }
     /// ]]></code>
     /// </example>
-    protected virtual HashSet<string> GetSourceAssemblyExclusions() => new();
+    protected virtual HashSet<string> GetSourceAssemblyExclusions() => [];
 
     /// <summary>
     /// Исключения для source-слоев: паттерны слоев, которые не нужно анализировать как источники
@@ -41,7 +41,7 @@ public abstract class DependencyTestsBase
     /// }
     /// ]]></code>
     /// </example>
-    protected virtual HashSet<string> GetSourceLayerExclusions() => new();
+    protected virtual HashSet<string> GetSourceLayerExclusions() => [];
 
     /// <summary>
     /// Исключения для forbidden-сборок: зависимости на эти сборки игнорируются
@@ -57,7 +57,7 @@ public abstract class DependencyTestsBase
     /// }
     /// ]]></code>
     /// </example>
-    protected virtual HashSet<string> GetForbiddenAssemblyExclusions() => new();
+    protected virtual HashSet<string> GetForbiddenAssemblyExclusions() => [];
 
     /// <summary>
     /// Исключения для forbidden-слоев: зависимости на эти слои игнорируются
@@ -73,7 +73,7 @@ public abstract class DependencyTestsBase
     /// }
     /// ]]></code>
     /// </example>
-    protected virtual HashSet<string> GetForbiddenLayerExclusions() => new();
+    protected virtual HashSet<string> GetForbiddenLayerExclusions() => [];
 
     /// <summary>
     /// Специфические исключения: пары (sourceAssembly -> forbiddenAssembly) для точечных исключений

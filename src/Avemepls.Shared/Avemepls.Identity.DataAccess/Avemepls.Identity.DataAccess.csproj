@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
-        <ProjectReference Include="..\Avemepls.Core.DataAccess\Avemepls.Core.DataAccess.csproj"/>
+        <ProjectReference Include="..\Avemepls.DataAccess\Avemepls.DataAccess.csproj" />
         <ProjectReference Include="..\Avemepls.Core\Avemepls.Core.csproj"/>
     </ItemGroup>
 

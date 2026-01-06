@@ -4,14 +4,21 @@
         <File Path="Directory.Build.props" />
         <File Path="Directory.Packages.props" />
     </Folder>
+    <Folder Name="/modules/" />
     <Folder Name="/Shared/" />
     <Folder Name="/Shared/Auth/">
         <Project Path="Avemepls.Shared/Avemepls.Auth.Bearer/Avemepls.Auth.Bearer.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Auth.Password/Avemepls.Auth.Password.csproj" />
     </Folder>
     <Folder Name="/Shared/Core/">
-        <Project Path="Avemepls.Shared/Avemepls.Core.DataAccess/Avemepls.Core.DataAccess.csproj" />
+        <Project Path="Avemepls.Auditor/Avemepls.Auditor.csproj" />
+        <Project Path="Avemepls.Blazor/Avemepls.Blazor.csproj" />
+        <Project Path="Avemepls.Domain/Avemepls.Domain.csproj" />
+        <Project Path="Avemepls.Infrastructure/Avemepls.Infrastructure.csproj" />
+        <Project Path="Avemepls.Mvc/Avemepls.Mvc.csproj" />
+        <Project Path="Avemepls.Security/Avemepls.Security.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Core/Avemepls.Core.csproj" />
+        <Project Path="Avemepls.Shared/Avemepls.DataAccess/Avemepls.DataAccess.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Tests/Avemepls.Tests.csproj" />
     </Folder>
     <Folder Name="/Shared/Identity/">

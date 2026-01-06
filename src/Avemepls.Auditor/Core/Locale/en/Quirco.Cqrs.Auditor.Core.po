@@ -1,0 +1,22 @@
+"PO-Revision-Date: 18.07.2024\n"
+
+msgid "Обычная"
+msgstr "Regular"
+
+msgid "Критическая"
+msgstr "Critical"
+
+msgid "Высокая"
+msgstr "High"
+
+msgid "Средняя"
+msgstr "Medium"
+
+msgid "Низкая"
+msgstr "Low"
+
+msgid "Информация"
+msgstr "Info"
+
+msgid "Отладка"
+msgstr "Debug"

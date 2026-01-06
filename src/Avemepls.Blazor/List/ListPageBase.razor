@@ -1,0 +1,160 @@
+﻿@using Microsoft.Extensions.Localization
+@using Avemepls.Blazor.Navigation;
+@inject NavigationManager NavigationManager
+@implements IDisposable
+
+@if (Title != null)
+{
+    <PageTitle>@Title</PageTitle>
+}
+
+<ListAuthorizeView Policy=@ListPermission>
+    <Authorized Context="ctx">
+        <PageHeader Ghost="false">
+            <PageHeaderTitle>@Title</PageHeaderTitle>
+            <PageHeaderExtra>
+                @if (!string.IsNullOrEmpty(NewItemUrl))
+                {
+                    <AuthorizeView Policy="@AddPermission">
+                        <Authorized>
+                            @if (!string.IsNullOrEmpty(NewItemUrl))
+                            {
+                                <Button OnClick="AddItem" Style="margin-top:16px" Icon="plus">
+                                    @("Создать".Loc(Loc))
+                                </Button>
+                            }
+                        </Authorized>
+                    </AuthorizeView>
+                }
+                @PageHeaderExtraContent
+            </PageHeaderExtra>
+            <PageHeaderContent>
+                @if (OnSearch.HasDelegate)
+                {
+                    <SearchExtended @ref="_searchInput"
+                                    Placeholder="@("Введите поисковый запрос".Loc(Loc))"
+                                    OnSearch="@OnSearch"
+                                    Size="@InputSize.Large"
+                                    EnterButton="@("Найти".Loc(Loc))"
+                                    @bind-Value="@Query"
+                                    OnChange="@QueryChanged"/>
+                    @if (PageSearchExtraContent != null)
+                    {
+                        <Space Style="margin-top: 8px;">
+                            <SpaceItem>
+                                @PageSearchExtraContent
+                            </SpaceItem>
+                            @if (OnClearFilter.HasDelegate)
+                            {
+                                <SpaceItem>
+                                    <Button Type="@ButtonType.Dashed"
+                                            OnClick="@OnClearFilter"
+                                            Shape="@ButtonShape.Round"
+                                            Icon="@IconType.Outline.CloseCircle">
+                                        @("Сбросить фильтры".Loc(Loc))
+                                    </Button>
+                                </SpaceItem>
+                            }
+                        </Space>
+                    }
+                }
+            </PageHeaderContent>
+        </PageHeader>
+        <Content Class="list-page-content">
+            @ChildContent
+        </Content>
+    </Authorized>
+    <NotAuthorized>
+        <Result Status="ResultStatus.Http403"
+                Title="403"
+                SubTitle="@("У вас недостаточно прав для доступа к данному ресурсу".Loc(Loc))"/>
+    </NotAuthorized>
+</ListAuthorizeView>
+
+<script>
+    window.registerKeyDownHandler = (dotnetReference) => {
+        document.addEventListener('keydown', (event) => {
+            dotnetReference.invokeMethodAsync('HandleKeyDown', event.key);
+        });
+    };
+</script>
+
+@* ReSharper disable CSharpWarnings::CS1591 *@
+
+@code {
+
+    private SearchExtended? _searchInput;
+
+    [Parameter] public string? Query { get; set; }
+
+    [Parameter] public EventCallback<string> QueryChanged { get; set; }
+
+    [Parameter] public string? Title { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    [Parameter] public RenderFragment? PageHeaderExtraContent { get; set; }
+
+    [Parameter] public RenderFragment? PageSearchExtraContent { get; set; }
+
+    [Parameter] public string? NewItemUrl { get; set; }
+
+    [Parameter] public EventCallback<string> OnSearch { get; set; }
+
+    [Parameter] public EventCallback OnClearFilter { get; set; }
+
+    [Parameter] public string? ListPermission { get; set; }
+
+    [Parameter] public string? AddPermission { get; set; }
+
+    [Parameter] public bool SearchOnEnter { get; set; } = true;
+
+    [CascadingParameter(Name = "PageType")]
+    public Type? PageType { get; set; }
+
+    [Inject] public NavigationHistoryManager? NavigationHistoryManager { get; set; }
+    [Inject] private IJSRuntime? JSRuntime { get; set; }
+
+    [Inject] public IStringLocalizer<ListPageBase>? Loc { get; set; }
+
+    private DotNetObjectReference<ListPageBase>? _dotNetObjectReference;
+
+    [JSInvokable]
+    public async Task HandleKeyDown(string key)
+    {
+        if (key.ToUpperInvariant() == "ENTER" && SearchOnEnter && !_searchInput!.GetIsFocused())
+        {
+            await OnSearch.InvokeAsync(Query);
+        }
+    }
+
+    private void AddItem()
+    {
+        if (string.IsNullOrEmpty(NewItemUrl))
+            throw new InvalidOperationException("You need to specify NewItemUrl as navigation target for creation form");
+        NavigationManager.NavigateTo(NewItemUrl);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            if (PageType != null && NavigationHistoryManager != null)
+            {
+                await NavigationHistoryManager.AddPageToHistory(new NavigationHistoryRecord(PageType.FullName!, NavigationManager.Uri));
+            }
+
+            _dotNetObjectReference = DotNetObjectReference.Create(this);
+            await JSRuntime!.InvokeVoidAsync("registerKeyDownHandler", _dotNetObjectReference);
+        }
+    }
+
+    public virtual void Dispose()
+    {
+        // Dispose of the DotNetObjectReference when the component is disposed
+        _dotNetObjectReference?.Dispose();
+    }
+
+}

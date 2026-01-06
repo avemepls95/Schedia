@@ -2,5 +2,5 @@
 
 public interface IHasDateModified
 {
-    DateTime DateModified { get; set; }
+    DateTimeOffset DateModified { get; set; }
 }

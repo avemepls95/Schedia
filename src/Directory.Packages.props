@@ -4,6 +4,7 @@
     <EntityFrameworkCoreVersion>$(AspNetCoreVersion)</EntityFrameworkCoreVersion>
     <NpgsqlEntityFrameworkCoreVersion>10.0.0</NpgsqlEntityFrameworkCoreVersion>
     <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
+    <AntDesign>1.5.1</AntDesign>
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="AntDesign" Version="$(AntDesign)" />
@@ -27,9 +28,13 @@
     <PackageVersion Include="MassTransit.Abstractions" Version="$(MassTransit)" />
     <PackageVersion Include="MassTransit.RabbitMQ" Version="$(MassTransit)" />
     <PackageVersion Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
-    <PackageVersion Include="Meziantou.Xunit.ParallelTestFramework" Version="2.3.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.WebUtilities" Version="$(AspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.Components.Authorization" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.2" />
+    <PackageVersion Include="Microsoft.Extensions.Localization" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Localization.Abstractions" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="8.15.0" />
     <PackageVersion Include="Namotion.Reflection" Version="3.4.2" />
     <PackageVersion Include="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.12.0-beta.1" />
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.12.0" />
@@ -56,7 +61,6 @@
     <PackageVersion Include="JetBrains.Annotations" Version="2024.3.0" PrivateAssets="All" />
     <PackageVersion Include="DistributedLock" Version="2.6.0" />
     <PackageVersion Include="DistributedLock.FileSystem" Version="1.0.3" />
-    <PackageVersion Include="Quirco.Analyzers" Version="0.1.1" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -102,16 +106,18 @@
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.3.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Authorization" Version="$(AspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authorization.Policy" Version="2.3.0" />
     <PackageVersion Include="Microsoft.AspNetCore.DataProtection.EntityFrameworkCore" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="$(AspNetCoreVersion)" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.SignalR.Client" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Components" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Components.Web" Version="$(AspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.AspNetCore.Routing" Version="2.3.0" />
     <PackageVersion Include="Microsoft.Build.Utilities.Core" Version="17.9.5" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="$(EntityFrameworkCoreVersion)" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="$(EntityFrameworkCoreVersion)" />
@@ -122,8 +128,8 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(AspNetCoreVersion)" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.Extensions.Identity.Core" Version="$(AspNetCoreVersion)" />
@@ -132,7 +138,6 @@
     <PackageVersion Include="Microsoft.Extensions.Identity.Stores" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="$(AspNetCoreVersion)" />
     <PackageVersion Include="IdentityModel.OidcClient" Version="5.2.1" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Options" Version="8.0.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.14.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.14.0" />

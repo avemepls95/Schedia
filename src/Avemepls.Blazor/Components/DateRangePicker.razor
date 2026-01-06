@@ -1,0 +1,24 @@
+@typeparam TValue
+
+<RangePicker @bind-Value="Value"
+             Picker="@DatePickerType.Date"
+             Placeholder="@Placeholder"
+             OnChange="@ChangeValue"
+             Mask="@BlazorGlobalConfiguration.DatePickerFormat"
+             TValue="TValue[]"
+             ChangeOnClose
+             DefaultValue="@_defaultValues"
+             DateRender="@(DateRender ?? RenderFragmentsRenderer.GetDateFragment(DateRenderStyle))"
+             AllowClear="@AllowClear">
+</RangePicker>
+@foreach (var message in _validationMessages)
+{
+    <div style="display: flex; flex-wrap: nowrap;">
+        <div class="ant-form-item-explain ant-form-item-explain-connected" role="alert">
+            <div class="ant-form-item-explain-error">
+                @message
+            </div>
+        </div>
+        <div style="width: 0px; height: 24px;"></div>
+    </div>
+}

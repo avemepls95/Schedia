@@ -1,0 +1,39 @@
+﻿<ExtendedDatePicker
+    TValue="DateTime?"
+    Picker="@DatePickerType.Date"
+    Placeholder="@Placeholder"
+    @bind-Value="@DateTimeValue">
+</ExtendedDatePicker>
+
+@* ReSharper disable CSharpWarnings::CS1591 *@
+@code {
+
+    private DateOnly? _value;
+
+    [Parameter]
+    public DateOnly? Value
+    {
+        get => _value;
+        set
+        {
+            var valueHasChanged = !EqualityComparer<DateOnly?>.Default.Equals(value, _value);
+            if (valueHasChanged)
+            {
+                _value = value;
+                ValueChanged?.InvokeAsync(value);
+            }
+        }
+    }
+
+    [Parameter]
+    public EventCallback<DateOnly?>? ValueChanged { get; set; }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    private DateTime? DateTimeValue
+    {
+        get => _value?.ToDateTime(TimeOnly.MinValue);
+        set => Value = value == null ? null : DateOnly.FromDateTime(value.Value);
+    }
+}

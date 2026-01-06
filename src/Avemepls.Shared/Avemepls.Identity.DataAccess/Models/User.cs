@@ -2,11 +2,9 @@ using Avemepls.Core.Models;
 
 namespace Avemepls.Identity.DataAccess.Models;
 
-public readonly record struct UserId(int Value) : IHasValue<int>;
-
-public class User : IHasId<UserId, int>
+public class User : IHasId<User>
 {
-    public UserId Id { get; set; }
+    public Id<User> Id { get; set; }
 
     public string Username { get; set; }
 

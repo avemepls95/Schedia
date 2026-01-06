@@ -1,0 +1,40 @@
+﻿@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<ColorPicker> Loc
+
+<div id="color-picker">
+    <input type="color" id="color" value="@CurrentValue" @onchange="async x => await SetAsync(x.Value?.ToString())"/>
+    <Input TValue="string" Value="@Value" AllowClear Placeholder="@("Цвет не выбран".Loc(Loc))" OnChange="async x => await SetAsync(x)"/>
+</div>
+
+<style>
+    #color-picker{
+      display: flex;
+    }
+
+    #color-picker .ant-input-affix-wrapper{
+      width: 10.5em;
+    }
+
+    #color-picker input[type="color"] {
+        appearance: none;
+        cursor: pointer;
+        height: 2.5em;
+        width: 2.5em;
+        border: none;
+        background: none;
+        display: block;
+    }
+</style>
+
+
+@* ReSharper disable CSharpWarnings::CS1591 *@
+
+@code {
+    private string CurrentValue => Value ?? "#ffffff";
+
+    [Parameter] public string? Value { get; set; }
+
+    [Parameter] public EventCallback<string?> ValueChanged { get; set; }
+
+    async Task SetAsync(string? value) => await ValueChanged.InvokeAsync(value);
+}

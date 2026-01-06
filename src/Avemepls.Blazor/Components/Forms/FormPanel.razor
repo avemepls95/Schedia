@@ -1,0 +1,54 @@
+@if (Visible)
+{
+    <div class="form-panel-wrapper">
+        <div class="form-panel-header">
+            <div class="form-panel-header-title">@Title</div>
+
+            @if (Extra != null)
+            {
+                <div class="form-panel-header-extra">@Extra</div>
+            }
+        </div>
+
+        <div class="form-panel-content">
+            @ChildContent
+        </div>
+    </div>
+}
+
+<style>
+    .form-panel-wrapper {
+        border: 1px dashed #d1d1d1;
+        background: #fdfdfd;
+        padding: 10px;
+        border-radius: 2px;
+        margin-bottom: 20px;        
+    }
+    .form-panel-header {
+        display: flex;
+        margin-bottom: 10px;
+    }
+    .form-panel-header-title {
+        font-size: 19px;        
+    }
+    .form-panel-header-extra {
+        margin-left: auto;
+    }
+</style>
+
+@* ReSharper disable CSharpWarnings::CS1591 *@
+@code {
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? Extra { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Visible { get; set; } = true;
+
+}

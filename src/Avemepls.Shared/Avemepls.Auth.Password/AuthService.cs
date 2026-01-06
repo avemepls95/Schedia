@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 using Avemepls.Auth.Password.Abstractions;
+using Avemepls.Core.Models;
 using Avemepls.Identity.DataAccess.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -15,7 +16,7 @@ public class AuthService(IHttpContextAccessor httpContextAccessor) : IAuthServic
 {
     // В реальном проекте здесь был бы репозиторий для работы с БД
     // Для примера используем временное хранилище
-    private static readonly List<User> _users = new();
+    private static readonly List<User> _users = [];
 
     public async Task<User?> AuthenticateAsync(string username, string password)
     {
@@ -78,7 +79,7 @@ public class AuthService(IHttpContextAccessor httpContextAccessor) : IAuthServic
         return user;
     }
 
-    public Task<bool> ChangePasswordAsync(UserId userId, string oldPassword, string newPassword)
+    public Task<bool> ChangePasswordAsync(Id<User> userId, string oldPassword, string newPassword)
     {
         var user = _users.Find(u => u.Id == userId && u.IsActive);
 

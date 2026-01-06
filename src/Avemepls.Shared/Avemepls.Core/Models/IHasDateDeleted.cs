@@ -2,7 +2,7 @@
 
 public interface IHasDateDeleted
 {
-    DateTime? DateDeleted { get; set; }
+    DateTimeOffset? DateDeleted { get; set; }
 
     bool IsDeleted => DateDeleted.HasValue;
 }

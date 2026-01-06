@@ -1,0 +1,100 @@
+<#
+    void CrudController
+        (
+        string entityName,
+        string entityPluralName,
+        string description,
+        string createUpdateModel = null,
+        string entitySlimModel = null,
+        string entityDetailedModel = null,
+        string searchQuery = null
+        )
+    {
+        createUpdateModel ??= $"CreateUpdate{entityName}Model";
+        entitySlimModel ??= $"{entityName}Model";
+        entityDetailedModel ??= $"{entityName}Model";
+        searchQuery ??= $"Search{entityName}Query";
+#>
+
+
+    /// <summary>
+    /// <#= description #>
+    /// </summary>
+    [ApiController]
+    public partial class <#= entityPluralName #>Controller : CrudController
+    <
+        <#= entityName #>,
+        <#= createUpdateModel #>,
+        <#= entitySlimModel #>,
+        <#= entityDetailedModel #>,
+        <#= searchQuery #>,       
+    >
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="<#= entityPluralName #>Controller"/>.
+        /// </summary>
+        /// <param name="mediator"></param>
+        public <#= entityPluralName #>Controller(IMediator mediator) : base(mediator)
+        {
+        }
+
+        /// <summary>
+        /// Returns an instance of <see cref="<#= entityDetailedModel #>" /> by it's ID.
+        /// </summary>
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(<#= entityDetailedModel #>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Dictionary<string, string[]>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public override Task<IActionResult> GetAsync([FromRoute]int id, CancellationToken cancellationToken)
+        {
+            return base.GetAsync(id, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create new <see cref="<#= entityName #>" />.
+        /// </summary>
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Dictionary<string, string[]>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public override Task<IActionResult> CreateAsync([FromBody, Required]<#= createUpdateModel #> request, CancellationToken cancellationToken)
+        {
+            return base.CreateAsync(request, cancellationToken);
+        }
+
+        /// <summary>
+        /// Updates <see cref="<#= entityName #>" />.
+        /// </summary>
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Dictionary<string, string[]>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public override Task<IActionResult> UpdateAsync([FromRoute]int id, [FromBody, Required]<#= createUpdateModel #> request, CancellationToken cancellationToken)
+        {
+            return base.UpdateAsync(id, request, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes <see cref="<#= entityName #>" /> by ID.
+        /// </summary>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Dictionary<string, string[]>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public override Task<IActionResult> DeleteAsync(int id, CancellationToken cancellationToken)
+        {
+            return base.DeleteAsync(id, cancellationToken);
+        }
+
+        /// <summary>
+        /// Search for <see cref="<#= entityName #>" />.
+        /// </summary>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(Dictionary<string, string[]>))]
+        public override Task<IActionResult> ListAsync([FromQuery, Bind(Prefix = "")]<#= searchQuery #> query, CancellationToken cancellationToken)
+        {
+            return base.ListAsync(query, cancellationToken);
+        }
+    }
+<#
+    }
+#>

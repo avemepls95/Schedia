@@ -1,7 +1,7 @@
 namespace Avemepls.Core.Models;
 
-public interface IHasId<out TId, TType>
-    where TId : IHasValue<TType>
+public interface IHasId<TEntity>
+    where TEntity : class
 {
-    public TId Id { get; }
+    public Id<TEntity> Id { get; set; }
 }

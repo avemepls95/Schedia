@@ -3,6 +3,6 @@ using Avemepls.Identity.DataAccess.Models;
 
 namespace Avemepls.Identity.DataAccess.Configurations;
 
-public class UserConfiguration : ConfigurationBase<User, UserId, int>
+public class UserConfiguration : BaseConfiguration<User>
 {
 }

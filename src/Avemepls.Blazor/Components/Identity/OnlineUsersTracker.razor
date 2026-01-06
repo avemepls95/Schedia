@@ -1,0 +1,21 @@
+@using Avemepls.Infrastructure.Identity
+@implements IDisposable
+@inject OnlineUsersStore OnlineUsers
+@inject OnlineUser OnlineUser
+@code {
+    /// <summary>
+    /// Инициализация компонента, добавляет пользователя в список онлайн-пользователей
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        await OnlineUsers.Online(OnlineUser);
+    }
+    
+    /// <summary>
+    /// Удаляет пользователя из списка онлайн-пользователей
+    /// </summary>
+    public void Dispose()
+    {
+        OnlineUsers.Offline(OnlineUser);
+    }
+}

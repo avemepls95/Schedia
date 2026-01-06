@@ -1,0 +1,51 @@
+﻿@using System.Globalization
+
+@if (Value == null || (HideZeroes && Value == 0m))
+{
+    <span class="@Class">@NullTemplate</span>
+}
+else
+{
+    <span class="@Class">@GetStringValue()</span>
+}
+
+@* ReSharper disable CSharpWarnings::CS1591 *@
+@code {
+
+    [Parameter]
+    public decimal? Value { get; set; }
+
+    [Parameter]
+    public RenderFragment? NullTemplate { get; set; } = @<span>&mdash;</span>;
+
+    [Parameter]
+    public bool HideZeroes { get; set; } = true;
+
+    [Parameter]  
+    public string ValueFormat { get; set; } = "c";
+    
+    [Parameter]
+    public string? Class { get; set; }
+    
+    [Parameter]
+    public string? Suffix { get; set; }
+
+    private string GetStringValue()
+    {
+        if (Value == null)
+            return "";
+
+        if (string.IsNullOrEmpty(ValueFormat))
+            return Value.Value.ToString(CultureInfo.InvariantCulture) + Suffix;
+        
+        if (Value == Math.Ceiling(Value.Value))
+        {
+            var numberFormat = (NumberFormatInfo)NumberFormatInfo.CurrentInfo.Clone();
+            numberFormat.CurrencyDecimalDigits = 0;
+            return Value.Value.ToString(ValueFormat, numberFormat);
+        }
+        
+        return Value.Value.ToString(ValueFormat);
+    }
+
+}

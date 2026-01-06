@@ -5,13 +5,8 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Avemepls.Identity.DataAccess;
 
-public partial class IdentityDbContext : DbContext
+public partial class IdentityDbContext(DbContextOptions<IdentityDbContext> options) : DbContext(options)
 {
-    public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
-        : base(options)
-    {
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
