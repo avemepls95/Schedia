@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+
+<Layout Style="min-height: 100vh;">
+    <Sider Collapsible Collapsed="@_collapsed" CollapsedChanged="@OnCollapse" Width="250" Theme="SiderTheme.Light">
+        <a href="">
+            <div class="logo"></div>
+        </a>
+        <NavMenu></NavMenu>
+    </Sider>
+    <Content Class="site-layout-background" Style="padding: 24px; margin: 0; min-height: 280px;">
+        @Body
+    </Content>
+</Layout>
+
+@code{
+
+    bool _collapsed;
+
+    void OnCollapse(bool collapsed)
+    {
+        _collapsed = collapsed;
+    }
+
+}

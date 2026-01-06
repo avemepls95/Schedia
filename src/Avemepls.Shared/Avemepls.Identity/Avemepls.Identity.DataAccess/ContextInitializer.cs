@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using Avemepls.Core.DataAccess.ContextInitializing;
+﻿using Avemepls.Core.DataAccess.ContextInitializing;
 
 using Microsoft.EntityFrameworkCore;
 

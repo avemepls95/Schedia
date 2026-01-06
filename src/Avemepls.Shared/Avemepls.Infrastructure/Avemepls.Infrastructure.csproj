@@ -9,7 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Avemepls.Security\Avemepls.Security.csproj" />
-      <ProjectReference Include="..\Avemepls.Shared\Avemepls.Core\Avemepls.Core.csproj" />
+      <ProjectReference Include="..\Avemepls.Core\Avemepls.Core.csproj" />
     </ItemGroup>
 
 </Project>

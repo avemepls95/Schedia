@@ -123,4 +123,34 @@ public static class PrincipalExtensions
 
         return claim != null && !string.IsNullOrEmpty(claim.Value);
     }
+
+    /// <summary>
+    /// Ensures that user has all specified permissions
+    /// </summary>
+    /// <param name="principal">Principal instance, should be of type <see cref="ClaimsPrincipal"/></param>
+    /// <param name="permissions">List of permissions to check</param>
+    public static bool HasPermissions(this IPrincipal principal, params string[] permissions)
+    {
+        if (principal is ClaimsPrincipal claimsPrincipal)
+        {
+            return permissions.TrueForAll(p => claimsPrincipal.HasClaim(Constants.ClaimTypes.Permission, p));
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Get user id
+    /// </summary>
+    public static int? GetId(this IPrincipal principal)
+    {
+        if (principal is ClaimsPrincipal claimsPrincipal)
+        {
+            return int.TryParse(claimsPrincipal.FindFirstValue(Constants.ClaimTypes.UserId), out var userId)
+                ? userId
+                : null;
+        }
+
+        return null;
+    }
 }

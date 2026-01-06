@@ -1,5 +1,5 @@
-﻿using Avemepls.Core.Security;
-using Avemepls.Security.Permissions.Requirements;
+﻿using Avemepls.Security.Permissions.Requirements;
+using Avemepls.Security.Principal;
 
 using Microsoft.AspNetCore.Authorization;
 

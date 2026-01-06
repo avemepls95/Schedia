@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <ProjectReference Include="..\Avemepls.Shared\Avemepls.Core\Avemepls.Core.csproj"/>
+      <ProjectReference Include="..\Avemepls.Core\Avemepls.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>

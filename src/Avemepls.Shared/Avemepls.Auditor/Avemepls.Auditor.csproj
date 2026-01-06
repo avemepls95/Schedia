@@ -9,10 +9,11 @@
         <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" />
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\Avemepls.DataAccess\Avemepls.DataAccess.csproj" />
         <ProjectReference Include="..\Avemepls.Domain\Avemepls.Domain.csproj" />
         <ProjectReference Include="..\Avemepls.Infrastructure\Avemepls.Infrastructure.csproj" />
         <ProjectReference Include="..\Avemepls.Security\Avemepls.Security.csproj" />
-        <ProjectReference Include="..\Avemepls.Shared\Avemepls.DataAccess\Avemepls.DataAccess.csproj" />
-        <ProjectReference Include="..\Avemepls.Shared\Avemepls.Core\Avemepls.Core.csproj" />
+        <ProjectReference Include="..\Avemepls.DataAccess\Avemepls.DataAccess.csproj" />
+        <ProjectReference Include="..\Avemepls.Core\Avemepls.Core.csproj" />
     </ItemGroup>
 </Project>

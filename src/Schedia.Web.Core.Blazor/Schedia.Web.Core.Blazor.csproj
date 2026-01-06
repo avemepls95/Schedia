@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+        <NoWarn>$(NoWarn);CS1591</NoWarn>
+        <OutputType>Library</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AntDesign"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Locale\en\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Components\DictionaryCode.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Avemepls.Shared\Avemepls.Core\Avemepls.Core.csproj" />
+      <ProjectReference Include="..\Avemepls.Shared\Avemepls.Blazor\Avemepls.Blazor.csproj" />
+    </ItemGroup>
+
+</Project>

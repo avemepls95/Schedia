@@ -1,0 +1,65 @@
+﻿@using Avemepls.Blazor.Common.Menus
+@using Avemepls.Blazor.Common.Menus.Providers
+@using Avemepls.Blazor.Components
+@using Microsoft.Extensions.Localization
+@inject IEnumerable<IMenuSectionsProvider> SectionProviders
+@inject IStringLocalizer<Program> Loc;
+
+<Menu Theme="MenuTheme.Light" Mode="MenuMode.Inline">
+    <SearchExtended Placeholder="@("Поиск справочников".Loc(Loc))" @bind-Value="_query" OnChange="OnSearch"/>
+    @foreach (var menuItem in _queriedMenuItems)
+    {
+        <MenuSection Item="@menuItem" QueryWord="@_query"/>
+    }
+</Menu>
+
+@code {
+
+    private string? _query;
+    private MenuItemModel[] _allMenuItems = [];
+    private MenuItemModel[] _queriedMenuItems = [];
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _allMenuItems = SectionProviders
+                .SelectMany(p => p.GetMenuItems())
+                .GroupBy(x => x.Key, (key, items) =>
+                {
+                    var firstItem = items.First();
+                    return new MenuItemModel(
+                        key,
+                        firstItem.Title,
+                        firstItem.Permission,
+                        items.SelectMany(w => w.Children ?? []).ToArray())
+                    {
+                        Url = firstItem.Url,
+                        Icon = firstItem.Icon
+                    };
+                })
+                .ToArray();
+
+            _queriedMenuItems = _allMenuItems;
+            StateHasChanged();
+        }
+
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    private void OnSearch()
+    {
+        if (string.IsNullOrEmpty(_query))
+        {
+            _queriedMenuItems = _allMenuItems;
+            return;
+        }
+
+        _queriedMenuItems = _allMenuItems
+            .Where(x => x.Children is not null)
+            .SelectMany(x => x.Children!)
+            .Where(x => x.Title.ToLower().Contains(_query.ToLower()))
+            .ToArray();
+    }
+
+}

@@ -1,0 +1,43 @@
+﻿@using Schedia.Web.Core.Blazor.BlazorAssembliesRegistry
+@using Schedia.Web.Layouts
+<AntContainer/>
+
+<Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="@BlazorAssembliesRegistry.Assemblies">
+    <Found Context="routeData">
+        <CascadingValue Value="@routeData.PageType"
+                        Name="PageType">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <Authorizing>
+                    Авторизация...
+                </Authorizing>
+                <NotAuthorized>
+                    Отказано в доступе.
+                </NotAuthorized>
+            </AuthorizeRouteView>
+        </CascadingValue>
+    </Found>
+    <NotFound>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p>Страница не найдена...</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+<ComponentReconnectModal>
+    <ReconnectingTemplate>
+        <p>
+            😔 Связь с сервером потеряна. Идёт попытка переподключения...
+        </p>
+    </ReconnectingTemplate>
+    <ReconnectFailedTemplate>
+        <p>
+            Связь с сервером потеряна.
+            Попробуйте <a href="javascript:location.reload()">перезагрузить</a> страницу.
+        </p>
+    </ReconnectFailedTemplate>
+    <ReconnectRejectedTemplate>
+        <p>
+            🛑 Сервер недоступен. Попробуйте <a href="javascript:location.reload()">перезагрузить</a> страницу.
+        </p>
+    </ReconnectRejectedTemplate>
+</ComponentReconnectModal>
