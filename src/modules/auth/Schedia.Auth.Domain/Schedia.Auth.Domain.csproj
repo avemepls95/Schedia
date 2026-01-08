@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+            <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\10.0.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Auth.Bearer\Avemepls.Auth.Bearer.csproj" />
+      <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Auth.Password\Avemepls.Auth.Password.csproj" />
+      <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Domain\Avemepls.Domain.csproj" />
+      <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Mapster\Avemepls.Mapster.csproj" />
+    </ItemGroup>
+
+</Project>

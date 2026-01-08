@@ -1,4 +1,4 @@
-namespace Avemepls.Infrastructure;
+namespace Avemepls.Infrastructure.DateTime;
 
 /// <summary>
 /// Abstraction to provide current date and time. Useful for testing purposes

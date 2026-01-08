@@ -1,15 +1,20 @@
-using System;
-
 using Avemepls.Auth.Password.Abstractions;
+
+using FluentValidation;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
+using ServiceScan.SourceGenerator;
+
 namespace Avemepls.Auth.Password;
 
-public static class ServicesCollectionExtensions
+public static partial class ServicesCollectionExtensions
 {
+    [GenerateServiceRegistrations(AssignableTo = typeof(IValidator<>), Lifetime = ServiceLifetime.Transient)]
+    public static partial IServiceCollection AddFluentValidators(this IServiceCollection services);
+
     public static IServiceCollection AddPasswordAuth(this IServiceCollection services)
     {
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -18,9 +23,9 @@ public static class ServicesCollectionExtensions
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.SameSite = SameSiteMode.Strict;
-                options.LoginPath = "/Account/Login";
-                options.LogoutPath = "/Account/Logout";
-                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.LoginPath = "/login";
+                options.LogoutPath = "/logout";
+                options.AccessDeniedPath = "/access-denied";
                 options.ExpireTimeSpan = TimeSpan.FromDays(30);
                 options.SlidingExpiration = true;
             });
@@ -29,6 +34,8 @@ public static class ServicesCollectionExtensions
 
         services.AddScoped<IAuthService, AuthService>();
         services.AddHttpContextAccessor();
+
+        services.AddFluentValidators();
 
         return services;
     }

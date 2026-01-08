@@ -2,7 +2,6 @@
 using Avemepls.Security.Principal;
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.VisualBasic;
 
 using Constants = Avemepls.Security.Principal.Constants;
 

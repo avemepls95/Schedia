@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -23,13 +24,19 @@ namespace Avemepls.Identity.DataAccess.Migrations
                 schema: "identity",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false),
-                    is_active = table.Column<bool>(type: "boolean", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     username = table.Column<string>(type: "text", nullable: false),
                     email = table.Column<string>(type: "text", nullable: true),
                     password_hash = table.Column<string>(type: "text", nullable: false),
                     date_updated = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    email_confirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    email_confirmation_token = table.Column<string>(type: "text", nullable: true),
+                    email_confirmation_token_expiry = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    password_reset_token = table.Column<string>(type: "text", nullable: true),
+                    password_reset_token_expiry = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     date_created = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false),
                     date_deleted = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>

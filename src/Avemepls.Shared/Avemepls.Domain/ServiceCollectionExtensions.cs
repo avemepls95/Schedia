@@ -3,7 +3,10 @@
 using Avemepls.Domain.Filters;
 using Avemepls.Domain.Security;
 
+using MediatR;
+
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Avemepls.Domain;
 
@@ -71,4 +74,13 @@ public static class ServiceCollectionExtensions
             assembly,
             typeof(IPermissionEvaluator<>),
             ServiceLifetime.Transient);
+
+    public static IServiceCollection AddMediatR(this IServiceCollection services)
+    {
+        services.TryAddTransient<IMediator, Mediator>();
+        services.TryAddTransient<IPublisher, Mediator>();
+        services.TryAddTransient<ISender, Mediator>();
+
+        return services;
+    }
 }

@@ -1,6 +1,5 @@
-using System;
-
 using Avemepls.Core.DataAccess.ContextInitializing;
+using Avemepls.Identity.DataAccess.Repositories;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +21,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped(serviceProvider => serviceProvider.GetRequiredService<IDbContextFactory<IdentityDbContext>>().CreateDbContext());
         services.AddDbContextFactory<IdentityDbContext>(configure, ServiceLifetime.Scoped);
         services.AddScoped<IContextInitializer, ContextInitializer>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

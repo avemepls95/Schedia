@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Avemepls.Auth.Bearer;
+﻿namespace Avemepls.Auth.Bearer;
 
 public class TokenInformation
 {

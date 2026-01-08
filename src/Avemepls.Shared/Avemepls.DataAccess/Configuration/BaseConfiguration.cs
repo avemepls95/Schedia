@@ -54,6 +54,10 @@ public abstract class BaseConfiguration<TEntity> : IEntityTypeConfiguration<TEnt
 
         builder.HasKey(x => x.Id);
 
+        builder.Property(x => x.Id)
+            .ValueGeneratedOnAdd()
+            .HasConversion(x => x.Value, i => new Id<TEntity>(i));
+
         ConfigureCore(builder);
 
         SortColumns(builder);

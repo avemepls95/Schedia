@@ -35,4 +35,6 @@ public static class StringExtensions
             return false;
         }
     }
+
+    public static bool IsNullOrWhiteSpace(this string? value) => string.IsNullOrWhiteSpace(value);
 }

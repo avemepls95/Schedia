@@ -4,27 +4,35 @@
         <File Path="Directory.Build.props" />
         <File Path="Directory.Packages.props" />
     </Folder>
-    <Folder Name="/Core/">
-        <Project Path="Schedia.Web.Core.Blazor/Schedia.Web.Core.Blazor.csproj" />
+    <Folder Name="/core/">
+        <Project Path="core/Schedia.Domain.Core/Schedia.Domain.Core.csproj" />
+        <Project Path="core/Schedia.Web.Core.Blazor/Schedia.Web.Core.Blazor.csproj" />
     </Folder>
     <Folder Name="/modules/" />
-    <Folder Name="/Shared/" />
-    <Folder Name="/Shared/Auth/">
+    <Folder Name="/modules/auth/">
+        <Project Path="modules/auth/Schedia.Auth.Domain/Schedia.Auth.Domain.csproj" />
+    </Folder>
+    <Folder Name="/modules/identity/">
+        <Project Path="modules/identity/Schedia.Identity/Schedia.Identity.csproj" />
+    </Folder>
+    <Folder Name="/shared/" />
+    <Folder Name="/Shared/auth/">
         <Project Path="Avemepls.Shared/Avemepls.Auth.Bearer/Avemepls.Auth.Bearer.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Auth.Password/Avemepls.Auth.Password.csproj" />
     </Folder>
-    <Folder Name="/Shared/Core/">
+    <Folder Name="/shared/core/">
         <Project Path="Avemepls.Shared/Avemepls.Auditor/Avemepls.Auditor.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Blazor/Avemepls.Blazor.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Domain/Avemepls.Domain.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Infrastructure/Avemepls.Infrastructure.csproj" />
+        <Project Path="Avemepls.Shared/Avemepls.Mapster/Avemepls.Mapster.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Mvc/Avemepls.Mvc.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Security/Avemepls.Security.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Core/Avemepls.Core.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.DataAccess/Avemepls.DataAccess.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Tests/Avemepls.Tests.csproj" />
     </Folder>
-    <Folder Name="/Shared/Identity/">
+    <Folder Name="/shared/Identity/">
         <Project Path="Avemepls.Shared/Avemepls.Identity/Avemepls.Identity.Abstraction/Avemepls.Identity.Abstraction.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Identity/Avemepls.Identity.DataAccess/Avemepls.Identity.DataAccess.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Identity/Avemepls.Identity.Domain/Avemepls.Identity.Domain.csproj" />

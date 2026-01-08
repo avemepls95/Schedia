@@ -1,8 +1,10 @@
-using Avemepls.Auth.Bearer;
-using Avemepls.Auth.Password;
-using Avemepls.Identity.DataAccess;
-using Microsoft.EntityFrameworkCore;
+using Avemepls.Infrastructure;
+
+using Microsoft.IdentityModel.Logging;
+
 using Schedia.Web;
+using Schedia.Web.Components;
+using Schedia.Web.Core.Blazor.BlazorAssembliesRegistry;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -13,22 +15,18 @@ builder.Services.AddOpenApi();
 
 var configuration = builder.Configuration;
 
-var oAuthOptions = configuration.GetSection("IdentityOptions").Get<OAuthOptions>()!;
 services
     .AddMemoryCache()
-    .AddJwtBearerTokenAuth(oAuthOptions)
-    .AddPasswordAuth();
+    .AddInfrastructureServices();
 
-services.AddDataAccess((_, cfg) =>
-{
-    cfg
-        .UseNpgsql(configuration.GetConnectionString("Schedia"), o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery))
-        .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-});
+builder.Services.AddSchediaBase(configuration);
+builder.AddSchediaAdmin();
 
 var app = builder
     .Build()
     .InitializeData();
+
+app.UseForwardedHeaders();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -36,6 +34,35 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+    app.UseHttpsRedirection();
+}
+else
+{
+    IdentityModelEventSource.ShowPII = true;
+}
+
+app.UseDeveloperExceptionPage();
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseAntiforgery();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseResponseCompression();
+}
+
+app.MapControllers();
+
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode()
+    .AddAdditionalAssemblies([.. BlazorAssembliesRegistry.Assemblies]);
 
 await app.RunAsync();

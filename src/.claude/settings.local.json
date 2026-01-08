@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(dotnet ef migrations add:*)",
+      "Bash(dotnet build:*)",
+      "Bash(for f in \"Avemepls.Infrastructure/Email/ConsoleEmailService.cs\" \"Avemepls.Infrastructure/Email/IEmailService.cs\" \"Avemepls.Infrastructure/ServiceCollectionExtensions.cs\" \"Avemepls.Identity/Avemepls.Identity.DataAccess/Repositories/IUserRepository.cs\" \"Avemepls.Identity/Avemepls.Identity.DataAccess/Repositories/UserRepository.cs\")",
+      "Bash(do tail -c1 \"$f\")",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "Bash(cat:*)"
+    ]
+  }
+}

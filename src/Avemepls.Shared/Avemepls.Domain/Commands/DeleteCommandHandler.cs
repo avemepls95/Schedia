@@ -1,7 +1,7 @@
 using Avemepls.Core.Models;
 using Avemepls.Domain.Exceptions;
 using Avemepls.Domain.Security;
-using Avemepls.Infrastructure;
+using Avemepls.Infrastructure.DateTime;
 using Avemepls.Security.Principal;
 
 using MediatR;

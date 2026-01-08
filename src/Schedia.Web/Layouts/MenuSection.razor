@@ -13,8 +13,6 @@
         <MenuItem Key="@(Item.Key)" RouterLink="@(Item.Url)">
             @if (Item.Icon is null)
             {
-                // Don't touch this if it works fine
-                // Otherwise - touch
                 if (!string.IsNullOrEmpty(QueryWord) && Item.Title.ToLower().Contains(QueryWord.ToLower()))
                 {
                     var parts = Regex.Split(Item.Title, QueryWord, RegexOptions.IgnoreCase);

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Avemepls.Identity.DataAccess.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20251221150619_Add_User")]
+    [Migration("20260108135033_Add_User")]
     partial class Add_User
     {
         /// <inheritdoc />
@@ -30,19 +30,21 @@ namespace Avemepls.Identity.DataAccess.Migrations
             modelBuilder.Entity("Avemepls.Identity.DataAccess.Models.User", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
                         .HasColumnOrder(1);
 
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<DateTimeOffset>("DateCreated")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("date_created")
-                        .HasColumnOrder(8);
+                        .HasColumnOrder(13);
 
                     b.Property<DateTimeOffset?>("DateDeleted")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date_deleted")
-                        .HasColumnOrder(9);
+                        .HasColumnName("date_deleted");
 
                     b.Property<DateTimeOffset?>("DateUpdated")
                         .HasColumnType("timestamp with time zone")
@@ -54,16 +56,40 @@ namespace Avemepls.Identity.DataAccess.Migrations
                         .HasColumnName("email")
                         .HasColumnOrder(5);
 
+                    b.Property<string>("EmailConfirmationToken")
+                        .HasColumnType("text")
+                        .HasColumnName("email_confirmation_token")
+                        .HasColumnOrder(9);
+
+                    b.Property<DateTimeOffset?>("EmailConfirmationTokenExpiry")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("email_confirmation_token_expiry")
+                        .HasColumnOrder(10);
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean")
+                        .HasColumnName("email_confirmed")
+                        .HasColumnOrder(8);
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean")
-                        .HasColumnName("is_active")
-                        .HasColumnOrder(3);
+                        .HasColumnName("is_active");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("password_hash")
                         .HasColumnOrder(6);
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("text")
+                        .HasColumnName("password_reset_token")
+                        .HasColumnOrder(11);
+
+                    b.Property<DateTimeOffset?>("PasswordResetTokenExpiry")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("password_reset_token_expiry")
+                        .HasColumnOrder(12);
 
                     b.Property<string>("Username")
                         .IsRequired()

@@ -1,6 +1,6 @@
 ﻿using Avemepls.Auditor.DataAccess;
 using Avemepls.Auditor.DataAccess.Models;
-using Avemepls.Infrastructure;
+using Avemepls.Infrastructure.DateTime;
 
 using Microsoft.Extensions.DependencyInjection;
 

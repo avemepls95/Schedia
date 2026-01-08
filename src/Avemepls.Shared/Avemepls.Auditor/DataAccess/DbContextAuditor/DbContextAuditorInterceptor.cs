@@ -3,14 +3,13 @@ using System.Security.Claims;
 using Avemepls.Auditor.Core.Notifications;
 using Avemepls.Core.Accumulator;
 using Avemepls.Core.Models;
-using Avemepls.Infrastructure;
+using Avemepls.Infrastructure.DateTime;
 using Avemepls.Security.Principal;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.VisualBasic;
 
 using Constants = Avemepls.Security.Principal.Constants;
 

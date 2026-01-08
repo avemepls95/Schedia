@@ -2,7 +2,9 @@
 
     <ItemGroup>
         <PackageReference Include="AntDesign"/>
+        <PackageReference Include="Blazorade.Core"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
             <PrivateAssets>all</PrivateAssets>
@@ -13,7 +15,15 @@
     <ItemGroup>
       <ProjectReference Include="..\Avemepls.Shared\Avemepls.Auth.Bearer\Avemepls.Auth.Bearer.csproj" />
       <ProjectReference Include="..\Avemepls.Shared\Avemepls.Auth.Password\Avemepls.Auth.Password.csproj" />
+      <ProjectReference Include="..\core\Schedia.Web.Core.Blazor\Schedia.Web.Core.Blazor.csproj" />
+      <ProjectReference Include="..\modules\auth\Schedia.Auth.Domain\Schedia.Auth.Domain.csproj" />
+      <ProjectReference Include="..\Schedia.Auth.Domain\Schedia.Auth.Domain.csproj" />
       <ProjectReference Include="..\Schedia.Web.Core.Blazor\Schedia.Web.Core.Blazor.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Jobs\JobsView.razor" />
+      <_ContentIncludedByDefault Remove="Pages\License\LicenseGenerator.razor" />
     </ItemGroup>
 
 </Project>

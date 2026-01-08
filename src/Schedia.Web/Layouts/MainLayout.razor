@@ -4,6 +4,7 @@
 
 <AuthorizeView>
     <Authorized>
+        <label>456</label>
 
         <Layout Style="min-height: 100vh;">
             <Sider Collapsible Collapsed="@_collapsed" CollapsedChanged="@OnCollapse" Width="250"
@@ -20,7 +21,7 @@
 
     </Authorized>
     <NotAuthorized>
-        <Login/>
+        @Body
     </NotAuthorized>
 </AuthorizeView>
 
@@ -35,18 +36,4 @@
 
     [Inject]
     public required IPrincipalAccessor PrincipalAccessor { get; set; }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            var user = await PrincipalAccessor.GetPrincipal();
-
-            if (user.Identity?.IsAuthenticated != true)
-            {
-                NavigationManager.NavigateTo($"api/auth/oidc/sign-in?redirectUri={NavigationManager.Uri}", true);
-            }
-        }
-    }
-
 }
