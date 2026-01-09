@@ -1,0 +1,48 @@
+﻿@using Blazorade.Core.Components.Server
+@using Schedia.Web.Blazor.Layouts
+@using Schedia.Web.Core.Blazor.BlazorAssembliesRegistry
+@inject NavigationManager Navigation
+<AntContainer/>
+
+<Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="@BlazorAssembliesRegistry.Assemblies">
+    <Found Context="routeData">
+        <CascadingValue Value="@routeData.PageType"
+                        Name="PageType">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <Authorizing>
+                    Авторизация...
+                </Authorizing>
+                <NotAuthorized>
+                    @{
+                        var returnUrl = Navigation.ToBaseRelativePath(Navigation.Uri);
+                        Navigation.NavigateTo($"/login?returnUrl={Uri.EscapeDataString("/" + returnUrl)}", forceLoad: false);
+                    }
+                </NotAuthorized>
+            </AuthorizeRouteView>
+        </CascadingValue>
+    </Found>
+    <NotFound>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p>Страница не найдена...</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+<ComponentReconnectModal>
+    <ReconnectingTemplate>
+        <p>
+            😔 Связь с сервером потеряна. Идёт попытка переподключения...
+        </p>
+    </ReconnectingTemplate>
+    <ReconnectFailedTemplate>
+        <p>
+            Связь с сервером потеряна.
+            Попробуйте <a href="javascript:location.reload()">перезагрузить</a> страницу.
+        </p>
+    </ReconnectFailedTemplate>
+    <ReconnectRejectedTemplate>
+        <p>
+            🛑 Сервер недоступен. Попробуйте <a href="javascript:location.reload()">перезагрузить</a> страницу.
+        </p>
+    </ReconnectRejectedTemplate>
+</ComponentReconnectModal>

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- UI Library: MudBlazor (рекомендуется) или AntDesign -->
+        <PackageReference Include="MudBlazor" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Domain проекты для MediatR команд -->
+        <ProjectReference Include="..\modules\auth\Schedia.Auth.Domain\Schedia.Auth.Domain.csproj" />
+        <ProjectReference Include="..\modules\identity\Schedia.Identity.Domain\Schedia.Identity.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Pages\ConfirmEmail\ConfirmEmail.razor" />
+      <AdditionalFiles Include="Pages\ForgotPassword\ForgotPassword.razor" />
+      <AdditionalFiles Include="Pages\Register\Register.razor" />
+      <AdditionalFiles Include="Pages\ResetPassword\ResetPassword.razor" />
+    </ItemGroup>
+</Project>

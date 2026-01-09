@@ -2,19 +2,13 @@
 
 namespace Avemepls.Mapster.Configuration;
 
-public class AutoMapperMemberConfigurationExpressionGeneric : AutoMapperMemberConfigurationExpressionBuilder
+public class AutoMapperMemberConfigurationExpressionGeneric(string destinationMember) : AutoMapperMemberConfigurationExpressionBuilder
 {
-    private readonly string _destinationMember;
     private readonly List<Action<TypeAdapterSetter>> _configurators = [];
-
-    public AutoMapperMemberConfigurationExpressionGeneric(string destinationMember)
-    {
-        _destinationMember = destinationMember;
-    }
 
     public AutoMapperMemberConfigurationExpressionGeneric Ignore()
     {
-        _configurators.Add(config => config.Ignore(_destinationMember));
+        _configurators.Add(config => config.Ignore(destinationMember));
 
         return this;
     }

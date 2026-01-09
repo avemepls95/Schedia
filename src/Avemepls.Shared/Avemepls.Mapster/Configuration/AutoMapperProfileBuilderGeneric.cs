@@ -2,21 +2,12 @@
 
 namespace Avemepls.Mapster.Configuration;
 
-public class AutoMapperProfileBuilderGeneric : AutoMapperProfileBuilder
+public class AutoMapperProfileBuilderGeneric(Type source, Type destination) : AutoMapperProfileBuilder
 {
-    private readonly Type _source;
-    private readonly Type _destination;
-
     private readonly IList<AutoMapperMemberConfigurationExpressionBuilder> _propertyBuilders =
         new List<AutoMapperMemberConfigurationExpressionBuilder>();
 
     private readonly List<Action<TypeAdapterSetter>> _configurators = [];
-
-    public AutoMapperProfileBuilderGeneric(Type source, Type destination)
-    {
-        _source = source;
-        _destination = destination;
-    }
 
     public AutoMapperProfileBuilderGeneric ForMember(
         string destinationMember,
@@ -41,7 +32,7 @@ public class AutoMapperProfileBuilderGeneric : AutoMapperProfileBuilder
 
     internal override void Build(TypeAdapterConfig config)
     {
-        var typeConfig = config.ForType(_source, _destination)
+        var typeConfig = config.ForType(source, destination)
             .ShallowCopyForSameType(true);
 
         foreach (var propertyBuilder in _propertyBuilders)

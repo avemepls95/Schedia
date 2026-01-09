@@ -9,7 +9,13 @@
       "Bash(do tail -c1 \"$f\")",
       "Bash(echo:*)",
       "Bash(done)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet run:*)",
+      "Bash(curl:*)",
+      "Bash(find:*)",
+      "Bash(netstat:*)",
+      "Bash(taskkill:*)"
     ]
   }
 }

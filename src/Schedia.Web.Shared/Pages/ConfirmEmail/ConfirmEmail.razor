@@ -1,0 +1,86 @@
+@page "/confirm-email"
+@layout AnonymousLayout
+@using Schedia.Web.Shared.Layouts
+@using ValidationException = FluentValidation.ValidationException
+@inject IMediator Mediator
+@inject NavigationManager NavManager
+
+<div class="confirm-email-container" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f0f2f5;">
+    @if (_isLoading)
+    {
+        <MudCard Style="max-width: 500px; width: 100%; padding: 40px; text-align: center;">
+            <div style="font-size: 24px; margin-bottom: 16px;">⏳</div>
+            <p>Confirming your email...</p>
+        </MudCard>
+    }
+    else if (_success)
+    {
+        <MudCard Style="max-width: 500px; width: 100%; padding: 40px; text-align: center;">
+            <div style="font-size: 48px; color: #52c41a; margin-bottom: 16px;">✓</div>
+            <h2>Email Confirmed!</h2>
+            <p style="margin-bottom: 24px;">Your email address has been verified successfully.</p>
+            <button @onclick="@(() => NavManager.NavigateTo("/"))" style="padding: 10px 20px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+                Go to Home
+            </button>
+        </MudCard>
+    }
+    else
+    {
+        <MudCard Style="max-width: 500px; width: 100%; padding: 40px; text-align: center;">
+            <div style="font-size: 48px; color: #ff4d4f; margin-bottom: 16px;">✗</div>
+            <h2>Confirmation Failed</h2>
+            <p style="margin-bottom: 24px;">@(_errorMessage)</p>
+            <button @onclick="@(() => NavManager.NavigateTo("/login"))" style="padding: 10px 20px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+                Back to Login
+            </button>
+        </MudCard>
+    }
+</div>
+
+@code {
+    private bool _isLoading = true;
+    private bool _success = false;
+    private string _errorMessage = "";
+
+    [SupplyParameterFromQuery(Name = "token")]
+    public string? Token { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        if (string.IsNullOrEmpty(Token))
+        {
+            _isLoading = false;
+            StateHasChanged();
+            return;
+        }
+
+        try
+        {
+            await Mediator.Send(new Schedia.Identity.Domain.User.ConfirmEmail.Command
+            {
+                Token = Token
+            });
+
+            _success = true;
+        }
+        catch (ValidationException ex)
+        {
+            _errorMessage = ex.Message;
+            _success = false;
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = "Произошла непредвиденная ошибка";
+            Console.WriteLine(ex.Message);
+            _success = false;
+        }
+        finally
+        {
+            _isLoading = false;
+            StateHasChanged();
+        }
+    }
+}

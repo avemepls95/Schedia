@@ -7,19 +7,12 @@ using Mapster.Models;
 namespace Avemepls.Mapster.Configuration;
 
 public class
-    AutoMapperMemberConfigurationExpression<TSource, TDestination, TMember> :
-        AutoMapperMemberConfigurationExpressionBuilder
+    AutoMapperMemberConfigurationExpression<TSource, TDestination, TMember>(Expression<Func<TDestination, TMember>> destinationMember) :
+    AutoMapperMemberConfigurationExpressionBuilder
 {
     private readonly List<Action<TypeAdapterSetter>> _configurators = [];
-    private readonly Expression<Func<TDestination, TMember>> _destinationMember;
     private LambdaExpression _source;
     private LambdaExpression? _shouldMap;
-
-    public AutoMapperMemberConfigurationExpression(
-        Expression<Func<TDestination, TMember>> destinationMember)
-    {
-        _destinationMember = destinationMember;
-    }
 
     public AutoMapperMemberConfigurationExpression<TSource, TDestination, TMember> MapFrom<TSourceMember>(
         Expression<Func<TSource, TSourceMember>> source)
@@ -41,7 +34,7 @@ public class
 
     public AutoMapperMemberConfigurationExpression<TSource, TDestination, TMember> Ignore()
     {
-        _configurators.Add(config => config.Ignore(GetMemberPath(_destinationMember)!));
+        _configurators.Add(config => config.Ignore(GetMemberPath(destinationMember)!));
         _isIgnored = true;
 
         return this;
@@ -62,7 +55,7 @@ public class
 
             config.Settings.Resolvers.Add(new InvokerModel
             {
-                DestinationMemberName = GetMemberPath(_destinationMember)!,
+                DestinationMemberName = GetMemberPath(destinationMember)!,
                 SourceMemberName = sourceName,
                 Invoker = _source,
                 Condition = _shouldMap

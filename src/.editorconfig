@@ -464,6 +464,9 @@ dotnet_diagnostic.cs8618.severity = none
 # Obsolete method
 dotnet_diagnostic.cs0618.severity = error
 
+# Primary constructor parameter is never accessed
+dotnet_diagnostic.cs9113.severity = error
+
 # Nullable
 dotnet_diagnostic.cs0407.severity = error
 

@@ -1,18 +1,22 @@
-﻿namespace Schedia.Domain.Core;
+﻿using Avemepls.Core.DataAccess.Behaviors;
+using Avemepls.Domain.Behaviors;
+using Avemepls.Mapster;
 
-// #PoIgnore#
-#pragma warning disable S2094
+using MediatR;
+
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
+namespace Schedia.Domain.Core;
+
 public static class ServiceCollectionExtensions
-#pragma warning restore S2094
 {
-    // public static IServiceCollection AddDomainCore(this IServiceCollection services)
-    // {
-    //     services.AddMapsterAdapter(typeof(BaseRules).Assembly);
-    //     services.TryAddEnumerable(new ServiceDescriptor(typeof(IPipelineBehavior<,>), typeof(TransactionPipelineBehavior<,>), ServiceLifetime.Scoped));
-    //     services.TryAddEnumerable(new ServiceDescriptor(typeof(IPipelineBehavior<,>), typeof(FluentValidationPipelineBehavior<,>), ServiceLifetime.Scoped));
-    //
-    //     services.TryAddScoped<UserConfirmationContext>();
-    //
-    //     return services;
-    // }
+    public static IServiceCollection AddDomainCore(this IServiceCollection services)
+    {
+        services.AddMapsterAdapter(typeof(ServiceCollectionExtensions).Assembly);
+        services.TryAddEnumerable(new ServiceDescriptor(typeof(IPipelineBehavior<,>), typeof(TransactionPipelineBehavior<,>), ServiceLifetime.Scoped));
+        services.TryAddEnumerable(new ServiceDescriptor(typeof(IPipelineBehavior<,>), typeof(FluentValidationPipelineBehavior<,>), ServiceLifetime.Scoped));
+
+        return services;
+    }
 }

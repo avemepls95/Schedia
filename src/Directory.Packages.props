@@ -5,6 +5,7 @@
         <NpgsqlEntityFrameworkCoreVersion>10.0.0</NpgsqlEntityFrameworkCoreVersion>
         <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
         <AntDesign>1.5.1</AntDesign>
+        <MauiVersion>10.0.20</MauiVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageVersion Include="AntDesign" Version="$(AntDesign)"/>
@@ -97,6 +98,7 @@
         <PackageVersion Include="MediatR" Version="12.5.0"/>
         <PackageVersion Include="MediatR.AutoDoc.Blazor" Version="1.0.1"/>
         <PackageVersion Include="MediatR.Contracts" Version="2.0.1"/>
+        <PackageVersion Include="MudBlazor" Version="8.0.0"/>
         <PackageVersion Include="NSubstituteEquivalency" Version="2.0.0"/>
         <PackageVersion Include="EasyCaching.Bus.CSRedis" Version="$(EasyCaching)"/>
         <PackageVersion Include="EasyCaching.Core" Version="$(EasyCaching)"/>
@@ -129,6 +131,7 @@
         <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3"/>
         <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0"/>
         <PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0"/>
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(AspNetCoreVersion)"/>
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="$(AspNetCoreVersion)"/>
         <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="$(AspNetCoreVersion)"/>
@@ -149,6 +152,9 @@
         <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0"/>
         <PackageVersion Include="prometheus-net.AspNetCore" Version="8.2.1"/>
         <PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="$(AspNetCoreVersion)"/>
+        <PackageVersion Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
+        <PackageVersion Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)"/>
         <PackageVersion Include="prometheus-net.AspNetCore.HealthChecks" Version="8.2.1"/>
         <PackageVersion Include="Moq" Version="4.18.4"/>
         <PackageVersion Include="Newtonsoft.Json" Version="13.0.3"/>
