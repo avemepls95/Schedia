@@ -40,6 +40,7 @@
     <Project Path="Schedia.Web.MAUI/Schedia.Web.MAUI.csproj">
         <Deploy />
     </Project>
+    <Project Path="Schedia.Web.Shared.Tests/Schedia.Web.Shared.Tests.csproj" />
     <Project Path="Schedia.Web.Shared/Schedia.Web.Shared.csproj" />
     <Project Path="Tests/Tests.csproj" />
 </Solution>

@@ -15,7 +15,9 @@
       "Bash(curl:*)",
       "Bash(find:*)",
       "Bash(netstat:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(Select-String -Pattern \"error CS|Warning\\\\\\(s\\\\\\)|Error\\\\\\(s\\\\\\)\")",
+      "Bash(dotnet test:*)"
     ]
   }
 }

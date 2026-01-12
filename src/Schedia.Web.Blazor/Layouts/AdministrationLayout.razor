@@ -1,5 +1,6 @@
 ﻿@using MudBlazor
 @inherits LayoutComponentBase
+@page "/administration"
 
 <MudThemeProvider />
 <MudPopoverProvider />
@@ -13,12 +14,4 @@
 </Layout>
 
 @code{
-
-    bool _collapsed;
-
-    void OnCollapse(bool collapsed)
-    {
-        _collapsed = collapsed;
-    }
-
 }

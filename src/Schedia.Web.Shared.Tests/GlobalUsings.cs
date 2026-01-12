@@ -1,0 +1,13 @@
+global using Bunit;
+global using FluentAssertions;
+global using FluentValidation;
+global using MediatR;
+global using Microsoft.AspNetCore.Components;
+global using Microsoft.AspNetCore.Components.Web;
+global using Moq;
+global using MudBlazor;
+global using Xunit;
+global using Schedia.Web.Shared.Tests.Fixtures;
+global using Schedia.Web.Shared.Tests.Helpers;
+global using AuthCommand = Schedia.Auth.Domain.ViaPassword.Auth;
+global using Severity = MudBlazor.Severity;

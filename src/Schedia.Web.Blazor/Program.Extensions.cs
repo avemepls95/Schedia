@@ -61,13 +61,18 @@ public static class ProgramExtensions
             //         "Аудит-лог",
             //         new MenuItemModel("audit-log", "audit-log", "События", AuditorPermissions.Auditor.View))
             //     .WithIcon("read");
-            builder.WithMenuItem("users", "Пользователи", "/administration/users", null).WithIcon("person");
-
             builder.WithSection("tools",
                     "Инструменты",
                     new MenuItemModel("jobs",
                         "jobs-view",
                         "Фоновые задания"))
+                .WithIcon("tool");
+
+            builder.WithSection("identity",
+                    "Пользователи",
+                    new MenuItemModel("users",
+                        "/administration/users",
+                        "Пользователи"))
                 .WithIcon("tool");
 
             builder.WithMenuItem("logout", "Выйти", "/api/auth/oidc/sign-out", null)
