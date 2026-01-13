@@ -1,0 +1,79 @@
+@using System.Security.Principal
+@using System.Text.RegularExpressions
+@using Avemepls.Blazor.Common.Menus
+@using Avemepls.Security.Principal
+
+@if (_hasAccessToMenuSection)
+{
+    @if (Item.Children is null || Item.Children.Length == 0)
+    {
+        <MudNavLink Href="@Item.Url" Match="NavLinkMatch.All">
+            @if (!string.IsNullOrEmpty(QueryWord) && Item.Title.ToLower().Contains(QueryWord.ToLower()))
+            {
+                @RenderHighlightedTitle(Item.Title, QueryWord)
+            }
+            else
+            {
+                @Item.Title
+            }
+        </MudNavLink>
+    }
+    else
+    {
+        <MudNavGroup Title="@Item.Title" Expanded="false">
+            @foreach (var child in Item.Children)
+            {
+                <AdministrationMenuSection Item="@child" QueryWord="@QueryWord" />
+            }
+        </MudNavGroup>
+    }
+}
+
+@code {
+
+    [Parameter]
+    public required MenuItemModel Item { get; set; }
+
+    [Parameter]
+    public string? QueryWord { get; set; }
+
+    [Inject]
+    public required IPrincipalAccessor PrincipalAccessor { get; set; }
+
+    private bool _hasAccessToMenuSection;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var principal = await PrincipalAccessor.GetPrincipal();
+        _hasAccessToMenuSection = HasAccessToSection(principal, Item);
+    }
+
+    private bool HasAccessToSection(IPrincipal principal, MenuItemModel item)
+    {
+        if (item.Permission != null)
+            return principal.HasPermissions(item.Permission);
+        if (item.Children != null && item.Children.Length > 0)
+            return item.Children.Any(a => HasAccessToSection(principal, a));
+
+        return true;
+    }
+
+    private RenderFragment RenderHighlightedTitle(string title, string query) => builder =>
+    {
+        var parts = Regex.Split(title, Regex.Escape(query), RegexOptions.IgnoreCase);
+        var matchIndex = title.IndexOf(query, StringComparison.OrdinalIgnoreCase);
+        var matchedText = matchIndex >= 0 ? title.Substring(matchIndex, query.Length) : query;
+
+        builder.OpenElement(0, "span");
+        builder.AddContent(1, parts[0]);
+        builder.OpenElement(2, "span");
+        builder.AddAttribute(3, "style", "background-color: lightgreen;");
+        builder.AddContent(4, matchedText);
+        builder.CloseElement();
+        if (parts.Length > 1)
+        {
+            builder.AddContent(5, parts[1]);
+        }
+        builder.CloseElement();
+    };
+}

@@ -74,9 +74,6 @@ public static class ProgramExtensions
                         "/administration/users",
                         "Пользователи"))
                 .WithIcon("tool");
-
-            builder.WithMenuItem("logout", "Выйти", "/api/auth/oidc/sign-out", null)
-                .WithIcon("logout");
         });
 
         return services;

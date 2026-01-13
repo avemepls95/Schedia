@@ -1,22 +1,37 @@
 ﻿@using Avemepls.Blazor.Common.Menus
 @using Avemepls.Blazor.Common.Menus.Providers
-@using Avemepls.Blazor.Components
-@using Microsoft.Extensions.Localization
 @inject IEnumerable<IMenuSectionsProvider> SectionProviders
+@inject IAuthenticationService AuthService
 
-<Menu Theme="MenuTheme.Light" Mode="MenuMode.Inline">
-    <SearchExtended Placeholder="Поиск справочников" @bind-Value="_query" OnChange="OnSearch"/>
+<div class="pa-2">
+    <MudTextField @bind-Value="_query"
+                  Placeholder="Поиск"
+                  Adornment="Adornment.Start"
+                  AdornmentIcon="@Icons.Material.Filled.Search"
+                  Margin="Margin.Dense"
+                  Variant="Variant.Outlined"
+                  Immediate="true"
+                  DebounceInterval="300"
+                  OnDebounceIntervalElapsed="OnSearch" />
+</div>
+
+<MudNavMenu Class="flex-grow-0">
     @foreach (var menuItem in _queriedMenuItems)
     {
-        <MenuSection Item="@menuItem" QueryWord="@_query"/>
+        <AdministrationMenuSection Item="@menuItem" QueryWord="@_query" />
     }
-</Menu>
+    <MudNavLink OnClick="@(async () => await HandleLogout())" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error">
+        Выйти
+    </MudNavLink>
+</MudNavMenu>
 
 @code {
 
     private string? _query;
     private MenuItemModel[] _allMenuItems = [];
     private MenuItemModel[] _queriedMenuItems = [];
+
+    private bool _isLoading;
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -61,4 +76,10 @@
             .ToArray();
     }
 
+    private async Task HandleLogout()
+    {
+        _isLoading = true;
+
+        await AuthService.LogoutAsync();
+    }
 }

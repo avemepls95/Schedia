@@ -13,11 +13,16 @@
 
     <ItemGroup>
         <!-- Domain проекты для MediatR команд -->
+        <ProjectReference Include="..\Avemepls.Shared\Avemepls.Blazor\Avemepls.Blazor.csproj" />
         <ProjectReference Include="..\modules\auth\Schedia.Auth.Domain\Schedia.Auth.Domain.csproj" />
         <ProjectReference Include="..\modules\identity\Schedia.Identity.Domain\Schedia.Identity.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <AdditionalFiles Include="Layouts\Administration\AdministrationLayout.razor" />
+      <AdditionalFiles Include="Layouts\Administration\AdministrationMenuSection.razor" />
+      <AdditionalFiles Include="Layouts\Administration\AdministrationNavMenu.razor" />
+      <AdditionalFiles Include="Pages\Administration\Index.razor" />
       <AdditionalFiles Include="Pages\ConfirmEmail\ConfirmEmail.razor" />
       <AdditionalFiles Include="Pages\ForgotPassword\ForgotPassword.razor" />
       <AdditionalFiles Include="Pages\Register\Register.razor" />

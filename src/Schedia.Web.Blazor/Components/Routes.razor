@@ -1,15 +1,21 @@
 ﻿@using Blazorade.Core.Components.Server
 @using MudBlazor
-@using Schedia.Web.Blazor.Layouts
 @using Schedia.Web.Core.Blazor.BlazorAssembliesRegistry
+@using Schedia.Web.Shared.Layouts
 @inject NavigationManager Navigation
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
 <AntContainer/>
 
 <Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="@BlazorAssembliesRegistry.Assemblies">
     <Found Context="routeData">
         <CascadingValue Value="@routeData.PageType"
                         Name="PageType">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(AppLayout)">
                 <Authorizing>
                     Авторизация...
                 </Authorizing>
@@ -23,7 +29,7 @@
         </CascadingValue>
     </Found>
     <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
+        <LayoutView Layout="@typeof(AppLayout)">
             <p>Страница не найдена...</p>
         </LayoutView>
     </NotFound>

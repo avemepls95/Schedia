@@ -1,0 +1,41 @@
+﻿@using MudBlazor
+@inherits LayoutComponentBase
+
+<AuthorizeView>
+    <Authorized>
+        <MudLayout>
+            <MudDrawer @bind-Open="_drawerOpen"
+                       Elevation="2"
+                       Variant="DrawerVariant.Mini"
+                       MiniWidth="56px"
+                       Width="280px">
+
+                <div class="d-flex flex-column" style="height: 100%;">
+                    @if (_drawerOpen)
+                    {
+                        <AdministrationNavMenu />
+                    }
+                    <div class="pa-2 d-flex justify-center mt-auto">
+                        <MudIconButton Icon="@(_drawerOpen ? Icons.Material.Filled.ChevronLeft : Icons.Material.Filled.Menu)"
+                                       Size="Size.Small"
+                                       OnClick="@ToggleDrawer" />
+                    </div>
+                </div>
+            </MudDrawer>
+            <MudMainContent Style="min-height: 100vh; padding-top: 0;">
+                <div class="pa-4">
+                    @Body
+                </div>
+            </MudMainContent>
+        </MudLayout>
+    </Authorized>
+    <NotAuthorized>
+        @Body
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    bool _drawerOpen = true;
+
+    void ToggleDrawer() => _drawerOpen = !_drawerOpen;
+}

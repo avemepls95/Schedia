@@ -30,6 +30,7 @@
       <_ContentIncludedByDefault Remove="Pages\ForgotPassword\ForgotPassword.razor" />
       <_ContentIncludedByDefault Remove="Pages\ConfirmEmail\ConfirmEmail.razor" />
       <_ContentIncludedByDefault Remove="Pages\ResetPassword\ResetPassword.razor" />
+      <_ContentIncludedByDefault Remove="Pages\Administration\Index.razor" />
     </ItemGroup>
 
 </Project>
