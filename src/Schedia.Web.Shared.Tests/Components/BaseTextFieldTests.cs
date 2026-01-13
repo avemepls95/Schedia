@@ -4,12 +4,7 @@ namespace Schedia.Web.Shared.Tests.Components;
 
 public class BaseTextFieldTests : IDisposable
 {
-    private readonly BlazorTestContext _ctx;
-
-    public BaseTextFieldTests()
-    {
-        _ctx = new BlazorTestContext();
-    }
+    private readonly BlazorTestContext _ctx = new();
 
     public void Dispose()
     {

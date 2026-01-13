@@ -26,8 +26,8 @@ public class ForgotPasswordTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ForgotPassword.ForgotPassword>();
 
         // Assert
-        cut.ContainsText("Email").Should().BeTrue();
-        cut.GetInputCount().Should().BeGreaterOrEqualTo(1, "Should have Email field");
+        var action = () => cut.FindInputByLabel("Email");
+        action.Should().NotThrow("Email input field should be present");
     }
 
     [Fact]

@@ -34,9 +34,12 @@ public class ResetPasswordTests : IDisposable
         NavigateToResetPassword("valid-token");
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ResetPassword.ResetPassword>();
 
-        // Assert
-        cut.ContainsText("New Password").Should().BeTrue();
-        cut.ContainsText("Confirm Password").Should().BeTrue();
+        // Assert - verify actual input fields exist, not just text
+        var action1 = () => cut.FindInputByLabel("New Password");
+        action1.Should().NotThrow("New Password input field should be present");
+
+        var action2 = () => cut.FindInputByLabel("Confirm Password");
+        action2.Should().NotThrow("Confirm Password input field should be present");
     }
 
     [Fact]

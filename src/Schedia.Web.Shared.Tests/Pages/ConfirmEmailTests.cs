@@ -4,12 +4,7 @@ namespace Schedia.Web.Shared.Tests.Pages;
 
 public class ConfirmEmailTests : IDisposable
 {
-    private readonly BlazorTestContext _ctx;
-
-    public ConfirmEmailTests()
-    {
-        _ctx = new BlazorTestContext();
-    }
+    private readonly BlazorTestContext _ctx = new();
 
     public void Dispose()
     {
@@ -147,7 +142,7 @@ public class ConfirmEmailTests : IDisposable
     public async Task ConfirmEmail_WhenValidationException_ShouldShowErrorView()
     {
         // Arrange
-        var errorMessage = "Почта уже подтверждена";
+        const string errorMessage = "Почта уже подтверждена";
         _ctx.MediatorMock
             .Setup(m => m.Send(It.IsAny<ConfirmEmail.Command>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new ValidationException(errorMessage));

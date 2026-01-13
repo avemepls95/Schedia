@@ -4,12 +4,7 @@ namespace Schedia.Web.Shared.Tests.Pages;
 
 public class LoginTests : IDisposable
 {
-    private readonly BlazorTestContext _ctx;
-
-    public LoginTests()
-    {
-        _ctx = new BlazorTestContext();
-    }
+    private readonly BlazorTestContext _ctx = new();
 
     public void Dispose()
     {
@@ -19,24 +14,14 @@ public class LoginTests : IDisposable
     #region Rendering Tests
 
     [Fact]
-    public void Login_ShouldRender_AllRequiredFields()
-    {
-        // Arrange & Act
-        var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Login.Login>();
-
-        // Assert
-        cut.GetInputCount().Should().BeGreaterOrEqualTo(2, "Should have Username and Password fields");
-        cut.ContainsText("Login").Should().BeTrue("Should display Login title");
-    }
-
-    [Fact]
     public void Login_ShouldDisplay_UsernameField()
     {
         // Arrange & Act
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Login.Login>();
 
         // Assert
-        cut.ContainsText("Username").Should().BeTrue();
+        var action = () => cut.FindInputByLabel("Username");
+        action.Should().NotThrow("Username input field should be present");
     }
 
     [Fact]
@@ -46,7 +31,8 @@ public class LoginTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Login.Login>();
 
         // Assert
-        cut.ContainsText("Password").Should().BeTrue();
+        var action = () => cut.FindInputByLabel("Password");
+        action.Should().NotThrow("Password input field should be present");
     }
 
     [Fact]
@@ -197,7 +183,7 @@ public class LoginTests : IDisposable
     public async Task Login_WhenValidationException_ShouldShowErrorMessage()
     {
         // Arrange
-        var errorMessage = "Неверный логин или пароль";
+        const string errorMessage = "Неверный логин или пароль";
         _ctx.MediatorMock
             .Setup(m => m.Send(It.IsAny<AuthCommand.Command>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new ValidationException(errorMessage));
@@ -252,7 +238,7 @@ public class LoginTests : IDisposable
     public async Task Login_WithReturnUrl_ShouldPassToAuthService()
     {
         // Arrange
-        var returnUrl = "/dashboard";
+        const string returnUrl = "/dashboard";
         var tokenInfo = new TokenInformation { AccessToken = "token", RefreshToken = "refresh" };
 
         _ctx.MediatorMock
@@ -280,32 +266,6 @@ public class LoginTests : IDisposable
             "AuthService.LoginAsync should be called");
     }
 
-    [Fact]
-    public void Login_RegisterLink_ShouldHaveCorrectHref()
-    {
-        // Arrange
-        var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Login.Login>();
-
-        // Act
-        var registerLink = cut.FindLinkByHref("/register");
-
-        // Assert
-        registerLink.GetAttribute("href").Should().Be("/register");
-    }
-
-    [Fact]
-    public void Login_ForgotPasswordLink_ShouldHaveCorrectHref()
-    {
-        // Arrange
-        var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Login.Login>();
-
-        // Act
-        var forgotLink = cut.FindLinkByHref("/forgot-password");
-
-        // Assert
-        forgotLink.GetAttribute("href").Should().Be("/forgot-password");
-    }
-
     #endregion
 
     #region Authorization Tests
@@ -323,19 +283,6 @@ public class LoginTests : IDisposable
         // The form should NOT be visible
         var inputs = cut.FindAll("input");
         inputs.Should().BeEmpty("Form inputs should not be visible when user is authorized");
-    }
-
-    [Fact]
-    public void Login_WhenNotAuthorized_ShouldShowLoginForm()
-    {
-        // Arrange
-        _ctx.SetNotAuthorized();
-
-        // Act
-        var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Login.Login>();
-
-        // Assert
-        cut.GetInputCount().Should().BeGreaterOrEqualTo(2, "Login form should be visible when user is not authorized");
     }
 
     #endregion

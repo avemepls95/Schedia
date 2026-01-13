@@ -37,7 +37,8 @@ public class RegisterTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Register.Register>();
 
         // Assert
-        cut.ContainsText("Username").Should().BeTrue();
+        var action = () => cut.FindInputByLabel("Username");
+        action.Should().NotThrow("Username input field should be present");
     }
 
     [Fact]
@@ -47,7 +48,8 @@ public class RegisterTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Register.Register>();
 
         // Assert
-        cut.ContainsText("Email").Should().BeTrue();
+        var action = () => cut.FindInputByLabel("Email");
+        action.Should().NotThrow("Email input field should be present");
     }
 
     [Fact]
@@ -57,7 +59,8 @@ public class RegisterTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Register.Register>();
 
         // Assert
-        cut.ContainsText("Password").Should().BeTrue();
+        var action = () => cut.FindInputByLabel("Password");
+        action.Should().NotThrow("Password input field should be present");
     }
 
     [Fact]
@@ -67,7 +70,8 @@ public class RegisterTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Register.Register>();
 
         // Assert
-        cut.ContainsText("Confirm password").Should().BeTrue();
+        var action = () => cut.FindInputByLabel("Confirm password");
+        action.Should().NotThrow("Confirm password input field should be present");
     }
 
     [Fact]

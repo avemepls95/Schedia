@@ -172,7 +172,4 @@ public static class MudBlazorTestExtensions
 /// <summary>
 /// Exception thrown when an element is not found in the rendered component.
 /// </summary>
-public class ElementNotFoundException : Exception
-{
-    public ElementNotFoundException(string message) : base(message) { }
-}
+public class ElementNotFoundException(string message) : Exception(message);
