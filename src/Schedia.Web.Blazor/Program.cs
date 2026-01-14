@@ -50,6 +50,11 @@ app.UseDeveloperExceptionPage();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseRequestLocalization(new RequestLocalizationOptions()
+    .SetDefaultCulture("ru")
+    .AddSupportedCultures("ru", "en")
+    .AddSupportedUICultures("ru", "en"));
+
 app.UseAuthentication();
 app.UseAuthorization();
 

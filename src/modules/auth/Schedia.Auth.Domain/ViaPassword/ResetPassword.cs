@@ -3,13 +3,10 @@ using Avemepls.Core.DataAccess.Extensions;
 using Avemepls.Core.Extensions;
 using Avemepls.Domain.Validators;
 using Avemepls.Identity.DataAccess;
-
 using FluentValidation;
-
 using MediatR;
-
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Localization;
 using Schedia.Auth.Domain.Services;
 using Schedia.Auth.Domain.Validators;
 
@@ -44,7 +41,7 @@ public static class ResetPassword
     public class Validator<TCommand> : ExtendedAbstractValidator<TCommand>
         where TCommand : Command
     {
-        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory)
+        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory, IStringLocalizer<Validator<TCommand>> loc)
         {
             RuleFor(x => x.NewPassword).SetValidator(new PasswordValidator());
 
@@ -62,13 +59,13 @@ public static class ResetPassword
 
                     if (user?.Id is null)
                     {
-                        validationContext.AddFailure("Пользователь не найден");
+                        validationContext.AddFailure(loc["Пользователь не найден"]);
                         return;
                     }
 
                     if (user.PasswordResetTokenExpiry < DateTimeOffset.UtcNow)
                     {
-                        validationContext.AddFailure("Срок ссылки сброса пароля истек. Повторите процедуру заново");
+                        validationContext.AddFailure(loc["Срок ссылки сброса пароля истек. Повторите процедуру заново"]);
                     }
                 })
                 .When(x => !x.Token.IsNullOrWhiteSpace());

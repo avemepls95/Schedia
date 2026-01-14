@@ -1,17 +1,15 @@
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 
 using Avemepls.Core.DataAccess.Extensions;
 using Avemepls.Core.Models;
 using Avemepls.Identity.DataAccess;
 using Avemepls.Infrastructure.Email;
 using Avemepls.Security.Principal;
-
 using FluentValidation;
-
 using MediatR;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Localization;
 
 using UserEntity = Avemepls.Identity.DataAccess.Models.User;
 
@@ -49,7 +47,7 @@ public static class ResendEmailConfirmation
 
     internal sealed class Validator : AbstractValidator<Command>
     {
-        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory, IPrincipalAccessor principalAccessor)
+        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory, IPrincipalAccessor principalAccessor, IStringLocalizer<Validator> loc)
         {
             RuleFor(u => u)
                 .NotEmpty()
@@ -61,7 +59,7 @@ public static class ResendEmailConfirmation
 
                     if (user is null)
                     {
-                        validationContext.AddFailure("Что-то пошло не так. Пользователь не найден.");
+                        validationContext.AddFailure(loc["Что-то пошло не так. Пользователь не найден."]);
                         return;
                     }
 

@@ -1,12 +1,10 @@
-using Avemepls.Core.DataAccess.Behaviors;
+﻿using Avemepls.Core.DataAccess.Behaviors;
 using Avemepls.Core.DataAccess.Extensions;
 using Avemepls.Identity.DataAccess;
-
 using FluentValidation;
-
 using MediatR;
-
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace Schedia.Identity.Domain.User;
 
@@ -35,7 +33,7 @@ public static class ConfirmEmail
 
     internal sealed class Validator : AbstractValidator<Command>
     {
-        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory)
+        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory, IStringLocalizer<Validator> loc)
         {
             RuleFor(u => u.Token)
                 .NotEmpty()
@@ -48,19 +46,19 @@ public static class ConfirmEmail
 
                     if (user == null)
                     {
-                        validationContext.AddFailure("Не удалось найти пользователя. Пройдите процедуру подтверждения почты повторно");
+                        validationContext.AddFailure(loc["Не удалось найти пользователя. Пройдите процедуру подтверждения почты повторно"]);
                         return;
                     }
 
                     if (user.EmailConfirmed)
                     {
-                        validationContext.AddFailure("Почта уже подтверждена");
+                        validationContext.AddFailure(loc["Почта уже подтверждена"]);
                         return;
                     }
 
                     if (user.EmailConfirmationTokenExpiry < DateTimeOffset.UtcNow)
                     {
-                        validationContext.AddFailure("Срок действия ссылки истек. Пройдите процедуру подтверждения почты повторно");
+                        validationContext.AddFailure(loc["Срок действия ссылки истек. Пройдите процедуру подтверждения почты повторно"]);
                     }
                 });
         }

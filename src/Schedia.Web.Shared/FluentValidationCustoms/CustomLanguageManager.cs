@@ -2,7 +2,7 @@
 
 namespace Schedia.Web.Shared.FluentValidationCustoms;
 
-// #PoIgnore#
+// #RsIgnore#
 public class CustomLanguageManager : LanguageManager
 {
     public CustomLanguageManager()

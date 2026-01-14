@@ -6,10 +6,13 @@
         <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
         <AntDesign>1.5.1</AntDesign>
         <MauiVersion>10.0.20</MauiVersion>
+        <RsLocalizer>1.0.1</RsLocalizer>
     </PropertyGroup>
     <ItemGroup>
         <PackageVersion Include="AntDesign" Version="$(AntDesign)"/>
         <PackageVersion Include="AntDesign.TestKit" Version="$(AntDesign)"/>
+        <PackageVersion Include="Avemepls.RsLocalizer" Version="$(RsLocalizer)"/>
+        <PackageVersion Include="Avemepls.RsGenerator.SourceGenerator" Version="$(RsLocalizer)"/>
         <PackageVersion Include="Blazorade.Core" Version="4.0.0"/>
         <PackageVersion Include="Blazored.FluentValidation" Version="2.2.0"/>
         <PackageVersion Include="Blazored.SessionStorage" Version="2.4.0"/>

@@ -1,14 +1,18 @@
 @page "/register"
 @layout AnonymousLayout
 @attribute [AllowAnonymous]
+@using Avemepls.Blazor.Components
 @using Microsoft.AspNetCore.Authorization
 @using Avemepls.Identity.DataAccess
 @using Microsoft.EntityFrameworkCore
 @using Schedia.Web.Shared.Layouts
 @using FluentValidation
+@using Microsoft.Extensions.Localization
 @inject IMediator Mediator
 @inject IAuthenticationService AuthService
 @inject IDbContextFactory<IdentityDbContext> DbContextFactory
+@inject IStringLocalizer<Validator> ValidatorLoc
+@inject IStringLocalizer<Register> Loc
 
 <AuthorizeView>
     <Authorized>
@@ -59,16 +63,16 @@
                     @if (_isLoading)
                     {
                         <MudProgressCircular Size="Size.Small" Indeterminate="true"/>
-                        <MudText Class="ml-2">Loading...</MudText>
+                        <MudText Class="ml-2">@("Загрузка".Loc(Loc))...</MudText>
                     }
                     else
                     {
-                        <text>Register</text>
+                        <text>@("Регистрация".Loc(Loc))</text>
                     }
                 </MudButton>
 
                 <MudText Align="Align.Center">
-                    Already have an account?<MudLink Href="/login" Color="Color.Primary"> Login</MudLink>
+                    @("Уже зарегистрированы?".Loc(Loc))<MudLink Href="/login" Color="Color.Primary"> @("Войти".Loc(Loc))</MudLink>
                 </MudText>
             </MudCard>
         </MudContainer>
@@ -88,7 +92,7 @@
     {
         base.OnInitialized();
 
-        _authValidator = new Validator(DbContextFactory);
+        _authValidator = new Validator(DbContextFactory, ValidatorLoc);
     }
 
     private async Task HandleRegister()
@@ -116,7 +120,7 @@
         }
         catch (Exception ex)
         {
-            _errorMessage = "Произошла непредвиденная ошибка";
+            _errorMessage = Loc["Произошла непредвиденная ошибка"];
             Console.WriteLine(ex.Message);
         }
         finally
@@ -128,16 +132,17 @@
 
     public class Command : Auth.Domain.ViaPassword.Register.Command
     {
-        public string ConfirmPassword { get; set; }
+        public string? ConfirmPassword { get; set; }
     }
 
     public class Validator : Auth.Domain.ViaPassword.Register.Validator<Command>
     {
-        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory) : base(dbContextFactory)
+        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory, IStringLocalizer<Auth.Domain.ViaPassword.Register.Validator<Command>> loc)
+            : base(dbContextFactory, loc)
         {
             RuleFor(x => x.ConfirmPassword)
                 .Equal(x => x.Password)
-                .WithMessage("Confirm password should be equivalent to password");
+                .WithMessage(loc["Пароли не совпадают"]);
         }
     }
 }

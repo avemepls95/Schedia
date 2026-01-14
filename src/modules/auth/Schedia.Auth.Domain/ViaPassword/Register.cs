@@ -5,19 +5,15 @@ using Avemepls.Auth.Bearer.Abstractions;
 using Avemepls.Core.DataAccess.Behaviors;
 using Avemepls.Core.DataAccess.Extensions;
 using Avemepls.Core.Extensions;
-using Avemepls.Core.Localization;
 using Avemepls.Domain.Validators;
 using Avemepls.Identity.DataAccess;
 using Avemepls.Identity.DataAccess.Models;
 using Avemepls.Infrastructure.Email;
-
 using FluentValidation;
-
 using MediatR;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-
+using Microsoft.Extensions.Localization;
 using Schedia.Auth.Domain.Services;
 using Schedia.Auth.Domain.Validators;
 
@@ -79,7 +75,7 @@ public static class Register
     public class Validator<TCommand> : ExtendedAbstractValidator<TCommand>
         where TCommand : Command
     {
-        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory)
+        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory, IStringLocalizer<Validator<TCommand>> loc)
         {
             RuleFor(x => x.Email)
                 .Cascade(CascadeMode.Stop)
@@ -92,7 +88,7 @@ public static class Register
                         .Available()
                         .AnyAsync(u => u.Email == value, cancellationToken);
                 })
-                .WithMessage("Пользователь с таким email уже существует");
+                .WithMessage(loc["Пользователь с таким email уже существует"]);
 
             RuleFor(x => x.Password)
                 .Cascade(CascadeMode.Stop)
@@ -107,7 +103,7 @@ public static class Register
                         .Available()
                         .AnyAsync(u => u.Username == value, cancellationToken);
                 })
-                .WithMessage("Выбранное имя занято")
+                .WithMessage(loc["Выбранное имя занято"])
                 .When(x => !x.Username.IsNullOrWhiteSpace());
         }
     }

@@ -1,4 +1,4 @@
-"PO-Revision-Date: 09.06.2025\n"
+"RS-Revision-Date: 09.06.2025\n"
 
 msgid "Цвет не выбран"
 msgstr "Color not selected"

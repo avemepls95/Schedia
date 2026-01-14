@@ -30,4 +30,3 @@ public interface IAuthStorageService
     /// </summary>
     Task ClearTokensAsync();
 }
-

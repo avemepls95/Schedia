@@ -58,7 +58,7 @@
         return true;
     }
 
-    private RenderFragment RenderHighlightedTitle(string title, string query) => builder =>
+    private static RenderFragment RenderHighlightedTitle(string title, string query) => builder =>
     {
         var parts = Regex.Split(title, Regex.Escape(query), RegexOptions.IgnoreCase);
         var matchIndex = title.IndexOf(query, StringComparison.OrdinalIgnoreCase);

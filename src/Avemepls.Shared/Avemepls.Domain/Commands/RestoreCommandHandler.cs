@@ -25,7 +25,7 @@ public abstract class RestoreCommandHandler<TCommand, TContext, TEntity> : IRequ
     protected TContext Context { get; }
 
     /// <summary>
-    /// Инициализирует новый экземпляр класса <see cref="RestoreCommandHandler{TCommand, TContext, TEntity, TId}"/>.
+    /// Инициализирует новый экземпляр класса <see cref="RestoreCommandHandler{TCommand, TContext, TEntity}"/>.
     /// </summary>
     protected RestoreCommandHandler(
         TContext context,

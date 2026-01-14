@@ -1,4 +1,4 @@
-"PO-Revision-Date: 18.07.2024\n"
+"Rs-Revision-Date: 18.07.2024\n"
 
 msgid "Обычная"
 msgstr "Regular"

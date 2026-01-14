@@ -1,0 +1,22 @@
+﻿{
+  "ExceptionParts": [
+    "_loc",
+    "loc",
+    "Loc",
+    "ILocalizationContext.GetString"
+  ],
+  "ExceptionProjects": [
+    "Test",
+    "Quirco.Cqrs.Mvc",
+    "Quirco.Cqrs.Demo"
+  ],
+  "Languages": [
+    "en"
+  ],
+  "ParsingFileExtensions": [
+    ".cs",
+    ".razor"
+  ],
+  "Logging": false,
+  "UseRootFolder": false
+}

@@ -1,4 +1,4 @@
-﻿"PO-Revision-Date: 06.09.2024\n"
+﻿"RS-Revision-Date: 06.09.2024\n"
 
 msgid "Удалить '{entityType.GetXmlDocsSummary()}'"
 msgstr "Delete '{entityType.GetXmlDocsSummary()}'"

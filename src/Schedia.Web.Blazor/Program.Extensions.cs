@@ -3,6 +3,7 @@ using Avemepls.Blazor.Common.Menus;
 using Avemepls.Domain;
 using Avemepls.Identity.DataAccess;
 using Avemepls.Infrastructure.DateTime;
+using Avemepls.RsLocalizer.Extensions;
 using Avemepls.Security;
 using Avemepls.Security.Permissions;
 using Avemepls.Security.Principal;
@@ -24,7 +25,7 @@ using Schedia.Web.Shared.FluentValidationCustoms;
 
 namespace Schedia.Web.Blazor;
 
-// #PoIgnore#
+// #RsIgnore#
 public static class ProgramExtensions
 {
     public static IServiceCollection AddSchediaBase(this IServiceCollection services, IConfiguration configuration)
@@ -34,6 +35,11 @@ public static class ProgramExtensions
             .AddModules(configuration)
             .AddDomainCore()
             .OverrideValidationMessages()
+            .AddPortableObjectLocalization(cfg =>
+            {
+                cfg.ResourcesPath = "Locale";
+                cfg.ResourcesDirectory = AppContext.BaseDirectory;
+            })
 
             // .AddDatabasePipelines()
             // .OverrideValidationMessages()

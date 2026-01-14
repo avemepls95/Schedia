@@ -1,12 +1,15 @@
 @page "/login"
 @layout AnonymousLayout
 @attribute [AllowAnonymous]
+@using Avemepls.Blazor.Components
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
 @using Schedia.Auth.Domain.ViaPassword
 @using Schedia.Web.Shared.Layouts
 @using ValidationException = FluentValidation.ValidationException
 @inject IMediator Mediator
 @inject IAuthenticationService AuthService
+@inject IStringLocalizer<Login> Loc
 
 <AuthorizeView>
     <Authorized>
@@ -46,19 +49,19 @@
                     @if (_isLoading)
                     {
                         <MudProgressCircular Size="Size.Small" Indeterminate="true"/>
-                        <MudText Class="ml-2">Loading...</MudText>
+                        <MudText Class="ml-2">@("Загрузка".Loc(Loc))...</MudText>
                     }
                     else
                     {
-                        <text>Login</text>
+                        <text>@("Войти".Loc(Loc))</text>
                     }
                 </MudButton>
 
                 <MudStack AlignItems="AlignItems.Center" Spacing="2">
-                    <div>Don't have an account?
-                        <MudLink Href="/register" Color="Color.Primary">Register</MudLink>
+                    <div>@("Еще не зарегистрированы?".Loc(Loc))
+                        <MudLink Href="/register" Color="Color.Primary">@("Регистрация".Loc(Loc))</MudLink>
                     </div>
-                    <MudLink Href="/forgot-password" Color="Color.Primary">Forgot password?</MudLink>
+                    <MudLink Href="/forgot-password" Color="Color.Primary">@("Забыли пароль?".Loc(Loc))</MudLink>
                 </MudStack>
             </MudCard>
         </MudContainer>
@@ -105,7 +108,7 @@
         }
         catch (Exception ex)
         {
-            _errorMessage = "Произошла непредвиденная ошибка";
+            _errorMessage =  Loc["Произошла непредвиденная ошибка"];
             Console.WriteLine(ex.Message);
         }
         finally

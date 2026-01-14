@@ -31,8 +31,6 @@
     private MenuItemModel[] _allMenuItems = [];
     private MenuItemModel[] _queriedMenuItems = [];
 
-    private bool _isLoading;
-
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -78,8 +76,6 @@
 
     private async Task HandleLogout()
     {
-        _isLoading = true;
-
         await AuthService.LogoutAsync();
     }
 }

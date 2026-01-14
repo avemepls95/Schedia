@@ -16,6 +16,7 @@
         <NuGetAuditLevel>moderate</NuGetAuditLevel>
         <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
         <OptimizeImplicitlyTriggeredBuild>true</OptimizeImplicitlyTriggeredBuild>
+        <RsLocalize>True</RsLocalize>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="StyleCop.Analyzers" PrivateAssets="all"/>
@@ -25,6 +26,17 @@
 
         <PackageReference Include="JetBrains.Annotations" PrivateAssets="all" NoWarn="RT0003"/>
         <PackageReference Include="ReferenceTrimmer" PrivateAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="$(RsLocalize)">
+        <PackageReference Include="Avemepls.RsGenerator.SourceGenerator" PrivateAssets="all" />
+        <AdditionalFiles Include="$(SolutionDir)\localizer.json" />
+        <AdditionalFiles Include="Locale\en\*.rs"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="Locale\**\*.*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>

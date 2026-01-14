@@ -1,16 +1,14 @@
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 
 using Avemepls.Core.DataAccess.Extensions;
 using Avemepls.Domain.Validators;
 using Avemepls.Identity.DataAccess;
 using Avemepls.Infrastructure.Email;
-
 using FluentValidation;
-
 using MediatR;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Localization;
 
 namespace Schedia.Auth.Domain.ViaPassword;
 
@@ -51,7 +49,7 @@ public static class RequestPasswordReset
 
     public class Validator : ExtendedAbstractValidator<Command>
     {
-        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory)
+        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory, IStringLocalizer<Validator> loc)
         {
             RuleFor(r => r.Email)
                 .Cascade(CascadeMode.Stop)
@@ -63,7 +61,7 @@ public static class RequestPasswordReset
                         .Available()
                         .AnyAsync(u => u.Email == value, cancellationToken);
                 })
-                .WithMessage("Пользователь с таким email'ом не найден");
+                .WithMessage(loc["Пользователь с таким email'ом не найден"]);
         }
     }
 }

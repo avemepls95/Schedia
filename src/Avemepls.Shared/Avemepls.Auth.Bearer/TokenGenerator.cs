@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 
 using Avemepls.Auth.Bearer.Abstractions;
-
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 
@@ -60,7 +59,7 @@ internal sealed class TokenGenerator(OAuthOptions authOptions, IMemoryCache cach
 
         if (storedRefreshToken is null || !storedRefreshToken.Equals(refreshToken, StringComparison.Ordinal))
         {
-            throw new UnauthorizedAccessException("Указанный refresh token не найден.");
+            throw new UnauthorizedAccessException("Specified refresh token is not valid.");
         }
     }
 

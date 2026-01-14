@@ -1,26 +1,29 @@
 @page "/confirm-email"
 @layout AnonymousLayout
+@using Avemepls.Blazor.Components
+@using Microsoft.Extensions.Localization
 @using Schedia.Web.Shared.Layouts
 @using ValidationException = FluentValidation.ValidationException
 @inject IMediator Mediator
 @inject NavigationManager NavManager
+@inject IStringLocalizer<ConfirmEmail> Loc
 
 <div class="confirm-email-container" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f0f2f5;">
     @if (_isLoading)
     {
         <MudCard Style="max-width: 500px; width: 100%; padding: 40px; text-align: center;">
             <div style="font-size: 24px; margin-bottom: 16px;">⏳</div>
-            <p>Confirming your email...</p>
+            <p>@("Подтверждение Вашего электронного адреса".Loc(Loc))...</p>
         </MudCard>
     }
     else if (_success)
     {
         <MudCard Style="max-width: 500px; width: 100%; padding: 40px; text-align: center;">
             <div style="font-size: 48px; color: #52c41a; margin-bottom: 16px;">✓</div>
-            <h2>Email Confirmed!</h2>
-            <p style="margin-bottom: 24px;">Your email address has been verified successfully.</p>
+            <h2>@("Электронный адрес подтвержден!".Loc(Loc))</h2>
+            <p style="margin-bottom: 24px;">@("Ваш e-mail успешно подтвержден".Loc(Loc))</p>
             <button @onclick="@(() => NavManager.NavigateTo("/"))" style="padding: 10px 20px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
-                Go to Home
+                @("На главную".Loc(Loc))
             </button>
         </MudCard>
     }
@@ -28,10 +31,10 @@
     {
         <MudCard Style="max-width: 500px; width: 100%; padding: 40px; text-align: center;">
             <div style="font-size: 48px; color: #ff4d4f; margin-bottom: 16px;">✗</div>
-            <h2>Confirmation Failed</h2>
+            <h2>@("Ошибка подтверждения".Loc(Loc))</h2>
             <p style="margin-bottom: 24px;">@(_errorMessage)</p>
             <button @onclick="@(() => NavManager.NavigateTo("/login"))" style="padding: 10px 20px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
-                Back to Login
+                @("Войти".Loc(Loc))
             </button>
         </MudCard>
     }
@@ -39,7 +42,7 @@
 
 @code {
     private bool _isLoading = true;
-    private bool _success = false;
+    private bool _success;
     private string _errorMessage = "";
 
     [SupplyParameterFromQuery(Name = "token")]
@@ -73,7 +76,7 @@
         }
         catch (Exception ex)
         {
-            _errorMessage = "Произошла непредвиденная ошибка";
+            _errorMessage = Loc["Произошла непредвиденная ошибка"];
             Console.WriteLine(ex.Message);
             _success = false;
         }
