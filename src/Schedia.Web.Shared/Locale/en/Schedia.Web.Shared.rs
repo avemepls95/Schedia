@@ -1,4 +1,4 @@
-"RS-Revision-Date: 15.01.2026\n"
+"RS-Revision-Date: 16.01.2026\n"
 
 msgid "Поле '{PropertyName}' обязательно к заполнению"
 msgstr "Field '{PropertyName}' is required"
@@ -59,3 +59,9 @@ msgstr "Check your inbox ({0})"
 
 msgid "Мы выслали на него инструкцию для сброса пароля"
 msgstr "We have sent you password reset instructions"
+
+msgid "Настройки"
+msgstr "Settings"
+
+msgid "Выйти"
+msgstr "Log out"

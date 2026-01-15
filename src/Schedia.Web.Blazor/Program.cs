@@ -1,5 +1,6 @@
 using Avemepls.Infrastructure;
 
+using Microsoft.AspNetCore.Localization;
 using Microsoft.IdentityModel.Logging;
 
 using Schedia.Web.Blazor;
@@ -50,10 +51,15 @@ app.UseDeveloperExceptionPage();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseRequestLocalization(new RequestLocalizationOptions()
-    .SetDefaultCulture("ru")
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture("en")
     .AddSupportedCultures("ru", "en")
-    .AddSupportedUICultures("ru", "en"));
+    .AddSupportedUICultures("ru", "en");
+
+localizationOptions.RequestCultureProviders.Insert(0,
+    new CookieRequestCultureProvider { CookieName = "Schedia.Culture" });
+
+app.UseRequestLocalization(localizationOptions);
 
 app.UseAuthentication();
 app.UseAuthorization();

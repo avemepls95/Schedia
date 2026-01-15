@@ -1,0 +1,39 @@
+@using System.Globalization
+@using Microsoft.JSInterop
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<MudMenu Icon="@Icons.Material.Filled.Language" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+    <MudMenuItem OnClick="@(() => SetCultureAsync("en"))" Icon="@GetCheckIcon("en")">
+        English
+    </MudMenuItem>
+    <MudMenuItem OnClick="@(() => SetCultureAsync("ru"))" Icon="@GetCheckIcon("ru")">
+        Русский
+    </MudMenuItem>
+</MudMenu>
+
+@code {
+    private readonly string _currentCulture = CultureInfo.CurrentCulture.Name;
+
+    private string? GetCheckIcon(string culture)
+    {
+        return _currentCulture.StartsWith(culture, StringComparison.OrdinalIgnoreCase)
+            ? Icons.Material.Filled.Check
+            : null;
+    }
+
+    private async Task SetCultureAsync(string culture)
+    {
+        if (_currentCulture.StartsWith(culture, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        // Set cookie directly in browser via JS
+        var cookieValue = $"c={culture}|uic={culture}";
+        await JsRuntime.InvokeVoidAsync("eval",
+            $"document.cookie = 'Schedia.Culture={cookieValue}; path=/; max-age=31536000; samesite=lax'");
+
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+}
