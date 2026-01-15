@@ -24,6 +24,7 @@
         <PackageReference Include="NSubstitute.Analyzers.CSharp" PrivateAssets="all"/>
         <PackageReference Include="FluentAssertions.Analyzers" PrivateAssets="all"/>
 
+        <PackageReference Include="Avemepls.Analyzers" PrivateAssets="all" NoWarn="RT0003"/>
         <PackageReference Include="JetBrains.Annotations" PrivateAssets="all" NoWarn="RT0003"/>
         <PackageReference Include="ReferenceTrimmer" PrivateAssets="all"/>
     </ItemGroup>

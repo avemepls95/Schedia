@@ -1,19 +1,19 @@
 "RS-Revision-Date: 15.01.2026\n"
 
 msgid "Неверные логин или пароль"
-msgstr ""
+msgstr "Invalid username or password"
 
 msgid "Пользователь с таким email уже существует"
-msgstr ""
+msgstr "User with this email already exists"
 
 msgid "Выбранное имя занято"
-msgstr ""
+msgstr "The selected name is already taken"
 
 msgid "Пользователь с таким email'ом не найден"
-msgstr ""
+msgstr "User with this email not found"
 
 msgid "Пользователь не найден"
-msgstr ""
+msgstr "User not found"
 
 msgid "Срок ссылки сброса пароля истек. Повторите процедуру заново"
-msgstr ""
+msgstr "Password reset link has expired. Please try again"

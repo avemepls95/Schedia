@@ -7,8 +7,8 @@
   ],
   "ExceptionProjects": [
     "Test",
-    "Quirco.Cqrs.Mvc",
-    "Quirco.Cqrs.Demo"
+    "Avemepls.Mvc",
+    "Avemepls.Demo"
   ],
   "Languages": [
     "en"

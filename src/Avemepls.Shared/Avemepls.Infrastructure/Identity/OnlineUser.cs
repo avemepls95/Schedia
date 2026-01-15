@@ -17,31 +17,26 @@ public class OnlineUser(
     /// <summary>
     /// Дата и время подключения
     /// </summary>
-    [DisplayName("Online since")]
     public System.DateTimeOffset OnlineSince { get; } = currentDateTimeProvider.Now;
 
     /// <summary>
     /// IP-адрес подключения
     /// </summary>
-    [DisplayName("IP address")]
     public IPAddress IpAddress { get; } = httpContextAccessor.HttpContext.Connection.RemoteIpAddress;
 
     /// <summary>
     /// Тип аутентификации
     /// </summary>
-    [DisplayName("Authentication type")]
     public string? AuthenticationType { get; private set; }
 
     /// <summary>
     /// Логин пользователя
     /// </summary>
-    [DisplayName("Login")]
     public string? Name { get; private set; }
 
     /// <summary>
     /// Является ли пользователь онлайн?
     /// </summary>
-    [DisplayName("Is authenticated")]
     public bool IsAuthenticated { get; private set; }
 
     private IIdentity? _identity;

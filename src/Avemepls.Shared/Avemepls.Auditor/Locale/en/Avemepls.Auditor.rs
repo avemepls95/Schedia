@@ -1,34 +1,34 @@
 "RS-Revision-Date: 15.01.2026\n"
 
 msgid "Логи"
-msgstr ""
+msgstr "Logs"
 
 msgid "Аудит"
-msgstr ""
+msgstr "Audit"
 
 msgid "Просмотр"
-msgstr ""
+msgstr "View"
 
 msgid "Изменено {0}: {1} -> {2}"
-msgstr ""
+msgstr "Changed {0}: {1} -> {2}"
 
 msgid "Обычная"
-msgstr ""
+msgstr "Normal"
 
 msgid "Критическая"
-msgstr ""
+msgstr "Critical"
 
 msgid "Высокая"
-msgstr ""
+msgstr "High"
 
 msgid "Средняя"
-msgstr ""
+msgstr "Medium"
 
 msgid "Низкая"
-msgstr ""
+msgstr "Low"
 
 msgid "Информация"
-msgstr ""
+msgstr "Information"
 
 msgid "Отладка"
-msgstr ""
+msgstr "Debug"

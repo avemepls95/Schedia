@@ -11,6 +11,7 @@
     <ItemGroup>
         <PackageVersion Include="AntDesign" Version="$(AntDesign)"/>
         <PackageVersion Include="AntDesign.TestKit" Version="$(AntDesign)"/>
+        <PackageVersion Include="Avemepls.Analyzers" Version="1.0.2"/>
         <PackageVersion Include="Avemepls.RsLocalizer" Version="$(RsLocalizer)"/>
         <PackageVersion Include="Avemepls.RsGenerator.SourceGenerator" Version="$(RsLocalizer)"/>
         <PackageVersion Include="Blazorade.Core" Version="4.0.0"/>

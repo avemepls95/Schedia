@@ -1,13 +1,13 @@
 "RS-Revision-Date: 15.01.2026\n"
 
 msgid "Не удалось найти пользователя. Пройдите процедуру подтверждения почты повторно"
-msgstr ""
+msgstr "User not found. Please verify your email again"
 
 msgid "Почта уже подтверждена"
-msgstr ""
+msgstr "Email is already confirmed"
 
 msgid "Срок действия ссылки истек. Пройдите процедуру подтверждения почты повторно"
-msgstr ""
+msgstr "Link has expired. Please verify your email again"
 
 msgid "Что-то пошло не так. Пользователь не найден."
-msgstr ""
+msgstr "Something went wrong. User not found."

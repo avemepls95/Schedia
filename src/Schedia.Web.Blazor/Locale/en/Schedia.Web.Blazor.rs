@@ -1,10 +1,10 @@
 "RS-Revision-Date: 15.01.2026\n"
 
 msgid "Инструменты"
-msgstr ""
+msgstr "Tools"
 
 msgid "Фоновые задания"
-msgstr ""
+msgstr "Background jobs"
 
 msgid "Пользователи"
-msgstr ""
+msgstr "Users"

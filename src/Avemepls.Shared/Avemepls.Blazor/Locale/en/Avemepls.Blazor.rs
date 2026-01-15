@@ -43,7 +43,7 @@ msgid "У вас недостаточно прав для доступа к да
 msgstr "You do not have sufficient permissions to access this resource"
 
 msgid "Создать"
-msgstr "Create
+msgstr "Create"
 
 msgid "Сохранить"
 msgstr "Save"
@@ -71,5 +71,6 @@ msgstr "'{0}' successfully deleted"
 
 msgid "'{0}' успешно восстановлен(а)"
 msgstr "'{0}' successfully restored"
+
 msgid "Сбросить фильтры"
-msgstr ""
+msgstr "Reset filters"

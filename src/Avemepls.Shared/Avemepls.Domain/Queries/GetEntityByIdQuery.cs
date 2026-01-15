@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 
+using Avemepls.Core.Localization;
 using Avemepls.Core.Models;
 
 using MediatR;
@@ -21,7 +22,7 @@ public abstract class GetEntityByIdQuery<T>(Id<T> id, bool includeDeleted = true
     /// <summary>
     /// Идентификатор сущности.
     /// </summary>
-    [DisplayName("Идентификатор сущности")]
+    [DisplayNameLoc("Идентификатор сущности")]
     public Id<T> Id { get; set; } = id;
 
     /// <summary>
