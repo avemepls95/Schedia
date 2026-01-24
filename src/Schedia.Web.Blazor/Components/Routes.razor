@@ -2,9 +2,10 @@
 @using MudBlazor
 @using Schedia.Web.Core.Blazor.BlazorAssembliesRegistry
 @using Schedia.Web.Shared.Layouts
+@using Schedia.Web.Shared.Themes
 @inject NavigationManager Navigation
 
-<MudThemeProvider />
+<MudThemeProvider Theme="@SchediaTheme.Theme" />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />

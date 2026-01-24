@@ -170,3 +170,240 @@ h2 {
 .schedia-icon-key::before {
     content: "\E92A";
 }
+
+/* ===========================================
+   Schedia MudBlazor Theme Overrides
+   =========================================== */
+
+/* Кнопки - убираем Material-стиль uppercase и добавляем мягкость */
+.mud-button-root {
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-weight: 500 !important;
+}
+
+.mud-button-root.mud-button-filled {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.mud-button-root.mud-button-filled:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Paper - более мягкие тени и subtle border */
+.mud-paper {
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.mud-paper.mud-elevation-1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+.mud-paper.mud-elevation-2 {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* AppBar - минималистичный стиль */
+.mud-appbar {
+    box-shadow: 0 1px 0 #E2E8F0 !important;
+}
+
+.mud-appbar.mud-appbar-color-primary {
+    background-color: #FFFFFF !important;
+    color: #1E293B !important;
+}
+
+/* Drawer - border вместо тени */
+.mud-drawer {
+    border-right: 1px solid #E2E8F0 !important;
+    box-shadow: none !important;
+}
+
+.mud-drawer--right {
+    border-left: 1px solid #E2E8F0 !important;
+    border-right: none !important;
+}
+
+/* Cards - современные скругления */
+.mud-card {
+    border: 1px solid #F1F5F9;
+    border-radius: 16px !important;
+}
+
+.mud-card-header {
+    padding: 20px 24px 16px !important;
+}
+
+.mud-card-content {
+    padding: 16px 24px !important;
+}
+
+.mud-card-actions {
+    padding: 12px 24px 20px !important;
+}
+
+/* Inputs - более мягкие стили */
+.mud-input-outlined .mud-input-outlined-border {
+    border-color: #E2E8F0 !important;
+    border-radius: 10px !important;
+}
+
+.mud-input-outlined:hover .mud-input-outlined-border {
+    border-color: #CBD5E1 !important;
+}
+
+.mud-input-outlined.mud-input-focused .mud-input-outlined-border {
+    border-width: 2px !important;
+}
+
+/* TextField underline стиль */
+.mud-input-underline:before {
+    border-bottom-color: #E2E8F0 !important;
+}
+
+.mud-input-underline:hover:before {
+    border-bottom-color: #CBD5E1 !important;
+}
+
+/* Select */
+.mud-select .mud-input-outlined-border {
+    border-radius: 10px !important;
+}
+
+/* Menu и Popover */
+.mud-menu,
+.mud-popover-paper {
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+                0 8px 10px -6px rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.mud-list-item {
+    border-radius: 8px !important;
+    margin: 2px 4px !important;
+}
+
+/* Dialog */
+.mud-dialog {
+    border-radius: 16px !important;
+}
+
+.mud-dialog-title {
+    padding: 24px 24px 16px !important;
+}
+
+.mud-dialog-content {
+    padding: 16px 24px !important;
+}
+
+.mud-dialog-actions {
+    padding: 16px 24px 24px !important;
+}
+
+/* Table - современный вид */
+.mud-table {
+    border-radius: 12px !important;
+    overflow: hidden;
+    border: 1px solid #E2E8F0;
+}
+
+.mud-table-head .mud-table-cell {
+    background-color: #F8FAFC !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    border-bottom: 1px solid #E2E8F0 !important;
+}
+
+.mud-table-body .mud-table-row:hover {
+    background-color: #F8FAFC !important;
+}
+
+.mud-table-cell {
+    border-bottom: 1px solid #F1F5F9 !important;
+}
+
+/* Chips */
+.mud-chip {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+}
+
+/* Tabs */
+.mud-tabs-toolbar {
+    border-bottom: 1px solid #E2E8F0 !important;
+}
+
+.mud-tab {
+    text-transform: none !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+}
+
+/* Snackbar */
+.mud-snackbar {
+    border-radius: 12px !important;
+}
+
+/* NavMenu */
+.mud-nav-link {
+    border-radius: 8px !important;
+    margin: 2px 8px !important;
+}
+
+/* Icons в навигации */
+.mud-nav-link .mud-icon-root {
+    margin-right: 12px;
+}
+
+/* Switch */
+.mud-switch-track {
+    border-radius: 12px !important;
+}
+
+/* Checkbox и Radio */
+.mud-checkbox .mud-icon-root,
+.mud-radio .mud-icon-root {
+    border-radius: 6px;
+}
+
+/* Progress */
+.mud-progress-linear {
+    border-radius: 4px !important;
+    overflow: hidden;
+}
+
+/* Alert */
+.mud-alert {
+    border-radius: 12px !important;
+}
+
+/* Skeleton */
+.mud-skeleton {
+    border-radius: 8px !important;
+}
+
+/* Avatar */
+.mud-avatar {
+    font-weight: 500 !important;
+}
+
+/* Tooltip */
+.mud-tooltip {
+    border-radius: 8px !important;
+    font-size: 0.8125rem !important;
+}
+
+/* Badge */
+.mud-badge-badge {
+    font-weight: 500 !important;
+}
+
+/* Transitions для hover эффектов */
+.mud-button-root,
+.mud-card,
+.mud-paper,
+.mud-list-item,
+.mud-nav-link {
+    transition: all 0.15s ease-in-out !important;
+}
