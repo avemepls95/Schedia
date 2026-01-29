@@ -5,11 +5,11 @@ namespace Schedia.Web.Shared.Tests.Pages;
 
 public class RegisterTests : IDisposable
 {
-    private readonly BlazorTestContext _ctx;
+    private readonly BlazorTestContext<Shared.Pages.Register.Register> _ctx;
 
     public RegisterTests()
     {
-        _ctx = new BlazorTestContext();
+        _ctx = new BlazorTestContext<Shared.Pages.Register.Register>();
         _ctx.SetupInMemoryDatabase();
     }
 
@@ -37,7 +37,7 @@ public class RegisterTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Register.Register>();
 
         // Assert
-        var action = () => cut.FindInputByLabel("Username");
+        var action = () => cut.FindInputByLabel("Имя пользователя");
         action.Should().NotThrow("Username input field should be present");
     }
 
@@ -48,7 +48,7 @@ public class RegisterTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Register.Register>();
 
         // Assert
-        var action = () => cut.FindInputByLabel("Email");
+        var action = () => cut.FindInputByLabel("Электронная почта");
         action.Should().NotThrow("Email input field should be present");
     }
 
@@ -59,7 +59,7 @@ public class RegisterTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Register.Register>();
 
         // Assert
-        var action = () => cut.FindInputByLabel("Password");
+        var action = () => cut.FindInputByLabel("Пароль");
         action.Should().NotThrow("Password input field should be present");
     }
 
@@ -70,7 +70,7 @@ public class RegisterTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Register.Register>();
 
         // Assert
-        var action = () => cut.FindInputByLabel("Confirm password");
+        var action = () => cut.FindInputByLabel("Подтвердите пароль");
         action.Should().NotThrow("Confirm password input field should be present");
     }
 
@@ -81,7 +81,7 @@ public class RegisterTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Register.Register>();
 
         // Assert
-        var action = () => cut.FindButtonByText("Register");
+        var action = () => cut.FindButtonByText("Регистрация");
         action.Should().NotThrow("Register button should be present");
     }
 
@@ -103,7 +103,7 @@ public class RegisterTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Register.Register>();
 
         // Assert
-        cut.ContainsText("Already have an account").Should().BeTrue();
+        cut.ContainsText("Уже зарегистрированы?").Should().BeTrue();
     }
 
     #endregion
@@ -117,7 +117,7 @@ public class RegisterTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Register.Register>();
 
         // Act
-        cut.ClickButton("Register");
+        cut.ClickButton("Регистрация");
 
         // Assert
         _ctx.MediatorMock.Verify(
@@ -137,7 +137,7 @@ public class RegisterTests : IDisposable
         cut.SetInputValueByIndex(1, "test@email.com"); // Email
         cut.SetInputValueByIndex(2, "Password123!");   // Password
         cut.SetInputValueByIndex(3, "DifferentPass!"); // ConfirmPassword - different!
-        cut.ClickButton("Register");
+        cut.ClickButton("Регистрация");
 
         // Assert
         _ctx.MediatorMock.Verify(
@@ -157,7 +157,7 @@ public class RegisterTests : IDisposable
         cut.SetInputValueByIndex(1, "invalid-email");  // Invalid email
         cut.SetInputValueByIndex(2, "Password123!");   // Password
         cut.SetInputValueByIndex(3, "Password123!");   // ConfirmPassword
-        cut.ClickButton("Register");
+        cut.ClickButton("Регистрация");
 
         // Assert
         _ctx.MediatorMock.Verify(
@@ -186,7 +186,7 @@ public class RegisterTests : IDisposable
         cut.SetInputValueByIndex(3, "Password123!");
 
         // Act
-        cut.ClickButton("Register");
+        cut.ClickButton("Регистрация");
 
         // Assert
         cut.HasLoadingIndicator().Should().BeTrue("Loading indicator should be visible during submission");
@@ -216,7 +216,7 @@ public class RegisterTests : IDisposable
         cut.SetInputValueByIndex(3, "Password123!");
 
         // Act
-        cut.ClickButton("Register");
+        cut.ClickButton("Регистрация");
 
         // Wait for async operations
         await Task.Delay(100);
@@ -243,7 +243,7 @@ public class RegisterTests : IDisposable
         cut.SetInputValueByIndex(3, "Password123!");
 
         // Act
-        cut.ClickButton("Register");
+        cut.ClickButton("Регистрация");
 
         // Wait for async operations
         await Task.Delay(100);

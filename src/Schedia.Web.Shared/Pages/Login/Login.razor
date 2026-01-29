@@ -2,6 +2,7 @@
 @layout AnonymousLayout
 @attribute [AllowAnonymous]
 @using Avemepls.Blazor.Components
+@using Avemepls.Domain.Extensions
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
 @using Schedia.Auth.Domain.ViaPassword
@@ -18,19 +19,19 @@
     <NotAuthorized>
         <MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center justify-center" Style="min-height: 100vh;">
             <MudCard Style="max-width: 400px; width: 100%; padding: 20px;">
-                <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-4">Login</MudText>
+                <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-4">@("Вход".Loc(Loc))</MudText>
 
                 <MudForm Model="@_model" @ref="@_form" Validation="@(_authValidator.ValidateValue)">
 
                     <BaseTextField T="string"
                                    @bind-Value="_model.Username"
                                    For="@(() => _model.Username)"
-                                   Label="Username" />
+                                   Label="@("Имя пользователя".Loc(Loc))" />
 
                     <BaseTextField T="string"
                                    @bind-Value="_model.Password"
                                    For="@(() => _model.Password)"
-                                   Label="Password"
+                                   Label="@("Пароль".Loc(Loc))"
                                    InputType="InputType.Password" />
                 </MudForm>
 
@@ -104,7 +105,7 @@
         }
         catch (ValidationException ex)
         {
-            _errorMessage = ex.Message;
+            _errorMessage = ex.GetFirstError();
         }
         catch (Exception ex)
         {

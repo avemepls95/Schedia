@@ -1,11 +1,14 @@
 ﻿@using Avemepls.Blazor.Common.Menus
 @using Avemepls.Blazor.Common.Menus.Providers
+@using Avemepls.Blazor.Components
+@using Microsoft.Extensions.Localization
 @inject IEnumerable<IMenuSectionsProvider> SectionProviders
 @inject IAuthenticationService AuthService
+@inject IStringLocalizer<AdministrationNavMenu> Loc
 
 <div class="pa-2">
     <MudTextField @bind-Value="_query"
-                  Placeholder="Поиск"
+                  Placeholder="@("Поиск".Loc(Loc))"
                   Adornment="Adornment.Start"
                   AdornmentIcon="@Icons.Material.Filled.Search"
                   Margin="Margin.Dense"
@@ -21,7 +24,7 @@
         <AdministrationMenuSection Item="@menuItem" QueryWord="@_query" />
     }
     <MudNavLink OnClick="@(async () => await HandleLogout())" Icon="@Icons.Material.Filled.Logout" IconColor="Color.Error">
-        Выйти
+        @("Выйти".Loc(Loc))
     </MudNavLink>
 </MudNavMenu>
 

@@ -4,11 +4,11 @@ namespace Schedia.Web.Shared.Tests.Pages;
 
 public class ResetPasswordTests : IDisposable
 {
-    private readonly BlazorTestContext _ctx;
+    private readonly BlazorTestContext<Shared.Pages.ResetPassword.ResetPassword> _ctx;
 
     public ResetPasswordTests()
     {
-        _ctx = new BlazorTestContext();
+        _ctx = new BlazorTestContext<Shared.Pages.ResetPassword.ResetPassword>();
         _ctx.SetupInMemoryDatabase();
     }
 
@@ -35,10 +35,10 @@ public class ResetPasswordTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ResetPassword.ResetPassword>();
 
         // Assert - verify actual input fields exist, not just text
-        var action1 = () => cut.FindInputByLabel("New Password");
+        var action1 = () => cut.FindInputByLabel("Новый пароль");
         action1.Should().NotThrow("New Password input field should be present");
 
-        var action2 = () => cut.FindInputByLabel("Confirm Password");
+        var action2 = () => cut.FindInputByLabel("Подтвердите пароль");
         action2.Should().NotThrow("Confirm Password input field should be present");
     }
 
@@ -61,7 +61,7 @@ public class ResetPasswordTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ResetPassword.ResetPassword>();
 
         // Assert
-        var action = () => cut.FindButtonByText("Reset Password");
+        var action = () => cut.FindButtonByText("Сбросить пароль");
         action.Should().NotThrow("Reset Password button should be present");
     }
 
@@ -73,7 +73,7 @@ public class ResetPasswordTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ResetPassword.ResetPassword>();
 
         // Assert
-        cut.ContainsText("Set new password").Should().BeTrue();
+        cut.ContainsText("Установить новый пароль").Should().BeTrue();
     }
 
     #endregion
@@ -119,7 +119,7 @@ public class ResetPasswordTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ResetPassword.ResetPassword>();
 
         // Act
-        cut.ClickButton("Reset Password");
+        cut.ClickButton("Сбросить пароль");
 
         // Assert
         _ctx.MediatorMock.Verify(
@@ -138,7 +138,7 @@ public class ResetPasswordTests : IDisposable
         // Act - fill with mismatched passwords
         cut.SetInputValueByIndex(0, "NewPassword123!"); // NewPassword
         cut.SetInputValueByIndex(1, "DifferentPassword!"); // ConfirmPassword - different!
-        cut.ClickButton("Reset Password");
+        cut.ClickButton("Сбросить пароль");
 
         // Assert
         _ctx.MediatorMock.Verify(
@@ -159,8 +159,8 @@ public class ResetPasswordTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ResetPassword.ResetPassword>();
 
         // Assert
-        cut.ContainsText("Reset Password").Should().BeTrue();
-        cut.ContainsText("Password Reset Successful").Should().BeFalse("Success view should not be visible initially");
+        cut.ContainsText("Сбросить пароль").Should().BeTrue();
+        cut.ContainsText("Пароль успешно сброшен").Should().BeFalse("Success view should not be visible initially");
     }
 
     [Fact]
@@ -178,15 +178,15 @@ public class ResetPasswordTests : IDisposable
         cut.SetInputValueByIndex(1, "NewPassword123!");
 
         // Act
-        cut.ClickButton("Reset Password");
+        cut.ClickButton("Сбросить пароль");
 
         // Wait for async operations
         await Task.Delay(100);
         cut.Render();
 
         // Assert
-        cut.ContainsText("Password Reset Successful").Should().BeTrue("Success title should be displayed");
-        cut.ContainsText("Your password has been changed").Should().BeTrue("Success message should be displayed");
+        cut.ContainsText("Пароль успешно сброшен").Should().BeTrue("Success title should be displayed");
+        cut.ContainsText("Ваш пароль изменен").Should().BeTrue("Success message should be displayed");
     }
 
     [Fact]
@@ -204,7 +204,7 @@ public class ResetPasswordTests : IDisposable
         cut.SetInputValueByIndex(1, "NewPassword123!");
 
         // Act
-        cut.ClickButton("Reset Password");
+        cut.ClickButton("Сбросить пароль");
 
         // Wait for async operations
         await Task.Delay(100);
@@ -229,14 +229,14 @@ public class ResetPasswordTests : IDisposable
         cut.SetInputValueByIndex(1, "NewPassword123!");
 
         // Act
-        cut.ClickButton("Reset Password");
+        cut.ClickButton("Сбросить пароль");
 
         // Wait for async operations
         await Task.Delay(100);
         cut.Render();
 
         // Assert
-        cut.ContainsText("Go to Login").Should().BeTrue("Go to Login button should be present in success view");
+        cut.ContainsText("Войти").Should().BeTrue("Go to Login button should be present in success view");
     }
 
     #endregion
@@ -259,7 +259,7 @@ public class ResetPasswordTests : IDisposable
         cut.SetInputValueByIndex(1, "NewPassword123!");
 
         // Act
-        cut.ClickButton("Reset Password");
+        cut.ClickButton("Сбросить пароль");
 
         // Wait for async operations
         await Task.Delay(100);
@@ -286,7 +286,7 @@ public class ResetPasswordTests : IDisposable
         cut.SetInputValueByIndex(1, "NewPassword123!");
 
         // Act
-        cut.ClickButton("Reset Password");
+        cut.ClickButton("Сбросить пароль");
 
         // Wait for async operations
         await Task.Delay(100);
@@ -318,10 +318,10 @@ public class ResetPasswordTests : IDisposable
         cut.SetInputValueByIndex(1, "NewPassword123!");
 
         // Act
-        cut.ClickButton("Reset Password");
+        cut.ClickButton("Сбросить пароль");
 
         // Assert
-        cut.ContainsText("Loading").Should().BeTrue("Loading text should be visible");
+        cut.ContainsText("Загрузка").Should().BeTrue("Loading text should be visible");
 
         // Cleanup
         tcs.SetResult(Unit.Value);
@@ -344,14 +344,14 @@ public class ResetPasswordTests : IDisposable
 
         cut.SetInputValueByIndex(0, "NewPassword123!");
         cut.SetInputValueByIndex(1, "NewPassword123!");
-        cut.ClickButton("Reset Password");
+        cut.ClickButton("Сбросить пароль");
 
         // Wait for async operations
         await Task.Delay(100);
         cut.Render();
 
         // Act
-        var goToLoginButton = cut.FindAll("button").First(b => b.TextContent.Contains("Go to Login"));
+        var goToLoginButton = cut.FindAll("button").First(b => b.TextContent.Contains("Войти"));
         goToLoginButton.Click();
 
         // Assert

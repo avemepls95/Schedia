@@ -19,7 +19,15 @@
       "Bash(Select-String -Pattern \"error CS|Warning\\\\\\(s\\\\\\)|Error\\\\\\(s\\\\\\)\")",
       "Bash(dotnet test:*)",
       "mcp__context7__resolve-library-id",
-      "mcp__context7__query-docs"
+      "mcp__context7__query-docs",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__take_snapshot",
+      "mcp__chrome-devtools__list_console_messages",
+      "mcp__chrome-devtools__click",
+      "mcp__chrome-devtools__fill_form",
+      "mcp__chrome-devtools__wait_for",
+      "mcp__chrome-devtools__fill"
     ]
   }
 }

@@ -41,9 +41,12 @@ public static class ResetPassword
     public class Validator<TCommand> : ExtendedAbstractValidator<TCommand>
         where TCommand : Command
     {
-        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory, IStringLocalizer<Validator<TCommand>> loc)
+        public Validator(
+            IDbContextFactory<IdentityDbContext> dbContextFactory,
+            IStringLocalizer<Validator<TCommand>> loc,
+            IStringLocalizer<PasswordValidator> passwordLoc)
         {
-            RuleFor(x => x.NewPassword).SetValidator(new PasswordValidator());
+            RuleFor(x => x.NewPassword).SetValidator(new PasswordValidator(passwordLoc));
 
             RuleFor(x => x.Token)
                 .Cascade(CascadeMode.Stop)

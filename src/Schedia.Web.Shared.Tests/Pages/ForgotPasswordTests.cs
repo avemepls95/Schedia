@@ -1,14 +1,15 @@
 using Schedia.Auth.Domain.ViaPassword;
+using Schedia.Web.Shared.Pages.ForgotPassword;
 
 namespace Schedia.Web.Shared.Tests.Pages;
 
 public class ForgotPasswordTests : IDisposable
 {
-    private readonly BlazorTestContext _ctx;
+    private readonly BlazorTestContext<ForgotPassword> _ctx;
 
     public ForgotPasswordTests()
     {
-        _ctx = new BlazorTestContext();
+        _ctx = new BlazorTestContext<ForgotPassword>();
         _ctx.SetupInMemoryDatabase();
     }
 
@@ -26,7 +27,7 @@ public class ForgotPasswordTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ForgotPassword.ForgotPassword>();
 
         // Assert
-        var action = () => cut.FindInputByLabel("Email");
+        var action = () => cut.FindInputByLabel("Электронная почта");
         action.Should().NotThrow("Email input field should be present");
     }
 
@@ -37,8 +38,8 @@ public class ForgotPasswordTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ForgotPassword.ForgotPassword>();
 
         // Assert
-        cut.ContainsText("Enter your email address").Should().BeTrue();
-        cut.ContainsText("send you a link").Should().BeTrue();
+        cut.ContainsText("Введите свой email").Should().BeTrue();
+        cut.ContainsText("вышлем Вам ссылку").Should().BeTrue();
     }
 
     [Fact]
@@ -48,7 +49,7 @@ public class ForgotPasswordTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ForgotPassword.ForgotPassword>();
 
         // Assert
-        var action = () => cut.FindButtonByText("Send Reset Link");
+        var action = () => cut.FindButtonByText("Отправить ссылку для сброса пароля");
         action.Should().NotThrow("Send Reset Link button should be present");
     }
 
@@ -77,7 +78,7 @@ public class ForgotPasswordTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ForgotPassword.ForgotPassword>();
 
         // Act
-        cut.ClickButton("Send Reset Link");
+        cut.ClickButton("Отправить ссылку для сброса пароля");
 
         // Assert
         _ctx.MediatorMock.Verify(
@@ -97,8 +98,8 @@ public class ForgotPasswordTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ForgotPassword.ForgotPassword>();
 
         // Assert - Form should be visible
-        cut.ContainsText("Send Reset Link").Should().BeTrue();
-        cut.ContainsText("Check Your Email").Should().BeFalse("Success view should not be visible initially");
+        cut.ContainsText("Отправить ссылку для сброса пароля").Should().BeTrue();
+        cut.ContainsText("Проверьте свой почтовый ящик").Should().BeFalse("Success view should not be visible initially");
     }
 
     [Fact]
@@ -113,15 +114,15 @@ public class ForgotPasswordTests : IDisposable
         cut.SetInputValueByIndex(0, "test@example.com");
 
         // Act
-        cut.ClickButton("Send Reset Link");
+        cut.ClickButton("Отправить ссылку для сброса пароля");
 
         // Wait for async operations
         await Task.Delay(100);
         cut.Render();
 
         // Assert
-        cut.ContainsText("Check Your Email").Should().BeTrue("Success title should be displayed");
-        cut.ContainsText("password reset instructions").Should().BeTrue("Success message should be displayed");
+        cut.ContainsText("Проверьте свой почтовый ящик").Should().BeTrue("Success title should be displayed");
+        cut.ContainsText("инструкцию для сброса пароля").Should().BeTrue("Success message should be displayed");
     }
 
     [Fact]
@@ -136,7 +137,7 @@ public class ForgotPasswordTests : IDisposable
         cut.SetInputValueByIndex(0, "test@example.com");
 
         // Act
-        cut.ClickButton("Send Reset Link");
+        cut.ClickButton("Отправить ссылку для сброса пароля");
 
         // Wait for async operations
         await Task.Delay(100);
@@ -158,14 +159,14 @@ public class ForgotPasswordTests : IDisposable
         cut.SetInputValueByIndex(0, "test@example.com");
 
         // Act
-        cut.ClickButton("Send Reset Link");
+        cut.ClickButton("Отправить ссылку для сброса пароля");
 
         // Wait for async operations
         await Task.Delay(100);
         cut.Render();
 
         // Assert
-        var action = () => cut.FindButtonByText("Back to Login");
+        var action = () => cut.FindButtonByText("Войти");
         action.Should().NotThrow("Back to Login button should be present in success view");
     }
 
@@ -182,7 +183,7 @@ public class ForgotPasswordTests : IDisposable
         cut.SetInputValueByIndex(0, "notfound@example.com");
 
         // Act
-        cut.ClickButton("Send Reset Link");
+        cut.ClickButton("Отправить ссылку для сброса пароля");
 
         // Wait for async operations
         await Task.Delay(100);
@@ -206,7 +207,7 @@ public class ForgotPasswordTests : IDisposable
         cut.SetInputValueByIndex(0, "test@example.com");
 
         // Act
-        cut.ClickButton("Send Reset Link");
+        cut.ClickButton("Отправить ссылку для сброса пароля");
 
         // Wait for async operations
         await Task.Delay(100);
@@ -235,10 +236,10 @@ public class ForgotPasswordTests : IDisposable
         cut.SetInputValueByIndex(0, "test@example.com");
 
         // Act
-        cut.ClickButton("Send Reset Link");
+        cut.ClickButton("Отправить ссылку для сброса пароля");
 
         // Assert
-        cut.ContainsText("Loading").Should().BeTrue("Loading text should be visible");
+        cut.ContainsText("Загрузка").Should().BeTrue("Loading text should be visible");
 
         // Cleanup
         tcs.SetResult(Unit.Value);
@@ -258,14 +259,14 @@ public class ForgotPasswordTests : IDisposable
 
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ForgotPassword.ForgotPassword>();
         cut.SetInputValueByIndex(0, "test@example.com");
-        cut.ClickButton("Send Reset Link");
+        cut.ClickButton("Отправить ссылку для сброса пароля");
 
         // Wait for async operations
         await Task.Delay(100);
         cut.Render();
 
         // Act
-        cut.ClickButton("Back to Login");
+        cut.ClickButton("Войти");
 
         // Assert
         _ctx.Navigation.Uri.Should().Contain("/login");

@@ -1,7 +1,4 @@
-"RS-Revision-Date: 16.01.2026\n"
-
-msgid "Поле '{PropertyName}' обязательно к заполнению"
-msgstr "Field '{PropertyName}' is required"
+"RS-Revision-Date: 25.01.2026\n"
 
 msgid "Загрузка"
 msgstr "Loading"
@@ -65,3 +62,36 @@ msgstr "Settings"
 
 msgid "Выйти"
 msgstr "Log out"
+
+msgid "Имя пользователя"
+msgstr "Username"
+
+msgid "Электронная почта"
+msgstr "Email"
+
+msgid "Пароль"
+msgstr "Password"
+
+msgid "Подтвердите пароль"
+msgstr "Confirm password"
+
+msgid "Вход"
+msgstr "Sign in"
+
+msgid "Установить новый пароль"
+msgstr "Set new password"
+
+msgid "Новый пароль"
+msgstr "New password"
+
+msgid "Добро пожаловать в Schedia!"
+msgstr "Welcome to Schedia!"
+
+msgid "Администрирование"
+msgstr "Administration"
+
+msgid "Панель администрирования"
+msgstr "Administration panel"
+
+msgid "Поиск"
+msgstr "Search"

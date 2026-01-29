@@ -10,6 +10,7 @@ using FluentValidation;
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 using Schedia.Auth.Domain.Services;
 using Schedia.Auth.Domain.Validators;
@@ -26,7 +27,10 @@ public static class ChangePassword
         public string NewPassword { get; set; }
     }
 
-    internal sealed class Handler(IdentityDbContext dbContext, IPrincipalAccessor principalAccessor)
+    internal sealed class Handler(
+        IdentityDbContext dbContext,
+        IPrincipalAccessor principalAccessor,
+        IStringLocalizer<Handler> loc)
         : IRequestHandler<Command>
     {
         public async Task Handle(Command command, CancellationToken cancellationToken)
@@ -35,7 +39,7 @@ public static class ChangePassword
             var user = await dbContext.Users.AsTracking().Available().FirstOrDefaultAsync(u => u.Id == new Id<User>(userId), cancellationToken);
             if (user == null || !PasswordHasher.VerifyPassword(command.OldPassword, user.PasswordHash))
             {
-                throw new ValidationException("User with specified old password not found");
+                throw new ValidationException(loc["Старый пароль указан неверно"]);
             }
 
             user.PasswordHash = PasswordHasher.HashPassword(command.NewPassword);
@@ -46,10 +50,10 @@ public static class ChangePassword
 
     internal sealed class RegisterRequestValidator : AbstractValidator<Command>
     {
-        public RegisterRequestValidator()
+        public RegisterRequestValidator(IStringLocalizer<PasswordValidator> passwordLoc)
         {
             RuleFor(x => x.OldPassword).NotEmpty();
-            RuleFor(x => x.NewPassword).SetValidator(new PasswordValidator());
+            RuleFor(x => x.NewPassword).SetValidator(new PasswordValidator(passwordLoc));
         }
     }
 }

@@ -1,3 +1,6 @@
 @page "/"
+@using Avemepls.Blazor.Components
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Index> Loc
 
-<h1>Welcome to Schedia!</h1>
+<h1>@("Добро пожаловать в Schedia!".Loc(Loc))</h1>

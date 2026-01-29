@@ -1,12 +1,48 @@
+using System.Globalization;
 using Bunit.TestDoubles;
 using Microsoft.Extensions.DependencyInjection;
 using MudBlazor.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Avemepls.Identity.DataAccess;
+using FluentValidation;
+
+using Microsoft.Extensions.Localization;
+
+using Schedia.Auth.Domain.Validators;
+using Schedia.Auth.Domain.ViaPassword;
 using Schedia.Web.Shared.Services;
 
 namespace Schedia.Web.Shared.Tests.Fixtures;
+
+/// <summary>
+/// Mock implementation of IStringLocalizer&lt;T&gt; that returns the key as the value.
+/// </summary>
+public class MockStringLocalizer<T> : IStringLocalizer<T>
+{
+    public LocalizedString this[string name] => new(name, name);
+    public LocalizedString this[string name, params object[] arguments] => new(name, string.Format(name, arguments));
+    public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures) => [];
+}
+
+public class BlazorTestContext<TPage> : BlazorTestContext
+    where TPage : IComponent
+{
+    public Mock<IStringLocalizer<TPage>> Loc { get; }
+
+    public BlazorTestContext() : base()
+    {
+        Loc = new Mock<IStringLocalizer<TPage>>();
+
+        // Configure mock to return key as value (same as MockStringLocalizer)
+        Loc.Setup(l => l[It.IsAny<string>()])
+            .Returns((string key) => new LocalizedString(key, key));
+        Loc.Setup(l => l[It.IsAny<string>(), It.IsAny<object[]>()])
+            .Returns((string key, object[] args) => new LocalizedString(key, string.Format(key, args)));
+
+        Services.AddSingleton(Loc.Object);
+    }
+}
 
 /// <summary>
 /// Base test context with MudBlazor services and common mocks configured.
@@ -22,6 +58,9 @@ public class BlazorTestContext : TestContext
 
     public BlazorTestContext()
     {
+        // Set Russian culture for localization (avoids [brackets] wrapping in .Loc() method)
+        CultureInfo.CurrentUICulture = new CultureInfo("ru-RU");
+
         // Initialize mocks
         MediatorMock = new Mock<IMediator>();
         AuthServiceMock = new Mock<IAuthenticationService>();
@@ -40,10 +79,25 @@ public class BlazorTestContext : TestContext
         // Setup specific MudBlazor JS interop calls
         SetupMudBlazorJsInterop();
 
+        // Generic mock for any IStringLocalizer<T>
+        // This handles all localizers including nested types like Register.Validator
+        Services.Add(new ServiceDescriptor(
+            typeof(IStringLocalizer<>),
+            typeof(MockStringLocalizer<>),
+            ServiceLifetime.Singleton));
+
         // Register mock services
-        Services.AddSingleton(MediatorMock.Object);
-        Services.AddSingleton(AuthServiceMock.Object);
-        Services.AddSingleton(DbContextFactoryMock.Object);
+        Services
+            .AddSingleton(MediatorMock.Object)
+            .AddSingleton(AuthServiceMock.Object)
+            .AddSingleton(DbContextFactoryMock.Object);
+
+        // Real validator for RequestPasswordReset.Command used by ForgotPassword page
+        // (ForgotPassword.razor casts IValidator to concrete Validator type)
+        Services.AddSingleton<IValidator<RequestPasswordReset.Command>>(sp =>
+            new RequestPasswordReset.Validator(
+                sp.GetRequiredService<IDbContextFactory<IdentityDbContext>>(),
+                new MockStringLocalizer<RequestPasswordReset.Validator>()));
 
         // Setup default authorization state (not authorized)
         _authContext = this.AddTestAuthorization();

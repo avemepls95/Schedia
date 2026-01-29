@@ -1,10 +1,12 @@
 using Avemepls.Auth.Bearer;
 
+using Schedia.Web.Shared.Pages.Login;
+
 namespace Schedia.Web.Shared.Tests.Pages;
 
 public class LoginTests : IDisposable
 {
-    private readonly BlazorTestContext _ctx = new();
+    private readonly BlazorTestContext<Login> _ctx = new();
 
     public void Dispose()
     {
@@ -17,10 +19,10 @@ public class LoginTests : IDisposable
     public void Login_ShouldDisplay_UsernameField()
     {
         // Arrange & Act
-        var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Login.Login>();
+        var cut = _ctx.RenderComponent<Login>();
 
         // Assert
-        var action = () => cut.FindInputByLabel("Username");
+        var action = () => cut.FindInputByLabel("Имя пользователя");
         action.Should().NotThrow("Username input field should be present");
     }
 
@@ -31,7 +33,7 @@ public class LoginTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Login.Login>();
 
         // Assert
-        var action = () => cut.FindInputByLabel("Password");
+        var action = () => cut.FindInputByLabel("Пароль");
         action.Should().NotThrow("Password input field should be present");
     }
 
@@ -42,7 +44,7 @@ public class LoginTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Login.Login>();
 
         // Assert
-        var action = () => cut.FindButtonByText("Login");
+        var action = () => cut.FindButtonByText("Войти");
         action.Should().NotThrow("Login button should be present");
     }
 
@@ -79,7 +81,7 @@ public class LoginTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.Login.Login>();
 
         // Act
-        cut.ClickButton("Login");
+        cut.ClickButton("Войти");
 
         // Assert
         _ctx.MediatorMock.Verify(
@@ -96,7 +98,7 @@ public class LoginTests : IDisposable
 
         // Act - fill only password
         cut.SetInputValueByIndex(1, "somepassword"); // Password is second input
-        cut.ClickButton("Login");
+        cut.ClickButton("Войти");
 
         // Assert - form should be invalid, mediator not called
         _ctx.MediatorMock.Verify(
@@ -112,7 +114,7 @@ public class LoginTests : IDisposable
 
         // Act - fill only username
         cut.SetInputValueByIndex(0, "testuser"); // Username is first input
-        cut.ClickButton("Login");
+        cut.ClickButton("Войти");
 
         // Assert - form should be invalid, mediator not called
         _ctx.MediatorMock.Verify(
@@ -138,11 +140,11 @@ public class LoginTests : IDisposable
         cut.SetInputValueByIndex(1, "password123");
 
         // Act
-        cut.ClickButton("Login");
+        cut.ClickButton("Войти");
 
         // Assert
         cut.HasLoadingIndicator().Should().BeTrue("Loading indicator should be visible during submission");
-        cut.ContainsText("Loading").Should().BeTrue("Loading text should be visible");
+        cut.ContainsText("Загрузка").Should().BeTrue("Loading text should be visible");
 
         // Cleanup
         tcs.SetResult(new TokenInformation { AccessToken = "token", RefreshToken = "refresh" });
@@ -167,7 +169,7 @@ public class LoginTests : IDisposable
         cut.SetInputValueByIndex(1, "password123");
 
         // Act
-        cut.ClickButton("Login");
+        cut.ClickButton("Войти");
 
         // Wait for async operations
         await Task.Delay(100);
@@ -193,7 +195,7 @@ public class LoginTests : IDisposable
         cut.SetInputValueByIndex(1, "wrongpassword");
 
         // Act
-        cut.ClickButton("Login");
+        cut.ClickButton("Войти");
 
         // Wait for async operations
         await Task.Delay(100);
@@ -218,7 +220,7 @@ public class LoginTests : IDisposable
         cut.SetInputValueByIndex(1, "password123");
 
         // Act
-        cut.ClickButton("Login");
+        cut.ClickButton("Войти");
 
         // Wait for async operations
         await Task.Delay(100);
@@ -254,7 +256,7 @@ public class LoginTests : IDisposable
         cut.SetInputValueByIndex(1, "password123");
 
         // Act
-        cut.ClickButton("Login");
+        cut.ClickButton("Войти");
 
         // Wait for async operations
         await Task.Delay(100);

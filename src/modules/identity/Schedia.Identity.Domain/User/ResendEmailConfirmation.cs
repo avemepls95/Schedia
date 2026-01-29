@@ -65,7 +65,7 @@ public static class ResendEmailConfirmation
 
                     if (user.EmailConfirmed)
                     {
-                        validationContext.AddFailure("Email уже подтвержден.");
+                        validationContext.AddFailure(loc["Email уже подтвержден."]);
                     }
                 });
         }

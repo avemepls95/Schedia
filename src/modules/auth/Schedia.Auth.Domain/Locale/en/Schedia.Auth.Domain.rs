@@ -1,4 +1,4 @@
-"RS-Revision-Date: 15.01.2026\n"
+"RS-Revision-Date: 24.01.2026\n"
 
 msgid "Неверные логин или пароль"
 msgstr "Invalid username or password"
@@ -17,3 +17,21 @@ msgstr "User not found"
 
 msgid "Срок ссылки сброса пароля истек. Повторите процедуру заново"
 msgstr "Password reset link has expired. Please try again"
+
+msgid "Пароль должен содержать минимум 8 символов"
+msgstr "Password must be at least 8 characters"
+
+msgid "Пароль должен содержать максимум 16 символов"
+msgstr "Password must not exceed 16 characters"
+
+msgid "Пароль должен содержать хотя бы одну заглавную букву"
+msgstr "Password must contain at least one uppercase letter"
+
+msgid "Пароль должен содержать хотя бы одну строчную букву"
+msgstr "Password must contain at least one lowercase letter"
+
+msgid "Пароль должен содержать хотя бы одну цифру"
+msgstr "Password must contain at least one digit"
+
+msgid "Старый пароль указан неверно"
+msgstr "Old password is incorrect"

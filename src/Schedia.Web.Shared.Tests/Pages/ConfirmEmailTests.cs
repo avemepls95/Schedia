@@ -4,7 +4,7 @@ namespace Schedia.Web.Shared.Tests.Pages;
 
 public class ConfirmEmailTests : IDisposable
 {
-    private readonly BlazorTestContext _ctx = new();
+    private readonly BlazorTestContext<Shared.Pages.ConfirmEmail.ConfirmEmail> _ctx = new();
 
     public void Dispose()
     {
@@ -36,7 +36,7 @@ public class ConfirmEmailTests : IDisposable
         var cut = _ctx.RenderComponent<Schedia.Web.Shared.Pages.ConfirmEmail.ConfirmEmail>();
 
         // Assert
-        cut.ContainsText("Confirming your email").Should().BeTrue("Loading message should be visible initially");
+        cut.ContainsText("Подтверждение Вашего электронного адреса").Should().BeTrue("Loading message should be visible initially");
         cut.Markup.Should().Contain("⏳", "Hourglass emoji should be visible during loading");
 
         // Cleanup
@@ -65,8 +65,8 @@ public class ConfirmEmailTests : IDisposable
         cut.Render();
 
         // Assert
-        cut.ContainsText("Email Confirmed").Should().BeTrue("Success title should be displayed");
-        cut.ContainsText("verified successfully").Should().BeTrue("Success message should be displayed");
+        cut.ContainsText("Электронный адрес подтвержден!").Should().BeTrue("Success title should be displayed");
+        cut.ContainsText("Ваш e-mail успешно подтвержден").Should().BeTrue("Success message should be displayed");
     }
 
     [Fact]
@@ -108,7 +108,7 @@ public class ConfirmEmailTests : IDisposable
         cut.Render();
 
         // Assert
-        cut.ContainsText("Go to Home").Should().BeTrue("Go to Home button should be present");
+        cut.ContainsText("На главную").Should().BeTrue("Go to Home button should be present");
     }
 
     [Fact]
@@ -157,7 +157,7 @@ public class ConfirmEmailTests : IDisposable
         cut.Render();
 
         // Assert
-        cut.ContainsText("Confirmation Failed").Should().BeTrue("Error title should be displayed");
+        cut.ContainsText("Ошибка подтверждения").Should().BeTrue("Error title should be displayed");
         cut.ContainsText(errorMessage).Should().BeTrue("Error message should be displayed");
     }
 
@@ -200,7 +200,7 @@ public class ConfirmEmailTests : IDisposable
         cut.Render();
 
         // Assert
-        cut.ContainsText("Back to Login").Should().BeTrue("Back to Login button should be present");
+        cut.ContainsText("Войти").Should().BeTrue("Back to Login button should be present");
     }
 
     [Fact]
@@ -221,7 +221,7 @@ public class ConfirmEmailTests : IDisposable
         cut.Render();
 
         // Assert
-        cut.ContainsText("Confirmation Failed").Should().BeTrue("Error title should be displayed");
+        cut.ContainsText("Ошибка подтверждения").Should().BeTrue("Error title should be displayed");
         cut.ContainsText("непредвиденная ошибка").Should().BeTrue("Generic error message should be displayed");
     }
 
@@ -258,7 +258,7 @@ public class ConfirmEmailTests : IDisposable
         cut.Render();
 
         // Assert - should transition to error state (not loading, not success)
-        cut.ContainsText("Confirming your email").Should().BeFalse("Should not be in loading state");
+        cut.ContainsText("Подтверждение Вашего электронного адреса").Should().BeFalse("Should not be in loading state");
     }
 
     [Fact]
@@ -298,7 +298,7 @@ public class ConfirmEmailTests : IDisposable
         cut.Render();
 
         // Act
-        var goHomeButton = cut.FindAll("button").First(b => b.TextContent.Contains("Go to Home"));
+        var goHomeButton = cut.FindAll("button").First(b => b.TextContent.Contains("На главную"));
         goHomeButton.Click();
 
         // Assert
@@ -321,7 +321,7 @@ public class ConfirmEmailTests : IDisposable
         cut.Render();
 
         // Act
-        var backButton = cut.FindAll("button").First(b => b.TextContent.Contains("Back to Login"));
+        var backButton = cut.FindAll("button").First(b => b.TextContent.Contains("Войти"));
         backButton.Click();
 
         // Assert

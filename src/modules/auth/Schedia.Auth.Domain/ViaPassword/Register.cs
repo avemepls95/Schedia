@@ -75,7 +75,10 @@ public static class Register
     public class Validator<TCommand> : ExtendedAbstractValidator<TCommand>
         where TCommand : Command
     {
-        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory, IStringLocalizer<Validator<TCommand>> loc)
+        public Validator(
+            IDbContextFactory<IdentityDbContext> dbContextFactory,
+            IStringLocalizer<Validator<TCommand>> loc,
+            IStringLocalizer<PasswordValidator> passwordLoc)
         {
             RuleFor(x => x.Email)
                 .Cascade(CascadeMode.Stop)
@@ -93,7 +96,7 @@ public static class Register
             RuleFor(x => x.Password)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty()
-                .SetValidator(new PasswordValidator());
+                .SetValidator(new PasswordValidator(passwordLoc));
 
             RuleFor(x => x.Username)
                 .MustAsync(async (value, cancellationToken) =>

@@ -1,6 +1,7 @@
 @page "/confirm-email"
 @layout AnonymousLayout
 @using Avemepls.Blazor.Components
+@using Avemepls.Domain.Extensions
 @using Microsoft.Extensions.Localization
 @using Schedia.Web.Shared.Layouts
 @using ValidationException = FluentValidation.ValidationException
@@ -71,7 +72,7 @@
         }
         catch (ValidationException ex)
         {
-            _errorMessage = ex.Message;
+            _errorMessage = ex.GetFirstError();
             _success = false;
         }
         catch (Exception ex)
