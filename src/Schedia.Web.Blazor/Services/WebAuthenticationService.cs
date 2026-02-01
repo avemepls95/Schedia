@@ -14,7 +14,7 @@ public class WebAuthenticationService(
     TokenAuthenticationStateProvider authStateProvider,
     NavigationManager navigationManager,
     IJSRuntime jsRuntime)
-    : Schedia.Web.Shared.Services.IAuthenticationService
+    : Schedia.Web.Base.Services.IAuthenticationService
 {
     public async Task LoginAsync(TokenInformation tokenInformation, string? returnUrl = null)
     {

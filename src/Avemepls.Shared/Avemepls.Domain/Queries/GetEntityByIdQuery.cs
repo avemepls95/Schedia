@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 using Avemepls.Core.Localization;
 using Avemepls.Core.Models;

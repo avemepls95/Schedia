@@ -1,4 +1,4 @@
-"RS-Revision-Date: 24.01.2026\n"
+"RS-Revision-Date: 29.01.2026\n"
 
 msgid "Неверные логин или пароль"
 msgstr "Invalid username or password"
@@ -35,3 +35,9 @@ msgstr "Password must contain at least one digit"
 
 msgid "Старый пароль указан неверно"
 msgstr "Old password is incorrect"
+
+msgid "Имя пользователя"
+msgstr "Username"
+
+msgid "Пароль"
+msgstr "Password"

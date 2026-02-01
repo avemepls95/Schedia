@@ -1,12 +1,13 @@
 <Project>
     <PropertyGroup>
-        <AspNetCoreVersion>10.0.0</AspNetCoreVersion>
+        <AspNetCoreVersion>10.0.1</AspNetCoreVersion>
         <EntityFrameworkCoreVersion>$(AspNetCoreVersion)</EntityFrameworkCoreVersion>
         <NpgsqlEntityFrameworkCoreVersion>10.0.0</NpgsqlEntityFrameworkCoreVersion>
         <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
         <AntDesign>1.5.1</AntDesign>
         <MauiVersion>10.0.20</MauiVersion>
         <RsLocalizer>1.0.1</RsLocalizer>
+        <MassTransit>8.4.1</MassTransit>
     </PropertyGroup>
     <ItemGroup>
         <PackageVersion Include="AntDesign" Version="$(AntDesign)"/>
@@ -76,7 +77,7 @@
         </PackageVersion>
         <PackageVersion Include="DateOnlyTimeOnly.AspNet" Version="2.1.1"/>
         <PackageVersion Include="DateOnlyTimeOnly.AspNet.Swashbuckle" Version="2.1.1"/>
-        <PackageVersion Include="EFCore.NamingConventions" Version="8.0.3"/>
+        <PackageVersion Include="EFCore.NamingConventions" Version="$(EntityFrameworkCoreVersion)"/>
         <PackageVersion Include="EntityFrameworkCore.Projectables" Version="4.0.0"/>
         <PackageVersion Include="EntityFrameworkCore.Projectables.Abstractions" Version="4.0.0"/>
         <PackageVersion Include="MassTransit.TestFramework" Version="$(MassTransit)"/>

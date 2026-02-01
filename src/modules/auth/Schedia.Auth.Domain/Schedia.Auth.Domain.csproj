@@ -14,10 +14,7 @@
       <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Auth.Bearer\Avemepls.Auth.Bearer.csproj" />
       <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Domain\Avemepls.Domain.csproj" />
       <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Mapster\Avemepls.Mapster.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="ViaOAuth\" />
+      <ProjectReference Include="..\Schedia.Auth.Abstractions\Schedia.Auth.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-using Schedia.Web.Shared.Services;
+using Schedia.Web.Base.Services;
 
 namespace Schedia.Web.Blazor.Services;
 

@@ -1,8 +1,7 @@
 using Avemepls.Infrastructure;
-
 using Microsoft.AspNetCore.Localization;
 using Microsoft.IdentityModel.Logging;
-
+using Schedia.Web.Base;
 using Schedia.Web.Blazor;
 using Schedia.Web.Blazor.Components;
 using Schedia.Web.Blazor.Endpoints;

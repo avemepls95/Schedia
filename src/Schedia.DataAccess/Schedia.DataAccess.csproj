@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <EnableNETAnalyzers>false</EnableNETAnalyzers>
+        <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+        <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
+        <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+        <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="EFCore.NamingConventions"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational"/>
+        <PackageReference Include="MassTransit.EntityFrameworkCore"/>
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Avemepls.Shared\Avemepls.DataAccess\Avemepls.DataAccess.csproj" />
+      <ProjectReference Include="..\Avemepls.Shared\Avemepls.Identity\Avemepls.Identity.DataAccess\Avemepls.Identity.DataAccess.csproj" />
+    </ItemGroup>
+
+</Project>

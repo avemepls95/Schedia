@@ -277,6 +277,9 @@ dotnet_diagnostic.S1117.severity = error
 
 dotnet_diagnostic.S3267.severity = error
 
+# Property hides property from outer class
+dotnet_diagnostic.S3218.severity = warning
+
 dotnet_diagnostic.xUnit1026.severity = error
 
 # Use ordinal StringComparison

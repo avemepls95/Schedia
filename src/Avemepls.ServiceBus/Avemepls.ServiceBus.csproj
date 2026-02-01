@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MassTransit" />
+        <PackageReference Include="MassTransit.Abstractions" />
+        <PackageReference Include="MediatR" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Avemepls.Shared\Avemepls.Core\Avemepls.Core.csproj" />
+      <ProjectReference Include="..\Avemepls.Shared\Avemepls.Domain\Avemepls.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

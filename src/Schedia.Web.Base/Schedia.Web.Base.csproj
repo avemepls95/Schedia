@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avemepls.RsLocalizer"/>
+        <PackageReference Include="MassTransit.RabbitMQ"/>
+        <PackageReference Include="MudBlazor" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Avemepls.Shared\Avemepls.Blazor\Avemepls.Blazor.csproj" />
+        <ProjectReference Include="..\Avemepls.ServiceBus\Avemepls.ServiceBus.csproj" />
+        <ProjectReference Include="..\Avemepls.Shared\Avemepls.Auth.Bearer\Avemepls.Auth.Bearer.csproj" />
+        <ProjectReference Include="..\modules\auth\Schedia.Auth.Application\Schedia.Auth.Application.csproj" />
+        <ProjectReference Include="..\modules\identity\Schedia.Identity.Domain\Schedia.Identity.Domain.csproj" />
+        <ProjectReference Include="..\Schedia.DataAccess\Schedia.DataAccess.csproj" />
+        <ProjectReference Include="..\core\Schedia.Domain.Core\Schedia.Domain.Core.csproj" />
+        <ProjectReference Include="..\core\Schedia.Web.Core.Blazor\Schedia.Web.Core.Blazor.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Layouts\Administration\AdministrationLayout.razor" />
+      <AdditionalFiles Include="Layouts\Administration\AdministrationMenuSection.razor" />
+      <AdditionalFiles Include="Layouts\Administration\AdministrationNavMenu.razor" />
+      <AdditionalFiles Include="Pages\Administration\Index.razor" />
+      <AdditionalFiles Include="Pages\ConfirmEmail\ConfirmEmail.razor" />
+      <AdditionalFiles Include="Pages\ForgotPassword\ForgotPassword.razor" />
+      <AdditionalFiles Include="Pages\Register\Register.razor" />
+      <AdditionalFiles Include="Pages\ResetPassword\ResetPassword.razor" />
+    </ItemGroup>
+</Project>

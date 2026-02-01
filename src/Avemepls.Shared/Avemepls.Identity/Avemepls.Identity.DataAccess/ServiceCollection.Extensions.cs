@@ -8,14 +8,14 @@ namespace Avemepls.Identity.DataAccess;
 // #PoIgnore#
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddDataAccess(this IServiceCollection serviceCollection, Action<DbContextOptionsBuilder>? configure)
+    public static IServiceCollection AddIdentityDataAccess(this IServiceCollection serviceCollection, Action<DbContextOptionsBuilder>? configure)
     {
-        serviceCollection.AddDataAccess((_, cfg) => configure?.Invoke(cfg));
+        serviceCollection.AddIdentityDataAccess((_, cfg) => configure?.Invoke(cfg));
 
         return serviceCollection;
     }
 
-    public static IServiceCollection AddDataAccess(this IServiceCollection services, Action<IServiceProvider, DbContextOptionsBuilder> configure)
+    public static IServiceCollection AddIdentityDataAccess(this IServiceCollection services, Action<IServiceProvider, DbContextOptionsBuilder> configure)
     {
         services.AddScoped(serviceProvider => serviceProvider.GetRequiredService<IDbContextFactory<IdentityDbContext>>().CreateDbContext());
         services.AddDbContextFactory<IdentityDbContext>(configure, ServiceLifetime.Scoped);

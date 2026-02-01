@@ -1,8 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <ItemGroup>
-        <PackageReference Include="AntDesign"/>
-        <PackageReference Include="Avemepls.RsLocalizer"/>
         <PackageReference Include="Blazorade.Core"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
         <PackageReference Include="Microsoft.AspNetCore.Components"/>
@@ -15,12 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\core\Schedia.Domain.Core\Schedia.Domain.Core.csproj" />
-      <ProjectReference Include="..\Schedia.Web.Shared\Schedia.Web.Shared.csproj" />
-      <ProjectReference Include="..\Avemepls.Shared\Avemepls.Auth.Bearer\Avemepls.Auth.Bearer.csproj" />
-      <ProjectReference Include="..\core\Schedia.Web.Core.Blazor\Schedia.Web.Core.Blazor.csproj" />
-      <ProjectReference Include="..\modules\auth\Schedia.Auth.Domain\Schedia.Auth.Domain.csproj" />
-      <ProjectReference Include="..\modules\identity\Schedia.Identity.Domain\Schedia.Identity.Domain.csproj" />
+      <ProjectReference Include="..\Schedia.Web.Base\Schedia.Web.Base.csproj" />
     </ItemGroup>
 
 </Project>

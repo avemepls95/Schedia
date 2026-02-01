@@ -27,7 +27,9 @@
       "mcp__chrome-devtools__click",
       "mcp__chrome-devtools__fill_form",
       "mcp__chrome-devtools__wait_for",
-      "mcp__chrome-devtools__fill"
+      "mcp__chrome-devtools__fill",
+      "Bash(Select-String -Pattern \"\\(Passed|Failed|Skipped|Total|FAILED|error\\)\")",
+      "Bash(Select-Object -Last 20)"
     ]
   }
 }

@@ -1,0 +1,62 @@
+﻿using Avemepls.Auth.Bearer;
+using Avemepls.Auth.Bearer.Abstractions;
+using Avemepls.Core.DataAccess.Extensions;
+using Avemepls.Core.Localization;
+using Avemepls.Domain.Validators;
+using Avemepls.Identity.DataAccess;
+using FluentValidation;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+
+using Schedia.Auth.Abstractions.Models;
+using Schedia.Auth.Domain.Services;
+
+namespace Schedia.Auth.Domain.ViaPassword;
+
+public static class Login
+{
+    public class Command : IRequest<TokenInformation>
+    {
+        [DisplayNameLoc("Имя пользователя")]
+        public string Username { get; set; }
+
+        [DisplayNameLoc("Пароль")]
+        public string Password { get; set; }
+    }
+
+    internal sealed class Handler(IdentityDbContext dbContext, ITokenGenerator tokenGenerator, IPublisher publisher, IStringLocalizer<Handler> loc)
+        : IRequestHandler<Command, TokenInformation>
+    {
+        public async Task<TokenInformation> Handle(Command command, CancellationToken cancellationToken)
+        {
+            var user = await dbContext.Users.Available().FirstOrDefaultAsync(u => u.Username == command.Username, cancellationToken);
+
+            if (user == null || !PasswordHasher.VerifyPassword(command.Password, user.PasswordHash))
+            {
+                throw new ValidationException(loc["Неверные логин или пароль"]);
+            }
+
+            var token = tokenGenerator.Create(user.Id);
+
+            await publisher.Publish(
+                new UserLoginNotification
+                {
+                    Id = user.Id.Value,
+                    Date = DateTimeOffset.Now
+                },
+                cancellationToken);
+
+            return token;
+        }
+    }
+
+    public class Validator : ExtendedAbstractValidator<Command>
+    {
+        public Validator()
+        {
+            RuleFor(u => u.Username).NotEmpty();
+            RuleFor(u => u.Password).NotEmpty();
+        }
+    }
+}

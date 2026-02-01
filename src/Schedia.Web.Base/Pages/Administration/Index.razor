@@ -1,0 +1,12 @@
+@page "/administration"
+@using Avemepls.Blazor.Components
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Schedia.Web.Base.Layouts.Administration
+@attribute [Authorize]
+@layout AdministrationLayout
+@inject IStringLocalizer<Index> Loc
+
+<PageTitle>@("Администрирование".Loc(Loc))</PageTitle>
+
+<h1>@("Панель администрирования".Loc(Loc))</h1>
