@@ -2,13 +2,14 @@
 
 using Avemepls.Auditor.Core.Models;
 using Avemepls.Core.DataAccess.Models;
+using Avemepls.Core.Models;
 
 namespace Avemepls.Auditor.DataAccess.Models;
 
 /// <summary>
 /// Audit event. Represents short user's session of interaction with system's API.
 /// </summary>
-public class AuditEvent : Entity<AuditEvent>
+public class AuditEvent : Entity<int>, IHasId
 {
     /// <summary>
     /// Source of event (subsystem, process etc.)

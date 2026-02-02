@@ -5,9 +5,9 @@ namespace Avemepls.Core.Models;
 /// <summary>
 /// Базовая модель словарной сущности для запросов в списках
 /// </summary>
-public abstract class DictionaryModelSlim : IHasCode, IHasName, IHasId<DictionaryModelSlim>
+public abstract class DictionaryModelSlim : IHasCode, IHasName, IHasId
 {
-    public Id<DictionaryModelSlim> Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Полное название

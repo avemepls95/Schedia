@@ -1,7 +1,6 @@
 ﻿namespace Avemepls.Core.Models;
 
-public interface IGetByIdQuery<TEntity>
-    where TEntity : class
+public interface IGetByIdQuery<TId>
 {
-    public Id<TEntity> Id { get; set; }
+    public TId Id { get; set; }
 }

@@ -9,14 +9,37 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Avemepls.Domain.Commands;
 
+/// <inheritdoc />
+public abstract class RestoreCommandHandler<TContext, TEntity>(
+    TContext context,
+    IEnumerable<IPermissionEvaluator<TEntity>>? evaluators,
+    IPrincipalAccessor principal)
+    : RestoreCommandHandler<TContext, TEntity, int>(context, evaluators, principal)
+    where TContext : DbContext
+    where TEntity : class, IHasId<int>, IHasDateDeleted, new();
+
+/// <inheritdoc />
+#pragma warning disable SA1402
+public abstract class RestoreCommandHandler<TContext, TEntity, TId>(
+    TContext context,
+    IEnumerable<IPermissionEvaluator<TEntity>>? evaluators,
+    IPrincipalAccessor? principal = null)
+    : RestoreCommandHandler<RestoreCommand<TEntity, TId>,
+#pragma warning restore SA1402
+        TContext, TEntity, TId>(context, evaluators, principal)
+    where TEntity : class, IHasId<TId>, IHasDateDeleted, new()
+    where TContext : DbContext
+{
+}
+
 /// <summary>
 /// Восстанавливает запись без её загрузки из базы данных, если не заданы валидаторы (evaluators)
 /// </summary>
 #pragma warning disable SA1402
-public abstract class RestoreCommandHandler<TCommand, TContext, TEntity> : IRequestHandler<TCommand>
+public abstract class RestoreCommandHandler<TCommand, TContext, TEntity, TId> : IRequestHandler<TCommand>
 #pragma warning restore SA1402
-    where TCommand : RestoreCommand<TEntity>, IRequest
-    where TEntity : class, IHasId<TEntity>, IHasDateDeleted, new()
+    where TCommand : RestoreCommand<TEntity, TId>, IRequest
+    where TEntity : class, IHasId<TId>, IHasDateDeleted, new()
     where TContext : DbContext
 {
     private readonly IEnumerable<IPermissionEvaluator<TEntity>>? _evaluators;
@@ -25,7 +48,7 @@ public abstract class RestoreCommandHandler<TCommand, TContext, TEntity> : IRequ
     protected TContext Context { get; }
 
     /// <summary>
-    /// Инициализирует новый экземпляр класса <see cref="RestoreCommandHandler{TCommand, TContext, TEntity}"/>.
+    /// Инициализирует новый экземпляр класса <see cref="RestoreCommandHandler{TCommand, TContext, TEntity, TId}"/>.
     /// </summary>
     protected RestoreCommandHandler(
         TContext context,
@@ -49,10 +72,12 @@ public abstract class RestoreCommandHandler<TCommand, TContext, TEntity> : IRequ
         {
             if (request.Ids.Length == 1 && !entities.Any())
             {
-                throw new ObjectNotFoundException<TEntity>(request.Ids[0]);
+                throw new ObjectNotFoundException<TId>(typeof(TEntity), request.Ids[0]);
             }
 
-            throw new ObjectNotFoundException<TEntity>("Object with one of ids not found: " + string.Join(",", request.Ids));
+            throw new ObjectNotFoundException<TId>(
+                typeof(TEntity),
+                "Object with one of ids not found: " + string.Join(",", request.Ids));
         }
 
         foreach (var entity in entities)

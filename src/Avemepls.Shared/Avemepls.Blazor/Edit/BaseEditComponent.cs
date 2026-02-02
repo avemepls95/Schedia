@@ -24,8 +24,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Avemepls.Blazor.Edit;
 
+public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : BaseEditComponent<TModel, int, TCreateUpdateModel>
+    where TModel : class
+    where TCreateUpdateModel : class, new()
+{
+}
+
 #pragma warning disable SA1402
-public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceScopedComponentBase
+public abstract class BaseEditComponent<TModel, TId, TCreateUpdateModel> : ServiceScopedComponentBase
 #pragma warning restore SA1402
     where TModel : class
     where TCreateUpdateModel : class, new()
@@ -53,16 +59,16 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
     protected virtual bool GoBackAfterSave => true;
 
     /// <summary>
-    /// Идентификатор редактируемого объекта (0 - создание нового объекта)
+    /// Идентификатор редактируемого объекта (0 - создание новаого объекта)
     /// </summary>
     [Parameter]
-    public Id<TModel> Id { get; set; }
+    public TId Id { get; set; }
 
     [Inject]
     protected AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
     [Inject]
-    protected IStringLocalizer<BaseEditComponent<TModel, TCreateUpdateModel>> Loc { get; set; }
+    protected IStringLocalizer<BaseEditComponent<TModel, TId, TCreateUpdateModel>> Loc { get; set; }
 
     [Inject]
     public MessageService Messages { get; set; }
@@ -83,7 +89,7 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
     public IAuthorizationService AuthorizationService { get; set; }
 
     [Inject]
-    protected ILogger<BaseEditComponent<TModel, TCreateUpdateModel>> Logger { get; set; }
+    protected ILogger<BaseEditComponent<TModel, TId, TCreateUpdateModel>> Logger { get; set; }
 
     protected ClaimsPrincipal User { get; private set; }
 
@@ -136,7 +142,7 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
     /// <summary>
     /// Необходимое разрешение в зависимости от операции
     /// </summary>
-    public string? CurrentActionPermission => Equals(Id, default(Id<TModel>))
+    public string? CurrentActionPermission => Equals(Id, default(TId))
         ? AddPermission
         : EditPermission;
 
@@ -150,12 +156,12 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
     /// <summary>
     /// Создание GetById запроса для указанного типа
     /// </summary>
-    protected abstract GetEntityByIdQuery<TModel> BuildGetQuery(Id<TModel> id);
+    protected abstract GetEntityByIdQuery<TModel, TId> BuildGetQuery(TId id);
 
     /// <summary>
     /// Создание команды создания/обновления на основе редактируемой модели
     /// </summary>
-    protected abstract IRequest<Id<TModel>> BuildCreateUpdateCommand();
+    protected abstract IRequest<TId> BuildCreateUpdateCommand();
 
     /// <summary>
     /// Occurs when save button is pressed
@@ -171,12 +177,12 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
         StateHasChanged();
         try
         {
-            if ((Equals(Id, default(Id<TModel>)) && AddPermission != null
-                                                 && !(await AuthorizationService.AuthorizeAsync(User, AddPermission))
-                                                     .Succeeded)
-                || (!Equals(Id, default(Id<TModel>)) && EditPermission != null
-                                                     && !(await AuthorizationService.AuthorizeAsync(User, EditPermission))
-                                                         .Succeeded))
+            if ((Equals(Id, default(TId)) && AddPermission != null
+                                          && !(await AuthorizationService.AuthorizeAsync(User, AddPermission))
+                                              .Succeeded)
+                || (!Equals(Id, default(TId)) && EditPermission != null
+                                              && !(await AuthorizationService.AuthorizeAsync(User, EditPermission))
+                                                  .Succeeded))
             {
                 throw new AccessDeniedException(Loc["Отказано в доступе."]);
             }
@@ -235,7 +241,7 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
     /// <summary>
     /// Действия при успешном сохранении
     /// </summary>
-    protected virtual async Task OnAfterSave(Id<TModel> id)
+    protected virtual async Task OnAfterSave(TId id)
     {
         if (GoBackAfterSave)
         {
@@ -292,7 +298,6 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
     /// Действия при успешном удалении
     /// </summary>
     protected virtual async Task OnDelete<TDModel>()
-        where TDModel : class
     {
         if (IsSaving)
         {
@@ -303,7 +308,7 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
         {
             IsSaving = true;
 
-            var command = new DeleteCommand<TDModel>(new Id<TDModel>(Id.Value));
+            var command = new DeleteCommand<TDModel, TId>(Id);
             await Mediator.Send(command);
 
             await GoBack();
@@ -339,7 +344,7 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
     /// Действия при успешном восстановлении
     /// </summary>
     protected virtual async Task OnRestore<TRModel>()
-        where TRModel : class, IHasDateDeleted
+        where TRModel : IHasDateDeleted
     {
         if (IsSaving)
         {
@@ -350,7 +355,7 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
         {
             IsSaving = true;
 
-            var command = new RestoreCommand<TRModel>(new Id<TRModel>(Id.Value));
+            var command = new RestoreCommand<TRModel, TId>(Id);
             await Mediator.Send(command);
 
             _ = Messages.SuccessAsync(string.Format(Loc["'{0}' успешно восстановлен(а)"], EntityName));
@@ -366,6 +371,17 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
         }
     }
 
+    protected override async Task OnParametersSetAsync()
+    {
+        // Конвертация Id со специальным значением в default, чтобы активировать создание нового объекта
+        // вместо поиска несуществующей записи в базе данных
+        if (Id is string strId && strId == "0")
+            Id = default!;
+
+        await base.OnParametersSetAsync();
+        await Reload();
+    }
+
     /// <summary>
     /// Обновление/сброс данных редактируемой модели
     /// </summary>
@@ -375,7 +391,7 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
         {
             IsLoading = true;
 
-            if (!Equals(Id, default(Id<TModel>)) && !Equals(Id, null))
+            if (!Equals(Id, default(TId)) && !Equals(Id, default))
             {
                 ReadModel = await Mediator.Send(BuildGetQuery(Id));
                 Model = Mapper.Map<TCreateUpdateModel>(ReadModel);
@@ -385,9 +401,11 @@ public abstract class BaseEditComponent<TModel, TCreateUpdateModel> : ServiceSco
                 Model = CreateUpdateModelBuilder();
             }
         }
+#pragma warning disable S2139
         catch (Exception ex)
+#pragma warning restore S2139
         {
-            Logger.LogError(ex, "{Messaeg}", Loc["Ошибка при загрузке карточки"]);
+            Logger.LogError(ex, "{Message}", Loc["Ошибка при загрузке карточки"]);
             _ = Messages.ErrorAsync(ex.Message);
 
             throw;

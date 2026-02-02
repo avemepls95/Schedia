@@ -2,9 +2,9 @@ using Avemepls.Core.Models;
 
 namespace Avemepls.Identity.DataAccess.Models;
 
-public class User : IHasId<User>, IHasIsActive, IHasDateDeleted
+public class User : IHasId<int>, IHasIsActive, IHasDateDeleted
 {
-    public Id<User> Id { get; set; }
+    public int Id { get; set; }
 
     public string Username { get; set; }
 

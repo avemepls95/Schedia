@@ -1,5 +1,3 @@
-using Avemepls.Core.Models;
-
 namespace Avemepls.Domain.Queries;
 
 /// <summary>
@@ -7,11 +5,26 @@ namespace Avemepls.Domain.Queries;
 /// </summary>
 public static partial class ListQueryExtensions
 {
-    public static ListQuery<TModel> ExcludeIds<TModel>(this ListQuery<TModel> source, params Id<TModel>[] ids)
-        where TModel : class
+    public static ListQuery<TModel, TId> AddIds<TModel, TId>(
+        this ListQuery<TModel, TId> source,
+        params TId[] ids)
     {
-        var nonNullIds = ids.Where(i => !Equals(i, null)).ToArray();
+        var nonNullIds = ids.Where(i => !Equals(i, default)).ToArray();
+        if (nonNullIds.Any())
+        {
+            source.Ids = source.Ids != null
+                ? source.Ids.Union(nonNullIds).ToArray()
+                : nonNullIds;
+        }
 
+        return source;
+    }
+
+    public static ListQuery<TModel, TId> ExcludeIds<TModel, TId>(
+        this ListQuery<TModel, TId> source,
+        params TId[] ids)
+    {
+        var nonNullIds = ids.Where(i => !Equals(i, default)).ToArray();
         if (nonNullIds.Any())
         {
             source.ExcludeIds = source.ExcludeIds != null
@@ -22,12 +35,11 @@ public static partial class ListQueryExtensions
         return source;
     }
 
-    public static ListQuery<TModel> AddSortByIds<TModel>(
-        this ListQuery<TModel> source,
-        params Id<TModel>[] ids)
-        where TModel : class
+    public static ListQuery<TModel, TId> AddSortByIds<TModel, TId>(
+        this ListQuery<TModel, TId> source,
+        params TId[] ids)
     {
-        var nonNullIds = ids.Where(i => !Equals(i.Value, null) && !Equals(i.Value, 0)).ToArray();
+        var nonNullIds = ids.Where(i => !Equals(i, default)).ToArray();
 
         if (nonNullIds.Any())
         {

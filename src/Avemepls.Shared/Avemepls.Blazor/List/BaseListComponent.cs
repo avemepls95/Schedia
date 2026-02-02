@@ -16,15 +16,23 @@ using Microsoft.Extensions.Localization;
 
 namespace Avemepls.Blazor.List;
 
+#pragma warning disable SA1601
+public abstract partial class BaseListComponent<TModel, TEntity, TQuery>
+#pragma warning restore SA1601
+    : BaseListComponent<TModel, TEntity, TQuery, int>
+    where TEntity : class, IHasId<int>
+    where TQuery : SearchQuery<TModel, int>, new()
+{
+}
+
 /// <summary>
 /// Base component used to display filterable and paged list of entities
 /// </summary>
 #pragma warning disable SA1619
-public abstract partial class BaseListComponent<TModel, TEntity, TQuery> : ComponentBase, IDisposable
+public abstract partial class BaseListComponent<TModel, TEntity, TQuery, TId> : ComponentBase, IDisposable
 #pragma warning restore SA1619
-    where TEntity : class, IHasId<TEntity>
-    where TModel : class
-    where TQuery : SearchQuery<TModel>, new()
+    where TEntity : class, IHasId<TId>
+    where TQuery : SearchQuery<TModel, TId>, new()
 {
     [Inject]
     protected IScopedMediator Mediator { get; set; }
@@ -42,7 +50,7 @@ public abstract partial class BaseListComponent<TModel, TEntity, TQuery> : Compo
     protected NavigationHistoryManager? NavigationHistoryManager { get; set; }
 
     [Inject]
-    protected IStringLocalizer<BaseListComponent<TModel, TEntity, TQuery>> Loc { get; set; }
+    protected IStringLocalizer<BaseListComponent<TModel, TEntity, TQuery, TId>> Loc { get; set; }
 
     [CascadingParameter]
     protected Task<AuthenticationState> AuthenticationStateTask { get; set; }
@@ -152,11 +160,11 @@ public abstract partial class BaseListComponent<TModel, TEntity, TQuery> : Compo
         return Task.CompletedTask;
     }
 
-    protected async Task DeleteItem(Id<TEntity> itemId)
+    protected async Task DeleteItem(int itemId)
     {
         try
         {
-            await Mediator.Send(new DeleteCommand<TEntity>(itemId));
+            await Mediator.Send(new DeleteCommand<TEntity, int>(itemId));
             await ReloadInternal(false);
             await Messages.SuccessAsync(Loc["Успешно удалено"].Value);
         }
@@ -260,7 +268,7 @@ public abstract partial class BaseListComponent<TModel, TEntity, TQuery> : Compo
     /// </summary>
     protected virtual async Task OnTableChange(QueryModel<TModel> queryModel)
     {
-        var sortableFields = queryModel.SortModel.Where(x => x.SortDirection != null).ToArray();
+        var sortableFields = queryModel.SortModel.Where(x => x.SortDirection != SortDirection.None).ToArray();
 
         var sortFieldsHashCode = sortableFields.Select(x => x.FieldName + x.SortDirection).GetOrderIndependentHashCode();
 
@@ -275,7 +283,7 @@ public abstract partial class BaseListComponent<TModel, TEntity, TQuery> : Compo
 
         foreach (var sortModel in sortableFields)
         {
-            var isDescending = sortModel.SortDirection != SortDirection.Ascending;
+            var isDescending = sortModel.SortDirection is SortDirection.Descending;
             Filter.OrderBy(sortModel.FieldName, isDescending);
         }
 

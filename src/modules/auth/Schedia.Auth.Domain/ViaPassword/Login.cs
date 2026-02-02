@@ -42,7 +42,7 @@ public static class Login
             await publisher.Publish(
                 new UserLoginNotification
                 {
-                    Id = user.Id.Value,
+                    Id = user.Id,
                     Date = DateTimeOffset.Now
                 },
                 cancellationToken);

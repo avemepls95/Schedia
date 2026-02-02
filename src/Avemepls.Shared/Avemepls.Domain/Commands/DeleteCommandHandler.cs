@@ -11,16 +11,26 @@ using Microsoft.EntityFrameworkCore;
 namespace Avemepls.Domain.Commands;
 
 /// <inheritdoc />
-#pragma warning disable SA1402
 public abstract class DeleteCommandHandler<TContext, TEntity>(
     TContext context,
     IEnumerable<IPermissionEvaluator<TEntity>>? evaluators,
     ICurrentDateTimeProvider currentDateTimeProvider,
+    IPrincipalAccessor principal)
+    : DeleteCommandHandler<TContext, TEntity, int>(context, evaluators, currentDateTimeProvider, principal)
+    where TContext : DbContext
+    where TEntity : class, IHasId<int>, new();
+
+/// <inheritdoc />
+#pragma warning disable SA1402
+public abstract class DeleteCommandHandler<TContext, TEntity, TId>(
+    TContext context,
+    IEnumerable<IPermissionEvaluator<TEntity>>? evaluators,
+    ICurrentDateTimeProvider currentDateTimeProvider,
     IPrincipalAccessor? principal = null)
-    : DeleteCommandHandler<DeleteCommand<TEntity>,
+    : DeleteCommandHandler<DeleteCommand<TEntity, TId>,
 #pragma warning restore SA1402
-        TContext, TEntity>(context, evaluators, currentDateTimeProvider, principal)
-    where TEntity : class, IHasId<TEntity>, new()
+        TContext, TEntity, TId>(context, evaluators, currentDateTimeProvider, principal)
+    where TEntity : class, IHasId<TId>, new()
     where TContext : DbContext
 {
 }
@@ -29,22 +39,20 @@ public abstract class DeleteCommandHandler<TContext, TEntity>(
 /// Удаляет запись без её загрузки из базы данных, если не заданы валидаторы (evaluators)
 /// </summary>
 #pragma warning disable SA1402
-public abstract class DeleteCommandHandler<TCommand, TContext, TEntity> : IRequestHandler<TCommand>
+public abstract class DeleteCommandHandler<TCommand, TContext, TEntity, TId> : IRequestHandler<TCommand>
 #pragma warning restore SA1402
-    where TCommand : DeleteCommand<TEntity>, IRequest
-    where TEntity : class, IHasId<TEntity>, new()
+    where TCommand : DeleteCommand<TEntity, TId>, IRequest
+    where TEntity : class, IHasId<TId>, new()
     where TContext : DbContext
 {
-#pragma warning disable CA1051
     private readonly IEnumerable<IPermissionEvaluator<TEntity>>? _evaluators;
     private readonly ICurrentDateTimeProvider _currentDateTimeProvider;
     private readonly IPrincipalAccessor? _principalAccessor;
-#pragma warning restore CA1051
 
     protected TContext Context { get; }
 
     /// <summary>
-    /// Инициализирует новый экземпляр класса <see cref="DeleteCommandHandler{TCommand, TContext, TEntity}"/>.
+    /// Инициализирует новый экземпляр класса <see cref="DeleteCommandHandler{TCommand, TContext, TEntity, TId}"/>.
     /// </summary>
     protected DeleteCommandHandler(
         TContext context,
@@ -70,10 +78,11 @@ public abstract class DeleteCommandHandler<TCommand, TContext, TEntity> : IReque
         {
             if (request.Ids.Length == 1)
             {
-                throw new ObjectNotFoundException<TEntity>(request.Ids[0]);
+                throw new ObjectNotFoundException<TId>(typeof(TEntity), request.Ids[0]);
             }
 
-            throw new ObjectNotFoundException<TEntity>("Object with one of ids not found: " + string.Join(",", request.Ids));
+            throw new ObjectNotFoundException<TId>(typeof(TEntity),
+                                                   "Object with one of ids not found: " + string.Join(",", request.Ids));
         }
 
         foreach (var entity in entities)

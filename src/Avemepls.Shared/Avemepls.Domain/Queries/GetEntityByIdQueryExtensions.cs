@@ -10,9 +10,9 @@ public static partial class ListQueryExtensions
     /// </summary>
     /// <param name="source">Source query</param>
     /// <typeparam name="TModel">Type of model</typeparam>
+    /// <typeparam name="TId">Type of model's ID</typeparam>
     /// <returns>Modified list query</returns>
-    public static GetEntityByIdQuery<TModel> IgnoreQueryableModifiers<TModel>(this GetEntityByIdQuery<TModel> source)
-        where TModel : class
+    public static GetEntityByIdQuery<TModel, TId> IgnoreQueryableModifiers<TModel, TId>(this GetEntityByIdQuery<TModel, TId> source)
     {
         source.IgnoreAllQueryableModifiers = true;
         return source;

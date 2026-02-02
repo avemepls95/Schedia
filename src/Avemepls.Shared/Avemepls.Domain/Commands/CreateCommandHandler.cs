@@ -16,10 +16,24 @@ public abstract class CreateCommandHandler<TCommand, TContext, TEntity>(
     TContext context,
     IMapper mapper,
     IEnumerable<IPermissionEvaluator<TEntity>> evaluators)
-    : IRequestHandler<TCommand, Id<TEntity>>
-    where TCommand : ICreateCommand, IRequest<Id<TEntity>>
+    : CreateCommandHandler<TCommand, TContext, TEntity, int>(context, mapper, evaluators)
+    where TCommand : ICreateCommand, IRequest<int>
     where TContext : DbContext
-    where TEntity : class, IHasId<TEntity>, new()
+    where TEntity : class, IHasId, new();
+
+/// <summary>
+/// Creates entity
+/// </summary>
+#pragma warning disable SA1402
+public abstract class CreateCommandHandler<TCommand, TContext, TEntity, TId>(
+    TContext context,
+    IMapper mapper,
+    IEnumerable<IPermissionEvaluator<TEntity>> evaluators)
+    : IRequestHandler<TCommand, TId>
+#pragma warning restore SA1402
+    where TCommand : ICreateCommand, IRequest<TId>
+    where TContext : DbContext
+    where TEntity : class, IHasId<TId>, new()
 {
     /// <summary>
     /// Database context
@@ -39,13 +53,13 @@ public abstract class CreateCommandHandler<TCommand, TContext, TEntity>(
     /// <summary>
     /// Handles create/update operation
     /// </summary>
-    public virtual async Task<Id<TEntity>> Handle(TCommand request, CancellationToken cancellationToken)
+    public virtual async Task<TId> Handle(TCommand request, CancellationToken cancellationToken)
     {
         var entity = await TryGet(request, cancellationToken);
 
         if (entity is not null)
         {
-            throw new ObjectExistsException<TEntity>(entity.Id);
+            throw new ObjectExistsException<TEntity, TId>(entity.Id);
         }
 
         entity = await CreateEntity(request, cancellationToken);

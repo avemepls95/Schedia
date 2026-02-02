@@ -18,8 +18,8 @@ public static class CollectionExtensions
         IList<TTarget> target,
         Func<TSource, TTarget, TTarget> mapper,
         Action<TTarget>? deleter = null)
-        where TTarget : class, IHasId<TTarget>, new()
-        where TSource : class, IHasId<TSource>
+        where TTarget : class, IHasId, new()
+        where TSource : IHasId
     {
         return source.Sync<TSource, TTarget, int>(target, mapper, deleter);
     }
@@ -37,8 +37,8 @@ public static class CollectionExtensions
         IList<TTarget> target,
         Func<TSource, TTarget, TTarget> mapper,
         Action<TTarget>? deleter = null)
-        where TTarget : class, IHasId<TTarget>, new()
-        where TSource : class, IHasId<TSource>
+        where TTarget : class, IHasId<TId>, new()
+        where TSource : IHasId<TId>
         where TId : IComparable<TId>
     {
         var (inserted, updated, deleted) = (0, 0, 0);
@@ -94,12 +94,12 @@ public static class CollectionExtensions
         IList<TTarget> target,
         Func<TSource, TTarget, TTarget> mapExisting,
         Action<TTarget>? deleter = null)
-        where TTarget : class, IHasId<TTarget>, new()
-        where TSource : class, IHasId<TSource>
+        where TTarget : IHasId, new()
+        where TSource : IHasId
     {
         return source.SyncByCompare(target,
                                     mapExisting,
-                                    (s, t) => s.Id.IsEmpty && s.Id.Value == t.Id.Value,
+                                    (s, t) => s.Id != 0 && s.Id == t.Id,
                                     deleter);
     }
 
@@ -120,7 +120,7 @@ public static class CollectionExtensions
         Func<TSource, TTarget, bool> lookup,
         Action<TTarget>? deleter = null,
         bool createNewItems = true)
-        where TTarget : class, new()
+        where TTarget : new()
     {
         var (inserted, updated, deleted) = (0, 0, 0);
 
@@ -137,13 +137,13 @@ public static class CollectionExtensions
             {
                 var trg = target.FirstOrDefault(t => lookup(src, t));
 
-                if (Equals(trg, null))
+                if (Equals(trg, default(TTarget)))
                 {
                     var created = mapper(src, new TTarget());
 
-                    if (createNewItems && created is IHasId<TTarget> hasId)
+                    if (createNewItems && created is IHasId hasId)
                     {
-                        hasId.Id = new Id<TTarget>(0);
+                        hasId.Id = 0;
                     }
 
                     target.Add(created);
@@ -151,7 +151,7 @@ public static class CollectionExtensions
                 }
                 else
                 {
-                    if (trg is IHasId<TTarget> hasId)
+                    if (trg is IHasId hasId)
                     {
                         var id = hasId.Id;
                         mapper(src, trg);
@@ -170,10 +170,10 @@ public static class CollectionExtensions
         return (inserted, updated, deleted);
     }
 
-    public static TEntity GetById<TEntity>(this IEnumerable<TEntity> entities, Id<TEntity> id)
-        where TEntity : class, IHasId<TEntity>
+    public static TEntity GetById<TEntity>(this IEnumerable<TEntity> entities, int id)
+        where TEntity : IHasId<int>
     {
         return entities
-            .FirstOrDefault(x => x.Id == id) ?? throw new ObjectNotFoundException<TEntity>(id);
+            .FirstOrDefault(x => x.Id == id) ?? throw new ObjectNotFoundException<TEntity, int>(id);
     }
 }

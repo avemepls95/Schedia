@@ -9,19 +9,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Avemepls.Domain.Commands;
 
-/// <summary>
-/// Updates entity
-/// </summary>
-#pragma warning disable SA1402
 public abstract class UpdateCommandHandler<TCommand, TContext, TEntity>(
     TContext context,
     IMapper mapper,
     IEnumerable<IPermissionEvaluator<TEntity>> evaluators)
-    : IRequestHandler<TCommand>
-#pragma warning restore SA1402
-    where TCommand : IUpdateCommand<TEntity>, IRequest
+    : UpdateCommandHandler<TCommand, TContext, TEntity, int>(context, mapper, evaluators)
+    where TCommand : IUpdateCommand<int>, IRequest<int>
     where TContext : DbContext
-    where TEntity : class, IHasId<TEntity>, new()
+    where TEntity : class, IHasId, new();
+
+/// <summary>
+/// Creates entity
+/// </summary>
+#pragma warning disable SA1402
+public abstract class UpdateCommandHandler<TCommand, TContext, TEntity, TId>(
+    TContext context,
+    IMapper mapper,
+    IEnumerable<IPermissionEvaluator<TEntity>> evaluators)
+    : IRequestHandler<TCommand, TId>
+#pragma warning restore SA1402
+    where TCommand : IUpdateCommand<TId>, IRequest<TId>
+    where TContext : DbContext
+    where TEntity : class, IHasId<TId>, new()
 {
     /// <summary>
     /// Database context
@@ -41,7 +50,7 @@ public abstract class UpdateCommandHandler<TCommand, TContext, TEntity>(
     /// <summary>
     /// Handles create/update operation
     /// </summary>
-    public virtual async Task Handle(TCommand request, CancellationToken cancellationToken)
+    public virtual async Task<TId> Handle(TCommand request, CancellationToken cancellationToken)
     {
         var entity = await Get(request, cancellationToken);
 
@@ -51,6 +60,8 @@ public abstract class UpdateCommandHandler<TCommand, TContext, TEntity>(
         await EntitySaving(request, entity, cancellationToken);
         await Context.SaveChangesAsync(cancellationToken);
         await EntitySaved(request, entity, cancellationToken);
+
+        return entity.Id;
     }
 
     /// <summary>
@@ -79,7 +90,7 @@ public abstract class UpdateCommandHandler<TCommand, TContext, TEntity>(
             .FirstOrDefaultAsync(e => e.Id!.Equals(request.Id), cancellationToken);
 
         if (entity == null)
-            throw new ObjectNotFoundException<TEntity>(request.Id);
+            throw new ObjectNotFoundException<int>(typeof(TEntity), "" + request.Id);
 
         return entity;
     }

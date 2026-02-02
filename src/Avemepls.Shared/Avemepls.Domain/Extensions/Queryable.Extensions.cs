@@ -23,15 +23,14 @@ public static class QueryableExtensions
         return query;
     }
 
-    public static async Task<IQueryable<TEntity>> ApplyModifiers<TEntity, TModel, TRequest, TResult>(
+    public static async Task<IQueryable<TEntity>> ApplyModifiers<TEntity, TId, TModel, TRequest, TResult>(
         this IQueryable<TEntity> query,
         IEnumerable<IQueryableModifier<TEntity>>? modifiers,
         TRequest? request,
         CancellationToken cancellationToken)
         where TEntity : class
-        where TModel : class
         where TResult : PagedResponse<TModel>, new()
-        where TRequest : ListQuery<TModel, TResult>
+        where TRequest : ListQuery<TModel, TId, TResult>
     {
         if (modifiers == null || request?.IgnoreAllQueryableModifiers == true) return query;
 
@@ -46,12 +45,12 @@ public static class QueryableExtensions
 
     public static async ValueTask<TEntity> GetByIdAsync<TEntity>(
         this IQueryable<TEntity> entities,
-        Id<TEntity> id,
+        int id,
         CancellationToken cancellationToken)
-        where TEntity : class, IHasId<TEntity>
+        where TEntity : IHasId<int>
     {
         return await entities
                    .FirstOrDefaultAsync(x => x.Id == id, cancellationToken) ??
-               throw new ObjectNotFoundException<TEntity>(id);
+               throw new ObjectNotFoundException<TEntity, int>(id);
     }
 }

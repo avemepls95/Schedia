@@ -8,6 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Avemepls.Mvc.Controllers;
 
+[ApiController]
+[Route("api/[controller]")]
+public abstract class CrudController<TEntity, TCreateUpdateModel, TSlimModel, TDetailedModel, TListQuery>(IMediator mediator)
+    : CrudController<TEntity, TCreateUpdateModel, TSlimModel, TDetailedModel, TListQuery, int>(mediator)
+    where TEntity : class, IHasId<int>
+    where TCreateUpdateModel : class
+    where TSlimModel : IHasId<int>
+    where TDetailedModel : IHasId<int>
+    where TListQuery : IRequest<PagedResponse<TSlimModel>>
+{
+    protected abstract override GetEntityByIdQuery<TDetailedModel, int> BuildGetByIdQuery(in int id);
+}
+
 /// <summary>
 /// CQRS CRUD controller.
 /// </summary>
@@ -16,26 +29,27 @@ namespace Avemepls.Mvc.Controllers;
 /// <typeparam name="TSlimModel">Упрощённая модель для запроса на получение списка элементов</typeparam>
 /// <typeparam name="TDetailedModel">Детализированная модель для запроса на получение элемента по id</typeparam>
 /// <typeparam name="TListQuery">Запрос на поиск списка</typeparam>
+/// <typeparam name="TId">Тип идентификатора</typeparam>
 [ApiController]
 [Route("api/[controller]")]
-public abstract class CrudController<TEntity, TCreateUpdateModel, TSlimModel, TDetailedModel, TListQuery>(IMediator mediator)
-    : CrudController<TEntity, TCreateUpdateModel, TCreateUpdateModel, TSlimModel, TDetailedModel, TListQuery>(mediator)
-    where TEntity : class, IHasId<TEntity>
-    where TCreateUpdateModel : class, IHasId<TCreateUpdateModel>
-    where TSlimModel : class, IHasId<TSlimModel>
-    where TDetailedModel : class, IHasId<TDetailedModel>
+public abstract class CrudController<TEntity, TCreateUpdateModel, TSlimModel, TDetailedModel, TListQuery, TId
+>(IMediator mediator) : CrudController<TEntity, TCreateUpdateModel, TCreateUpdateModel, TSlimModel, TDetailedModel, TListQuery, TId>(mediator)
+    where TEntity : class, IHasId<TId>
+    where TCreateUpdateModel : class
+    where TSlimModel : IHasId<TId>
+    where TDetailedModel : IHasId<TId>
     where TListQuery : IRequest<PagedResponse<TSlimModel>>
 {
-    protected abstract CreateUpdateCommand<TEntity> BuildCreateUpdateCommand(Id<TEntity>? id, TCreateUpdateModel model);
+    protected abstract CreateUpdateCommand<TId, TCreateUpdateModel> BuildCreateUpdateCommand(TId? id, TCreateUpdateModel model);
 
-    protected override IRequest<Id<TEntity>> BuildCreateCommand(TCreateUpdateModel model)
+    protected override IRequest<TId> BuildCreateCommand(TCreateUpdateModel model)
     {
-        return BuildCreateUpdateCommand(null, model);
+        return BuildCreateUpdateCommand(default, model);
     }
 
-    protected override IRequest BuildUpdateCommand(Id<TEntity> id, TCreateUpdateModel model)
+    protected override IRequest<TId> BuildUpdateCommand(TId id, TCreateUpdateModel model)
     {
-        return BuildCreateUpdateCommand(id, model) as IRequest;
+        return BuildCreateUpdateCommand(id, model);
     }
 }
 
@@ -48,24 +62,25 @@ public abstract class CrudController<TEntity, TCreateUpdateModel, TSlimModel, TD
 /// <typeparam name="TSlimModel">Упрощённая модель для запроса на получение списка элементов</typeparam>
 /// <typeparam name="TDetailedModel">Детализированная модель для запроса на получение элемента по id</typeparam>
 /// <typeparam name="TListQuery">Запрос на поиск списка</typeparam>
+/// <typeparam name="TId">Тип идентификатора</typeparam>
 [ApiController]
 [Route("api/[controller]")]
-public abstract class CrudController<TEntity, TCreateModel, TUpdateModel, TSlimModel, TDetailedModel, TListQuery> : ControllerBase
-    where TEntity : class, IHasId<TEntity>
+public abstract class CrudController<TEntity, TCreateModel, TUpdateModel, TSlimModel, TDetailedModel, TListQuery, TId> : ControllerBase
+    where TEntity : class, IHasId<TId>
     where TCreateModel : class
     where TUpdateModel : class
-    where TSlimModel : class, IHasId<TSlimModel>
-    where TDetailedModel : class, IHasId<TDetailedModel>
+    where TSlimModel : IHasId<TId>
+    where TDetailedModel : IHasId<TId>
     where TListQuery : IRequest<PagedResponse<TSlimModel>>
 {
-    protected IMediator Mediator { get; }
+    private readonly IMediator _mediator;
 
     /// <summary>
     /// Initializes a new instance of <see cref="CrudController{TEntity,TModel,TSlimModel,TDetailedModel,TListQuery,TId}"/>.
     /// </summary>
     protected CrudController(IMediator mediator)
     {
-        Mediator = mediator;
+        _mediator = mediator;
     }
 
     /// <summary>
@@ -76,10 +91,10 @@ public abstract class CrudController<TEntity, TCreateModel, TUpdateModel, TSlimM
     [HttpPost]
     public virtual async Task<IActionResult> CreateAsync([FromBody] TCreateModel model, CancellationToken cancellationToken)
     {
-        var id = await Mediator.Send(BuildCreateCommand(model), cancellationToken);
+        var id = await _mediator.Send(BuildCreateCommand(model), cancellationToken);
 
         // ReSharper disable once Mvc.ActionNotResolved
-        return CreatedAtAction("Get", new { id }, await Mediator.Send(BuildGetByIdQuery(id), cancellationToken));
+        return CreatedAtAction("Get", new { id }, await _mediator.Send(BuildGetByIdQuery(id), cancellationToken));
     }
 
     /// <summary>
@@ -89,11 +104,11 @@ public abstract class CrudController<TEntity, TCreateModel, TUpdateModel, TSlimM
     /// <param name="model">Информация о сущности.</param>
     /// <param name="cancellationToken">Токен для отмены операции.</param>
     [HttpPut("{id}")]
-    public virtual async Task<IActionResult> UpdateAsync(Id<TUpdateModel> id, [FromBody] TUpdateModel model, CancellationToken cancellationToken)
+    public virtual async Task<IActionResult> UpdateAsync(TId id, [FromBody] TUpdateModel model, CancellationToken cancellationToken)
     {
-        await Mediator.Send(BuildUpdateCommand(new Id<TEntity>(id.Value), model), cancellationToken);
+        await _mediator.Send(BuildUpdateCommand(id, model), cancellationToken);
 
-        return Ok(await Mediator.Send(BuildGetByIdQuery(new Id<TEntity>(id.Value)), cancellationToken));
+        return Ok(await _mediator.Send(BuildGetByIdQuery(id), cancellationToken));
     }
 
     /// <summary>
@@ -102,9 +117,9 @@ public abstract class CrudController<TEntity, TCreateModel, TUpdateModel, TSlimM
     /// <param name="id">Идентификатор сущности</param>
     /// <param name="cancellationToken">Токен для отмены операции</param>
     [HttpDelete("{id}")]
-    public virtual async Task<IActionResult> DeleteAsync([FromRoute] Id<TEntity> id, CancellationToken cancellationToken)
+    public virtual async Task<IActionResult> DeleteAsync([FromRoute] TId id, CancellationToken cancellationToken)
     {
-        await Mediator.Send(new DeleteCommand<TEntity>(id), cancellationToken);
+        await _mediator.Send(new DeleteCommand<TEntity, TId>(id), cancellationToken);
 
         return NoContent();
     }
@@ -113,9 +128,9 @@ public abstract class CrudController<TEntity, TCreateModel, TUpdateModel, TSlimM
     /// Получение детализированной информации о сущности.
     /// </summary>
     [HttpGet("{id}")]
-    public virtual async Task<IActionResult> GetAsync([FromRoute] Id<TEntity> id, CancellationToken cancellationToken)
+    public virtual async Task<IActionResult> GetAsync([FromRoute] TId id, CancellationToken cancellationToken)
     {
-        return Ok(await Mediator.Send(BuildGetByIdQuery(id), cancellationToken));
+        return Ok(await _mediator.Send(BuildGetByIdQuery(id), cancellationToken));
     }
 
     /// <summary>
@@ -126,16 +141,16 @@ public abstract class CrudController<TEntity, TCreateModel, TUpdateModel, TSlimM
     [HttpGet]
     public virtual async Task<IActionResult> ListAsync([FromQuery] TListQuery query, CancellationToken cancellationToken)
     {
-        return Ok(await Mediator.Send(query, cancellationToken));
+        return Ok(await _mediator.Send(query, cancellationToken));
     }
 
     /// <summary>
     /// Фабрика для построения запроса на получение модели по идентификатору
     /// </summary>
     /// <param name="id">Идентификатор сущности</param>
-    protected abstract GetEntityByIdQuery<TDetailedModel> BuildGetByIdQuery(in Id<TEntity> id);
+    protected abstract GetEntityByIdQuery<TDetailedModel, TId> BuildGetByIdQuery(in TId id);
 
-    protected abstract IRequest<Id<TEntity>> BuildCreateCommand(TCreateModel model);
+    protected abstract IRequest<TId> BuildCreateCommand(TCreateModel model);
 
-    protected abstract IRequest BuildUpdateCommand(Id<TEntity> id, TUpdateModel model);
+    protected abstract IRequest<TId> BuildUpdateCommand(TId id, TUpdateModel model);
 }

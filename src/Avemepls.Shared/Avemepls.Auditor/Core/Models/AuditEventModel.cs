@@ -2,9 +2,9 @@
 
 namespace Avemepls.Auditor.Core.Models;
 
-public class AuditEventModel : IHasId<AuditEventModel>
+public class AuditEventModel : IHasId<int>
 {
-    public Id<AuditEventModel> Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Source of event (subsystem, process etc.)

@@ -10,6 +10,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Avemepls.Domain.Queries;
 
+public abstract class GetEntityByIdPostMappedQueryHandler<TQuery, TModel, TEntity, TContext>(
+    IMapper mapper,
+    TContext context,
+    IEnumerable<IQueryableModifier<TEntity>> modifiers)
+    : GetEntityByIdQueryHandler<TQuery, TModel, TEntity, TContext, int>(mapper, context, modifiers)
+    where TContext : DbContext
+    where TEntity : class, IHasId
+    where TQuery : GetEntityByIdQuery<TModel, int>;
+
 /// <summary>
 /// Get model by ID
 /// </summary>
@@ -17,13 +26,13 @@ namespace Avemepls.Domain.Queries;
 /// <typeparam name="TModel">Type of model object</typeparam>
 /// <typeparam name="TEntity">Type of entity</typeparam>
 /// <typeparam name="TContext">Data context</typeparam>
+/// <typeparam name="TId">Type of identifier</typeparam>
 #pragma warning disable SA1402
-public abstract class GetEntityByIdPostMappedQueryHandler<TQuery, TModel, TEntity, TContext> : IRequestHandler<TQuery, TModel>
+public abstract class GetEntityByIdPostMappedQueryHandler<TQuery, TModel, TEntity, TContext, TId> : IRequestHandler<TQuery, TModel>
 #pragma warning restore SA1402
     where TContext : DbContext
-    where TEntity : class, IHasId<TEntity>
-    where TQuery : GetEntityByIdQuery<TModel>
-    where TModel : class
+    where TEntity : class, IHasId<TId>
+    where TQuery : GetEntityByIdQuery<TModel, TId>
 {
     /// <summary>
     /// Инициализирует новый экземпляр класса
@@ -56,7 +65,7 @@ public abstract class GetEntityByIdPostMappedQueryHandler<TQuery, TModel, TEntit
     /// <inheritdoc />
     public virtual async Task<TModel> Handle(TQuery request, CancellationToken cancellationToken)
     {
-        return await Get(request, cancellationToken) ?? throw new ObjectNotFoundException<TModel>(request.Id);
+        return await Get(request, cancellationToken) ?? throw new ObjectNotFoundException<TId>(typeof(TEntity), request.Id);
     }
 
     /// <summary>
@@ -89,9 +98,10 @@ public abstract class GetEntityByIdPostMappedQueryHandler<TQuery, TModel, TEntit
     {
         var entity = await queryable.FirstOrDefaultAsync(cancellationToken);
 
-        return entity is null
-            ? null
-            : Mapper.Map<TModel>(entity);
+        if (entity is null)
+            return default;
+
+        return Mapper.Map<TModel>(entity);
     }
 
     /// <summary>

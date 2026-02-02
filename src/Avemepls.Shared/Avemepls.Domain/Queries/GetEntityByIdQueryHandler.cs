@@ -10,6 +10,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Avemepls.Domain.Queries;
 
+public abstract class GetEntityByIdQueryHandler<TQuery, TModel, TEntity, TContext>(
+    IMapper mapper,
+    TContext context,
+    IEnumerable<IQueryableModifier<TEntity>> modifiers)
+    : GetEntityByIdQueryHandler<TQuery, TModel, TEntity, TContext, int>(mapper, context, modifiers)
+    where TContext : DbContext
+    where TEntity : class, IHasId
+    where TQuery : GetEntityByIdQuery<TModel, int>;
+
 /// <summary>
 /// Get model by ID
 /// </summary>
@@ -17,16 +26,16 @@ namespace Avemepls.Domain.Queries;
 /// <typeparam name="TModel">Type of model object</typeparam>
 /// <typeparam name="TEntity">Type of entity</typeparam>
 /// <typeparam name="TContext">Data context</typeparam>
+/// <typeparam name="TId">Type of identifier</typeparam>
 #pragma warning disable SA1402
-public abstract class GetEntityByIdQueryHandler<TQuery, TModel, TEntity, TContext>(
+public abstract class GetEntityByIdQueryHandler<TQuery, TModel, TEntity, TContext, TId>(
     IMapper mapper,
     TContext context,
     IEnumerable<IQueryableModifier<TEntity>> modifiers) : IRequestHandler<TQuery, TModel>
 #pragma warning restore SA1402
     where TContext : DbContext
-    where TEntity : class, IHasId<TEntity>
-    where TModel : class
-    where TQuery : GetEntityByIdQuery<TModel>
+    where TEntity : class, IHasId<TId>
+    where TQuery : GetEntityByIdQuery<TModel, TId>
 {
     /// <summary>
     /// Контекст работы с БД.
@@ -47,7 +56,7 @@ public abstract class GetEntityByIdQueryHandler<TQuery, TModel, TEntity, TContex
     public virtual async Task<TModel> Handle(TQuery request, CancellationToken cancellationToken)
     {
         return await Get(request, cancellationToken) ??
-               throw new ObjectNotFoundException<TModel>(request.Id);
+               throw new ObjectNotFoundException<TId>(typeof(TEntity), request.Id);
     }
 
     /// <summary>

@@ -19,19 +19,34 @@ namespace Avemepls.Domain.Queries;
 /// <typeparam name="TEntity">Тип сущности в БД.</typeparam>
 /// <typeparam name="TContext">Тип контекста БД.</typeparam>
 /// <typeparam name="TListQuery">Тип поискового запроса.</typeparam>
+public abstract class ListQueryHandler<TModel, TEntity, TContext, TListQuery>(
+    IMapper mapper,
+    IDbContextFactory<TContext> context,
+    IEnumerable<IQueryableModifier<TEntity>>? modifiers)
+    : ListQueryHandler<TModel, TEntity, TContext, TListQuery, int, PagedResponse<TModel>>(mapper, context, modifiers)
+    where TEntity : class, IHasId
+    where TContext : DbContext
+    where TListQuery : ListQuery<TModel, int>;
+
+/// <summary>
+/// Обработчик запроса на поиск элементов.
+/// </summary>
+/// <typeparam name="TModel">Тип модели.</typeparam>
+/// <typeparam name="TEntity">Тип сущности в БД.</typeparam>
+/// <typeparam name="TContext">Тип контекста БД.</typeparam>
+/// <typeparam name="TListQuery">Тип поискового запроса.</typeparam>
+/// <typeparam name="TId">Type of entity id.</typeparam>
 #pragma warning disable SA1402
-public abstract class ListQueryHandler<TModel, TEntity, TContext, TListQuery>
+public abstract class ListQueryHandler<TModel, TEntity, TContext, TListQuery, TId>
 #pragma warning restore SA1402
 (
     IMapper mapper,
     IDbContextFactory<TContext> context,
     IEnumerable<IQueryableModifier<TEntity>>? modifiers)
-    : ListQueryHandler<TModel, TEntity, TContext, TListQuery, PagedResponse<TModel>>(mapper, context, modifiers)
-    where TEntity : class, IHasId<TEntity>
+    : ListQueryHandler<TModel, TEntity, TContext, TListQuery, TId, PagedResponse<TModel>>(mapper, context, modifiers)
+    where TEntity : class, IHasId<TId>
     where TContext : DbContext
-    where TListQuery : ListQuery<TModel>
-    where TModel : class, IHasId<TModel>
-
+    where TListQuery : ListQuery<TModel, TId>
 {
 }
 
@@ -42,20 +57,20 @@ public abstract class ListQueryHandler<TModel, TEntity, TContext, TListQuery>
 /// <typeparam name="TEntity">Тип сущности в БД.</typeparam>
 /// <typeparam name="TContext">Тип контекста БД.</typeparam>
 /// <typeparam name="TListQuery">Тип поискового запроса.</typeparam>
+/// <typeparam name="TId">Type of entity id.</typeparam>
 /// <typeparam name="TResult">Тип результата запроса, если нужно расширить PagedResponse</typeparam>
 #pragma warning disable SA1402
-public abstract class ListQueryHandler<TModel, TEntity, TContext, TListQuery, TResult>
+public abstract class ListQueryHandler<TModel, TEntity, TContext, TListQuery, TId, TResult>
 #pragma warning restore SA1402
 (
     IMapper mapper,
     IDbContextFactory<TContext> contextFactory,
     IEnumerable<IQueryableModifier<TEntity>>? modifiers)
     : IRequestHandler<TListQuery, TResult>
-    where TEntity : class, IHasId<TEntity>
+    where TEntity : class, IHasId<TId>
     where TContext : DbContext
-    where TListQuery : ListQuery<TModel, TResult>
+    where TListQuery : ListQuery<TModel, TId, TResult>
     where TResult : PagedResponse<TModel>, new()
-    where TModel : class, IHasId<TModel>
 {
     /// <summary>
     /// Маппер сущностей.
@@ -136,10 +151,10 @@ public abstract class ListQueryHandler<TModel, TEntity, TContext, TListQuery, TR
             .AsNoTracking();
 
         if (request.Ids is not null)
-            query = query.Where(e => request.Ids.Select(x => x.Value).Contains(e.Id.Value));
+            query = query.Where(e => request.Ids.Contains(e.Id));
 
         if (request.ExcludeIds is not null)
-            query = query.Where(e => !request.ExcludeIds.Select(x => x.Value).Contains(e.Id.Value));
+            query = query.Where(e => !request.ExcludeIds.Contains(e.Id));
 
         if (!request.IncludeDeleted)
         {
@@ -151,7 +166,7 @@ public abstract class ListQueryHandler<TModel, TEntity, TContext, TListQuery, TR
             query = query.WhereIsActive();
         }
 
-        query = await query.ApplyModifiers<TEntity, TModel, TListQuery, TResult>(Modifiers, request, cancellationToken);
+        query = await query.ApplyModifiers<TEntity, TId, TModel, TListQuery, TResult>(Modifiers, request, cancellationToken);
 
         return query.OrderBy(e => e.Id);
     }
@@ -173,7 +188,7 @@ public abstract class ListQueryHandler<TModel, TEntity, TContext, TListQuery, TR
         return DefaultSort(request, query);
     }
 
-    private static bool TrySortByIds(ref IQueryable<TModel> source, IEnumerable<Id<TModel>> ids)
+    private static bool TrySortByIds(ref IQueryable<TModel> source, IEnumerable<TId> ids)
     {
         var propertyInfo = typeof(TModel).GetProperty("Id");
 
@@ -182,7 +197,7 @@ public abstract class ListQueryHandler<TModel, TEntity, TContext, TListQuery, TR
 
         var parameterExpression = Expression.Parameter(typeof(TModel), "p");
         var propertyAccess = Expression.MakeMemberAccess(parameterExpression, propertyInfo);
-        Expression<Func<IEnumerable<int>, bool>> containsExpr = q => q.Contains(0);
+        Expression<Func<IEnumerable<int>, bool>> containsExpr = q => q.Contains(default);
 
         var containsMethod = ((MethodCallExpression)containsExpr.Body).Method;
 

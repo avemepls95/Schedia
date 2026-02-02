@@ -9,18 +9,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Avemepls.Domain.Commands;
 
-/// <summary>
-/// Creates or updates existing entity
-/// </summary>
 public abstract class CreateUpdateCommandHandler<TCommand, TContext, TModel, TEntity>(
     TContext context,
     IMapper mapper,
     IEnumerable<IPermissionEvaluator<TEntity>> evaluators)
-    : IRequestHandler<TCommand, Id<TModel>>
-    where TCommand : CreateUpdateCommand<TModel>
+    : CreateUpdateCommandHandler<TCommand, TContext, TModel, TEntity, int>(context, mapper, evaluators)
+    where TCommand : CreateUpdateCommand<int, TModel>
     where TContext : DbContext
-    where TEntity : class, IHasId<TEntity>, new()
-    where TModel : class, IHasId<TModel>
+    where TEntity : class, IHasId, new();
+
+/// <summary>
+/// Creates or updates existing entity
+/// </summary>
+#pragma warning disable SA1402
+public abstract class CreateUpdateCommandHandler<TCommand, TContext, TModel, TEntity, TId>(
+    TContext context,
+    IMapper mapper,
+    IEnumerable<IPermissionEvaluator<TEntity>> evaluators)
+    : IRequestHandler<TCommand, TId>
+#pragma warning restore SA1402
+    where TCommand : CreateUpdateCommand<TId, TModel>
+    where TContext : DbContext
+    where TEntity : class, IHasId<TId>, new()
 {
     /// <summary>
     /// Database context
@@ -40,7 +50,7 @@ public abstract class CreateUpdateCommandHandler<TCommand, TContext, TModel, TEn
     /// <summary>
     /// Handles create/update operation
     /// </summary>
-    public virtual async Task<Id<TModel>> Handle(TCommand request, CancellationToken cancellationToken)
+    public virtual async Task<TId> Handle(TCommand request, CancellationToken cancellationToken)
     {
         var entity = await TryGet(request, cancellationToken);
 
@@ -57,17 +67,16 @@ public abstract class CreateUpdateCommandHandler<TCommand, TContext, TModel, TEn
         {
             await Map(request.Model, entity, cancellationToken);
             await ValidateUpdateAccess(entity, cancellationToken);
-            if (request.Id is not null && request.Id.Value is not 0)
+            if (request.Id is not 0)
             {
-                entity.Id = new Id<TEntity>(request.Id!.Value.Value);
+                entity.Id = request.Id!;
             }
         }
 
         await EntitySaving(request, entity, cancellationToken);
         await Context.SaveChangesAsync(cancellationToken);
         await EntitySaved(request, entity, cancellationToken);
-
-        return new Id<TModel>(entity.Id.Value);
+        return entity.Id;
     }
 
     /// <summary>
@@ -105,8 +114,10 @@ public abstract class CreateUpdateCommandHandler<TCommand, TContext, TModel, TEn
         var entity = await Include(Context.Set<TEntity>())
             .AsTracking()
             .FirstOrDefaultAsync(e => e.Id!.Equals(request.Id), cancellationToken);
+        if (entity == null)
+            throw new ObjectNotFoundException<int>(typeof(TEntity), "" + request.Id);
 
-        return entity ?? throw new ObjectNotFoundException<TEntity>(new Id<TEntity>(request.Id.Value.Value));
+        return entity;
     }
 
     /// <summary>

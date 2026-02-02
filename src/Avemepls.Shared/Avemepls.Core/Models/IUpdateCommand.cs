@@ -3,8 +3,7 @@
 /// <summary>
 /// Command to update entity
 /// </summary>
-public interface IUpdateCommand<TEntity>
-    where TEntity : class, IHasId<TEntity>
+public interface IUpdateCommand<TId>
 {
-    public Id<TEntity> Id { get; set; }
+    public TId Id { get; set; }
 }

@@ -4,25 +4,27 @@ using Avemepls.Core.Localization;
 using Avemepls.Core.Models;
 
 using MediatR;
-
 namespace Avemepls.Domain.Queries;
+
+public abstract class GetEntityByIdQuery<T>(int id, bool includeDeleted = true, bool includeNonActive = true)
+    : GetEntityByIdQuery<T, int>(id, includeDeleted, includeNonActive);
 
 /// <summary>
 /// Get entity model by id
 /// </summary>
 /// <typeparam name="T">Type of model</typeparam>
+/// <typeparam name="TId">Type of identifier</typeparam>
 [DebuggerDisplay("{Id}")]
 #pragma warning disable SA1402
-public abstract class GetEntityByIdQuery<T>(Id<T> id, bool includeDeleted = true, bool includeNonActive = true)
-    : IGetByIdQuery<T>, IRequest<T>, IHasId<T>
-    where T : class
+public abstract class GetEntityByIdQuery<T, TId>(TId id, bool includeDeleted = true, bool includeNonActive = true)
+    : IGetByIdQuery<TId>, IRequest<T>, IHasId<TId>
 #pragma warning restore SA1402
 {
     /// <summary>
     /// Идентификатор сущности.
     /// </summary>
     [DisplayNameLoc("Идентификатор сущности")]
-    public Id<T> Id { get; set; } = id;
+    public TId Id { get; set; } = id;
 
     /// <summary>
     /// Искать ли среди удаленных.

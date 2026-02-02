@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Avemepls.Core.DataAccess.Configuration;
 
-public abstract class BaseConfiguration<TEntity> : IEntityTypeConfiguration<TEntity>
-    where TEntity : class, IHasId<TEntity>
+public abstract class BaseConfiguration<TEntity, TIdType> : IEntityTypeConfiguration<TEntity>
+    where TEntity : class, IHasId<TIdType>
 {
     private static readonly string DefaultTableName = typeof(TEntity).Name;
     private static readonly string DefaultSchemaName = typeof(TEntity).Namespace!.Split('.')[1];
@@ -53,10 +53,6 @@ public abstract class BaseConfiguration<TEntity> : IEntityTypeConfiguration<TEnt
         builder.ToTableInSnakeCase(DefaultTableName, GetSchemaName());
 
         builder.HasKey(x => x.Id);
-
-        builder.Property(x => x.Id)
-            .ValueGeneratedOnAdd()
-            .HasConversion(x => x.Value, i => new Id<TEntity>(i));
 
         ConfigureCore(builder);
 

@@ -18,21 +18,41 @@ namespace Avemepls.Domain.Queries;
 /// <typeparam name="TEntity">Тип сущности в БД.</typeparam>
 /// <typeparam name="TContext">Тип контекста БД.</typeparam>
 /// <typeparam name="TListQuery">Тип поискового запроса.</typeparam>
+public abstract class ListQueryPostMappedHandler<TModel, TEntity, TContext, TListQuery>(
+    IMapper mapper,
+    IDbContextFactory<TContext> context,
+    IEnumerable<IQueryableModifier<TEntity>>? modifiers)
+    : ListQueryPostMappedHandler<TModel, TEntity, TContext, TListQuery, int, PagedResponse<TModel>>(
+        mapper,
+        context,
+        modifiers)
+    where TEntity : class, IHasId
+    where TContext : DbContext
+    where TListQuery : ListQuery<TModel, int>;
+
+/// <summary>
+/// Обработчик запроса на поиск элементов. Отличается от <see cref="ListQueryHandler{TModel,TEntity,TContext,TListQuery}"/> особым способом
+/// материализации моделей - из хранилища сначала материализуются сущности, затем происходит маппинг в модели.
+/// </summary>
+/// <typeparam name="TModel">Тип модели.</typeparam>
+/// <typeparam name="TEntity">Тип сущности в БД.</typeparam>
+/// <typeparam name="TContext">Тип контекста БД.</typeparam>
+/// <typeparam name="TListQuery">Тип поискового запроса.</typeparam>
+/// <typeparam name="TId">Тип идентификатора.</typeparam>
 #pragma warning disable SA1402
-public abstract class ListQueryPostMappedHandler<TModel, TEntity, TContext, TListQuery>
+public abstract class ListQueryPostMappedHandler<TModel, TEntity, TContext, TListQuery, TId>
 #pragma warning restore SA1402
 (
     IMapper mapper,
     IDbContextFactory<TContext> context,
     IEnumerable<IQueryableModifier<TEntity>>? modifiers)
-    : ListQueryPostMappedHandler<TModel, TEntity, TContext, TListQuery, PagedResponse<TModel>>(
+    : ListQueryPostMappedHandler<TModel, TEntity, TContext, TListQuery, TId, PagedResponse<TModel>>(
         mapper,
         context,
         modifiers)
-    where TEntity : class, IHasId<TEntity>
-    where TModel : class
+    where TEntity : class, IHasId<TId>
     where TContext : DbContext
-    where TListQuery : ListQuery<TModel>
+    where TListQuery : ListQuery<TModel, TId>
 {
 }
 
@@ -44,19 +64,19 @@ public abstract class ListQueryPostMappedHandler<TModel, TEntity, TContext, TLis
 /// <typeparam name="TEntity">Тип сущности в БД.</typeparam>
 /// <typeparam name="TContext">Тип контекста БД.</typeparam>
 /// <typeparam name="TListQuery">Тип поискового запроса.</typeparam>
+/// <typeparam name="TId">Тип идентификатора.</typeparam>
 /// <typeparam name="TResult">Тип результата запроса, если нужно расширить PagedResponse</typeparam>
 #pragma warning disable SA1402
-public abstract class ListQueryPostMappedHandler<TModel, TEntity, TContext, TListQuery, TResult>
+public abstract class ListQueryPostMappedHandler<TModel, TEntity, TContext, TListQuery, TId, TResult>
 #pragma warning restore SA1402
 (
     IMapper mapper,
     IDbContextFactory<TContext> contextFactory,
     IEnumerable<IQueryableModifier<TEntity>>? modifiers) : IRequestHandler<TListQuery, TResult>
-    where TEntity : class, IHasId<TEntity>
-    where TModel : class
+    where TEntity : class, IHasId<TId>
     where TContext : DbContext
     where TResult : PagedResponse<TModel>, new()
-    where TListQuery : ListQuery<TModel, TResult>
+    where TListQuery : ListQuery<TModel, TId, TResult>
 {
     /// <summary>
     /// Маппер сущностей.
@@ -139,10 +159,10 @@ public abstract class ListQueryPostMappedHandler<TModel, TEntity, TContext, TLis
             .AsNoTracking();
 
         if (request.Ids is not null)
-            query = query.Where(e => request.Ids.Select(x => x.Value).Contains(e.Id.Value));
+            query = query.Where(e => request.Ids.Contains(e.Id));
 
         if (request.ExcludeIds is not null)
-            query = query.Where(e => !request.ExcludeIds.Select(x => x.Value).Contains(e.Id.Value));
+            query = query.Where(e => !request.ExcludeIds.Contains(e.Id));
 
         if (!request.IncludeDeleted)
             query = query.WhereIsNotDeleted();
@@ -150,7 +170,7 @@ public abstract class ListQueryPostMappedHandler<TModel, TEntity, TContext, TLis
         if (!request.IncludeNonActive)
             query = query.WhereIsActive();
 
-        query = await query.ApplyModifiers<TEntity, TModel, TListQuery, TResult>(
+        query = await query.ApplyModifiers<TEntity, TId, TModel, TListQuery, TResult>(
             Modifiers,
             request,
             cancellationToken);
@@ -167,7 +187,7 @@ public abstract class ListQueryPostMappedHandler<TModel, TEntity, TContext, TLis
 
         if (request.SortByIds?.Any() == true)
         {
-            query = query.OrderByDescending(x => request.SortByIds.Select(id => id.Value).Contains(x.Id.Value));
+            query = query.OrderByDescending(x => request.SortByIds.Contains(x.Id));
 
             isNestedSort = true;
         }

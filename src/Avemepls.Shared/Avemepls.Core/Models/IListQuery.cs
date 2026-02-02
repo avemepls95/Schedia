@@ -1,22 +1,21 @@
 ﻿namespace Avemepls.Core.Models;
 
-public interface IListQuery<TModel> : IHasIncludeDeleted, IHasIncludeNonActive, ILimitQuery
-    where TModel : class
+public interface IListQuery<TId> : IHasIncludeDeleted, IHasIncludeNonActive, ILimitQuery
 {
     /// <summary>
     /// Перечень идентификаторов сущностей для фильтрации по айди
     /// </summary>
-    public Id<TModel>[]? Ids { get; set; }
+    public TId[]? Ids { get; set; }
 
     /// <summary>
     /// Перечень идентификаторов сущностей, которыйх нужно исключить из выдачи
     /// </summary>
-    public Id<TModel>[]? ExcludeIds { get; set; }
+    public TId[]? ExcludeIds { get; set; }
 
     /// <summary>
     /// Показывать в начале
     /// </summary>
-    public Id<TModel>[]? SortByIds { get; set; }
+    public TId[]? SortByIds { get; set; }
 
     /// <summary>
     /// Порядок сортировки данных. Если не указан, данные не будут сортированы, либо будут отсортированы по дате создания,
@@ -25,4 +24,8 @@ public interface IListQuery<TModel> : IHasIncludeDeleted, IHasIncludeNonActive, 
     /// `OrderBy=name,-createdDate`
     /// </summary>
     public string[]? OrderBy { get; set; }
+}
+
+public interface IListQuery : IListQuery<int>
+{
 }

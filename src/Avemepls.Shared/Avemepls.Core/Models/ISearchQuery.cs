@@ -1,7 +1,6 @@
 ﻿namespace Avemepls.Core.Models;
 
-public interface ISearchQuery<TModel> : IListQuery<TModel>
-    where TModel : class
+public interface ISearchQuery<TId> : IListQuery<TId>
 {
     /// <summary>
     /// Search query (term)
