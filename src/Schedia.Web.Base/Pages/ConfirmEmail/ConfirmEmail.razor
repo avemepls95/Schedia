@@ -1,13 +1,10 @@
 @page "/confirm-email"
 @layout AnonymousLayout
+@inherits MediatorComponentBase
+@using Avemepls.Blazor.Common
 @using Avemepls.Blazor.Components
-@using Avemepls.Domain.Extensions
-@using Microsoft.Extensions.Localization
 @using Schedia.Web.Base.Layouts
-@using ValidationException = FluentValidation.ValidationException
-@inject IMediator Mediator
 @inject NavigationManager NavManager
-@inject IStringLocalizer<ConfirmEmail> Loc
 
 <div class="confirm-email-container" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background: #f0f2f5;">
     @if (_isLoading)
@@ -49,10 +46,14 @@
     [SupplyParameterFromQuery(Name = "token")]
     public string? Token { get; set; }
 
+    protected override void HandleError(string message)
+    {
+        _errorMessage = message;
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!firstRender)
-            return;
+        if (!firstRender) return;
 
         if (string.IsNullOrEmpty(Token))
         {
@@ -61,30 +62,12 @@
             return;
         }
 
-        try
+        _success = await Send(new Schedia.Identity.Domain.User.ConfirmEmail.Command
         {
-            await Mediator.Send(new Schedia.Identity.Domain.User.ConfirmEmail.Command
-            {
-                Token = Token
-            });
+            Token = Token
+        });
 
-            _success = true;
-        }
-        catch (ValidationException ex)
-        {
-            _errorMessage = ex.GetFirstError();
-            _success = false;
-        }
-        catch (Exception ex)
-        {
-            _errorMessage = Loc["Произошла непредвиденная ошибка"];
-            Console.WriteLine(ex.Message);
-            _success = false;
-        }
-        finally
-        {
-            _isLoading = false;
-            StateHasChanged();
-        }
+        _isLoading = false;
+        StateHasChanged();
     }
 }

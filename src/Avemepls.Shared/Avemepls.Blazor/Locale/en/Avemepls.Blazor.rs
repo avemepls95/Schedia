@@ -1,4 +1,4 @@
-"RS-Revision-Date: 09.06.2025\n"
+"RS-Revision-Date: 08.02.2026\n"
 
 msgid "Цвет не выбран"
 msgstr "Color not selected"
@@ -74,3 +74,6 @@ msgstr "'{0}' successfully restored"
 
 msgid "Сбросить фильтры"
 msgstr "Reset filters"
+
+msgid "Произошла непредвиденная ошибка"
+msgstr "An unexpected error occurred"

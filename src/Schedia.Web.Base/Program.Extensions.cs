@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Schedia.Auth.Application;
-using Schedia.Auth.Domain;
 using Schedia.DataAccess;
 using Schedia.Domain.Core;
 using Schedia.Identity.Domain;

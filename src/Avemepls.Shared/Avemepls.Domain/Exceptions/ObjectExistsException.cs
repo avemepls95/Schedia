@@ -1,6 +1,4 @@
-﻿using Avemepls.Core.Models;
-
-namespace Avemepls.Domain.Exceptions;
+﻿namespace Avemepls.Domain.Exceptions;
 
 public class ObjectExistsException : ObjectExistsException<int>
 {

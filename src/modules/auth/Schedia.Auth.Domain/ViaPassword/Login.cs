@@ -37,6 +37,7 @@ public static class Login
                 throw new ValidationException(loc["Неверные логин или пароль"]);
             }
 
+            throw new InvalidOperationException("Test");
             var token = tokenGenerator.Create(user.Id);
 
             await publisher.Publish(

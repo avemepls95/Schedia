@@ -1,5 +1,3 @@
-using Avemepls.Core.Models;
-
 namespace Avemepls.Domain.Exceptions;
 
 public class ObjectNotFoundException : ObjectNotFoundException<int>

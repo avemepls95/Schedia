@@ -1,6 +1,8 @@
 @page "/register"
 @layout AnonymousLayout
 @attribute [AllowAnonymous]
+@inherits MediatorComponentBase
+@using Avemepls.Blazor.Common
 @using Avemepls.Blazor.Components
 @using Microsoft.AspNetCore.Authorization
 @using Avemepls.Identity.DataAccess
@@ -9,11 +11,9 @@
 @using FluentValidation
 @using Microsoft.Extensions.Localization
 @using Schedia.Auth.Domain.Validators
-@inject IMediator Mediator
 @inject IAuthenticationService AuthService
 @inject IDbContextFactory<IdentityDbContext> DbContextFactory
 @inject IStringLocalizer<Validator> ValidatorLoc
-@inject IStringLocalizer<Register> Loc
 @inject IStringLocalizer<PasswordValidator> PasswordValidatorLoc
 
 <AuthorizeView>
@@ -90,6 +90,11 @@
 
     private MudForm _form = null!;
 
+    protected override void HandleError(string message)
+    {
+        _errorMessage = message;
+    }
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -102,34 +107,19 @@
         _isLoading = true;
         await _form.Validate();
         _isLoading = false;
-        if (!_form.IsValid)
-        {
-            return;
-        }
+        if (!_form.IsValid) return;
 
         _errorMessage = "";
+        var tokenInformation = await Send(new Auth.Domain.ViaPassword.Register.Command
+        {
+            Username = _model.Username,
+            Email = _model.Email,
+            Password = _model.Password
+        });
 
-        try
-        {
-            var tokenInformation = await Mediator.Send(new Auth.Domain.ViaPassword.Register.Command
-            {
-                Username = _model.Username,
-                Email = _model.Email,
-                Password = _model.Password
-            });
+        if (tokenInformation is null) return;
 
-            await AuthService.LoginAsync(tokenInformation);
-        }
-        catch (Exception ex)
-        {
-            _errorMessage = Loc["Произошла непредвиденная ошибка"];
-            Console.WriteLine(ex.Message);
-        }
-        finally
-        {
-            _isLoading = false;
-            StateHasChanged();
-        }
+        await AuthService.LoginAsync(tokenInformation);
     }
 
     public class Command : Auth.Domain.ViaPassword.Register.Command

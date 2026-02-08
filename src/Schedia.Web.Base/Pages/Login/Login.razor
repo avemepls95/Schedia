@@ -1,17 +1,12 @@
 @page "/login"
 @layout AnonymousLayout
 @attribute [AllowAnonymous]
+@inherits MediatorComponentBase
+@using Avemepls.Blazor.Common
 @using Avemepls.Blazor.Components
-@using Avemepls.Domain.Extensions
 @using Microsoft.AspNetCore.Authorization
-@using Microsoft.Extensions.Localization
-@using Microsoft.Extensions.Logging
 @using Schedia.Web.Base.Layouts
-@using ValidationException = FluentValidation.ValidationException
-@inject IMediator Mediator
 @inject IAuthenticationService AuthService
-@inject IStringLocalizer<Login> Loc
-@inject ILogger<Login> Logger
 
 <AuthorizeView>
     <Authorized>
@@ -82,42 +77,28 @@
 
     private MudForm _form = null!;
 
+    protected override void HandleError(string message)
+    {
+        _errorMessage = message;
+    }
+
     private async Task HandleLogin()
     {
         _isLoading = true;
         await _form.Validate();
         _isLoading = false;
-        if (!_form.IsValid)
-        {
-            return;
-        }
+
+        if (!_form.IsValid) return;
 
         _errorMessage = "";
+        var tokenInformation = await Send(new Auth.Domain.ViaPassword.Login.Command
+        {
+            Username = _model.Username,
+            Password = _model.Password,
+        });
 
-        try
-        {
-            var tokenInformation = await Mediator.Send(new Auth.Domain.ViaPassword.Login.Command
-            {
-                Username = _model.Username,
-                Password = _model.Password,
-            });
+        if (tokenInformation is null) return;
 
-            await AuthService.LoginAsync(tokenInformation, ReturnUrl);
-        }
-        catch (ValidationException ex)
-        {
-            _errorMessage = ex.GetFirstError();
-        }
-        catch (Exception ex)
-        {
-            _errorMessage =  Loc["Произошла непредвиденная ошибка"];
-            Console.WriteLine(ex.Message);
-            Logger.LogCritical(ex, ex.Message);
-        }
-        finally
-        {
-            _isLoading = false;
-            StateHasChanged();
-        }
+        await AuthService.LoginAsync(tokenInformation, ReturnUrl);
     }
 }
