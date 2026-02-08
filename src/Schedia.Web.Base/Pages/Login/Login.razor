@@ -5,11 +5,13 @@
 @using Avemepls.Domain.Extensions
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
+@using Microsoft.Extensions.Logging
 @using Schedia.Web.Base.Layouts
 @using ValidationException = FluentValidation.ValidationException
 @inject IMediator Mediator
 @inject IAuthenticationService AuthService
 @inject IStringLocalizer<Login> Loc
+@inject ILogger<Login> Logger
 
 <AuthorizeView>
     <Authorized>
@@ -110,6 +112,7 @@
         {
             _errorMessage =  Loc["Произошла непредвиденная ошибка"];
             Console.WriteLine(ex.Message);
+            Logger.LogCritical(ex, ex.Message);
         }
         finally
         {

@@ -29,7 +29,13 @@
       "mcp__chrome-devtools__wait_for",
       "mcp__chrome-devtools__fill",
       "Bash(Select-String -Pattern \"\\(Passed|Failed|Skipped|Total|FAILED|error\\)\")",
-      "Bash(Select-Object -Last 20)"
+      "Bash(Select-Object -Last 20)",
+      "WebFetch(domain:www.elastic.co)",
+      "WebFetch(domain:github.com)",
+      "Bash(dotnet tool run ilspy:*)",
+      "Bash(powershell -Command \"[System.Reflection.Assembly]::LoadFrom\\(''C:/Users/user/.nuget/packages/elastic.serilog.sinks/9.0.0/lib/net8.0/Elastic.Serilog.Sinks.dll''\\).GetTypes\\(\\) | ForEach-Object { $_FullName } | Select-String -Pattern ''Bootstrap''\")",
+      "Bash(powershell -Command \"try { [System.Reflection.Assembly]::LoadFrom\\(''C:/Users/user/.nuget/packages/elastic.serilog.sinks/9.0.0/lib/net8.0/Elastic.Serilog.Sinks.dll''\\).GetTypes\\(\\) | ForEach-Object { $_.FullName } } catch { $_.Exception.LoaderExceptions | ForEach-Object { $_.Message }; $_.Exception.InnerException.Types | Where-Object { $_ -ne $null } | ForEach-Object { $_.FullName } }\")",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }

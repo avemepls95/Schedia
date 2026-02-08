@@ -167,6 +167,7 @@
         <PackageVersion Include="Npgsql" Version="$(NpgsqlEntityFrameworkCoreVersion)"/>
         <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="$(NpgsqlEntityFrameworkCoreVersion)"/>
         <PackageVersion Include="PushSharp.Core" Version="1.0.2"/>
+        <PackageVersion Include="Elastic.Serilog.Sinks" Version="9.0.0"/>
         <PackageVersion Include="Serilog" Version="4.3.0"/>
         <PackageVersion Include="Serilog.AspNetCore" Version="9.0.0"/>
         <PackageVersion Include="Serilog.Enrichers.CorrelationId" Version="3.0.1"/>
