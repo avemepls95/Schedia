@@ -3,17 +3,38 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
 
-<MudMenu Icon="@Icons.Material.Filled.Language" Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
-    <MudMenuItem OnClick="@(() => SetCultureAsync("en"))" Icon="@GetCheckIcon("en")">
-        English
-    </MudMenuItem>
-    <MudMenuItem OnClick="@(() => SetCultureAsync("ru"))" Icon="@GetCheckIcon("ru")">
-        Русский
-    </MudMenuItem>
+<MudMenu AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
+    <ActivatorContent>
+        <MudIconButton Color="Color">
+            <img src="@CurrentFlagSrc" width="24" height="16" alt="@CurrentLabel" style="border-radius: 2px;" />
+        </MudIconButton>
+    </ActivatorContent>
+    <ChildContent>
+        <MudMenuItem OnClick="@(() => SetCultureAsync("en"))" Icon="@GetCheckIcon("en")">
+            <div class="d-flex align-center gap-2">
+                <img src="@FlagEnSrc" width="24" height="16" alt="EN" style="border-radius: 2px;" />
+                <span>English</span>
+            </div>
+        </MudMenuItem>
+        <MudMenuItem OnClick="@(() => SetCultureAsync("ru"))" Icon="@GetCheckIcon("ru")">
+            <div class="d-flex align-center gap-2">
+                <img src="@FlagRuSrc" width="24" height="16" alt="RU" style="border-radius: 2px;" />
+                <span>Русский</span>
+            </div>
+        </MudMenuItem>
+    </ChildContent>
 </MudMenu>
 
 @code {
+    [Parameter] public Color Color { get; set; } = Color.Primary;
+
     private readonly string _currentCulture = CultureInfo.CurrentCulture.Name;
+
+    private const string FlagRuSrc = "_content/Schedia.Web.Base/images/flags/ru.svg";
+    private const string FlagEnSrc = "_content/Schedia.Web.Base/images/flags/gb.svg";
+
+    private string CurrentFlagSrc => _currentCulture.StartsWith("ru", StringComparison.OrdinalIgnoreCase) ? FlagRuSrc : FlagEnSrc;
+    private string CurrentLabel => _currentCulture.StartsWith("ru", StringComparison.OrdinalIgnoreCase) ? "RU" : "EN";
 
     private string? GetCheckIcon(string culture)
     {

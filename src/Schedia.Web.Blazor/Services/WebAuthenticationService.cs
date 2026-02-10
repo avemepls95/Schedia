@@ -49,10 +49,6 @@ public class WebAuthenticationService(
         // Clear cookie via API endpoint
         await jsRuntime.InvokeAsync<bool>("tools.auth.clearAuthCookie");
 
-        // Notify authentication state changed
         authStateProvider.NotifyUserLogout();
-
-        // Navigate to login
-        navigationManager.NavigateTo("/login", forceLoad: false);
     }
 }
