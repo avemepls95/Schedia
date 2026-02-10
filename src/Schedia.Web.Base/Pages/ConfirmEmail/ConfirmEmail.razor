@@ -14,7 +14,7 @@
             <p>@("Подтверждение Вашего электронного адреса".Loc(Loc))...</p>
         </MudCard>
     }
-    else if (_success)
+    else if (string.IsNullOrWhiteSpace(ErrorMessage))
     {
         <MudCard Style="max-width: 500px; width: 100%; padding: 40px; text-align: center;">
             <div style="font-size: 48px; color: #52c41a; margin-bottom: 16px;">✓</div>
@@ -30,7 +30,8 @@
         <MudCard Style="max-width: 500px; width: 100%; padding: 40px; text-align: center;">
             <div style="font-size: 48px; color: #ff4d4f; margin-bottom: 16px;">✗</div>
             <h2>@("Ошибка подтверждения".Loc(Loc))</h2>
-            <p style="margin-bottom: 24px;">@(_errorMessage)</p>
+            <p style="margin-bottom: 24px;">@(ErrorMessage)</p>
+            <p style="margin-bottom: 24px;">@(AdditionalInformationAsWarning)</p>
             <button @onclick="@(() => NavManager.NavigateTo("/login"))" style="padding: 10px 20px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
                 @("Войти".Loc(Loc))
             </button>
@@ -40,20 +41,14 @@
 
 @code {
     private bool _isLoading = true;
-    private bool _success;
-    private string _errorMessage = "";
 
     [SupplyParameterFromQuery(Name = "token")]
     public string? Token { get; set; }
 
-    protected override void HandleError(string message)
-    {
-        _errorMessage = message;
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!firstRender) return;
+        if (!firstRender)
+            return;
 
         if (string.IsNullOrEmpty(Token))
         {
@@ -62,12 +57,10 @@
             return;
         }
 
-        _success = await Send(new Schedia.Identity.Domain.User.ConfirmEmail.Command
-        {
-            Token = Token
-        });
+        await Send(new Schedia.Identity.Domain.User.ConfirmEmail.Command { Token = Token });
 
         _isLoading = false;
+
         StateHasChanged();
     }
 }

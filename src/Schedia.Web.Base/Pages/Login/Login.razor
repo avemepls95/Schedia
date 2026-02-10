@@ -6,6 +6,7 @@
 @using Avemepls.Blazor.Components
 @using Microsoft.AspNetCore.Authorization
 @using Schedia.Web.Base.Layouts
+@inject ISnackbar Snackbar
 @inject IAuthenticationService AuthService
 
 <AuthorizeView>
@@ -31,9 +32,14 @@
                                    InputType="InputType.Password" />
                 </MudForm>
 
-                @if (!string.IsNullOrEmpty(_errorMessage))
+                @if (!string.IsNullOrEmpty(ErrorMessage))
                 {
-                    <MudAlert Severity="Severity.Error" Class="mb-4">@_errorMessage</MudAlert>
+                    <MudAlert Severity="Severity.Error" Class="mb-4">@ErrorMessage</MudAlert>
+                }
+
+                @if (!string.IsNullOrEmpty(AdditionalInformationAsWarning))
+                {
+                    <MudAlert Severity="Severity.Warning" Class="mb-4">@AdditionalInformationAsWarning</MudAlert>
                 }
 
                 <MudButton ButtonType="ButtonType.Button"
@@ -68,7 +74,6 @@
 @code {
     private readonly Auth.Domain.ViaPassword.Login.Command _model = new();
     private bool _isLoading;
-    private string _errorMessage = "";
 
     [SupplyParameterFromQuery(Name = "returnUrl")]
     public string? ReturnUrl { get; set; }
@@ -77,9 +82,13 @@
 
     private MudForm _form = null!;
 
-    protected override void HandleError(string message)
+    protected override Task OnInitializedAsync()
     {
-        _errorMessage = message;
+        base.OnInitializedAsync();
+
+        ErrorRaised += () => Snackbar.Add("Simple Snackbar");
+
+        return Task.CompletedTask;
     }
 
     private async Task HandleLogin()
@@ -88,16 +97,22 @@
         await _form.Validate();
         _isLoading = false;
 
-        if (!_form.IsValid) return;
+        if (!_form.IsValid)
+        {
+            return;
+        }
 
-        _errorMessage = "";
+        ErrorMessage = "";
         var tokenInformation = await Send(new Auth.Domain.ViaPassword.Login.Command
         {
             Username = _model.Username,
             Password = _model.Password,
         });
 
-        if (tokenInformation is null) return;
+        if (tokenInformation is null)
+        {
+            return;
+        }
 
         await AuthService.LoginAsync(tokenInformation, ReturnUrl);
     }

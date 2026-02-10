@@ -11,6 +11,7 @@
 @using FluentValidation
 @using Microsoft.Extensions.Localization
 @using Schedia.Auth.Domain.Validators
+@using Severity = MudBlazor.Severity
 @inject IAuthenticationService AuthService
 @inject IDbContextFactory<IdentityDbContext> DbContextFactory
 @inject IStringLocalizer<Validator> ValidatorLoc
@@ -25,9 +26,14 @@
             <MudCard Style="max-width: 400px; width: 100%; padding: 20px;">
                 <MudText Typo="Typo.h4" Align="Align.Center" Class="mb-4">@("Регистрация".Loc(Loc))</MudText>
 
-                @if (!string.IsNullOrEmpty(_errorMessage))
+                @if (!string.IsNullOrEmpty(ErrorMessage))
                 {
-                    <MudAlert Severity="MudBlazor.Severity.Error" Class="mb-4">@_errorMessage</MudAlert>
+                    <MudAlert Severity="Severity.Error" Class="mb-4">@ErrorMessage</MudAlert>
+                }
+
+                @if (!string.IsNullOrEmpty(AdditionalInformationAsWarning))
+                {
+                    <MudAlert Severity="Severity.Warning" Class="mb-4">@AdditionalInformationAsWarning</MudAlert>
                 }
 
                 <MudForm Model="@_model" @ref="@_form" Validation="@(_authValidator.ValidateValue)">
@@ -84,16 +90,10 @@
 @code {
     private readonly Command _model = new();
     private bool _isLoading;
-    private string _errorMessage = "";
 
     private Validator _authValidator = null!;
 
     private MudForm _form = null!;
-
-    protected override void HandleError(string message)
-    {
-        _errorMessage = message;
-    }
 
     protected override void OnInitialized()
     {
@@ -107,9 +107,13 @@
         _isLoading = true;
         await _form.Validate();
         _isLoading = false;
-        if (!_form.IsValid) return;
 
-        _errorMessage = "";
+        if (!_form.IsValid)
+        {
+            return;
+        }
+
+        ErrorMessage = "";
         var tokenInformation = await Send(new Auth.Domain.ViaPassword.Register.Command
         {
             Username = _model.Username,
@@ -117,7 +121,10 @@
             Password = _model.Password
         });
 
-        if (tokenInformation is null) return;
+        if (tokenInformation is null)
+        {
+            return;
+        }
 
         await AuthService.LoginAsync(tokenInformation);
     }

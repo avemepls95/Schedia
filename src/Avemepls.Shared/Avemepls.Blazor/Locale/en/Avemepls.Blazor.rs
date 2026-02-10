@@ -75,5 +75,8 @@ msgstr "'{0}' successfully restored"
 msgid "Сбросить фильтры"
 msgstr "Reset filters"
 
-msgid "Произошла непредвиденная ошибка"
+msgid "Возникла непредвиденная ошибка"
 msgstr "An unexpected error occurred"
+
+msgid "Чтобы мы скорее решили эту проблему, сообщите пожалуйста нашей команде технической поддержки код ошибки {0}"
+msgstr "To help us resolve this issue as quickly as possible, please provide our technical support team with error code {0}"
