@@ -16,7 +16,7 @@ public class OnlineUser(
     /// <summary>
     /// Дата и время подключения
     /// </summary>
-    public System.DateTimeOffset OnlineSince { get; } = currentDateTimeProvider.Now;
+    public System.DateTimeOffset OnlineSince { get; } = currentDateTimeProvider.UtcNow;
 
     /// <summary>
     /// IP-адрес подключения

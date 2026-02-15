@@ -1,4 +1,4 @@
-using Schedia.Auth.Domain.ViaPassword;
+using Avemepls.Auth.Domain.ViaPassword;
 using Schedia.Web.Base.Pages.ForgotPassword;
 
 namespace Schedia.Web.Base.Tests.Pages;

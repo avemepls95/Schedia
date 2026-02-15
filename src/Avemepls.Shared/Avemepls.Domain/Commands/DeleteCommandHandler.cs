@@ -91,7 +91,7 @@ public abstract class DeleteCommandHandler<TCommand, TContext, TEntity, TId> : I
 
             if (entity is IHasDateDeleted hasDateDeleted)
             {
-                hasDateDeleted.DateDeleted ??= _currentDateTimeProvider.Now;
+                hasDateDeleted.DateDeleted ??= _currentDateTimeProvider.UtcNow;
 
                 if (hasDateDeleted is IHasUserDeleted hasUserDeleted)
                 {

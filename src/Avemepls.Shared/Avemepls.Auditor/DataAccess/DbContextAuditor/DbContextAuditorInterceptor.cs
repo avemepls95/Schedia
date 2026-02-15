@@ -133,7 +133,7 @@ public class DbContextAuditorInterceptor(
             {
                 if (entry.Entity is IHasDateCreated newEntry && newEntry.DateCreated == default)
                 {
-                    newEntry.DateCreated = currentDateTimeProvider.Now;
+                    newEntry.DateCreated = currentDateTimeProvider.UtcNow;
                 }
 
                 if (entry.Entity is IHasUserCreated<int> { UserCreatedId: 0 } hasUser)
@@ -153,15 +153,14 @@ public class DbContextAuditorInterceptor(
                 }
             }
 
-            if (entry.State is EntityState.Modified or EntityState.Added &&
-                entry.Entity is IHasDateModified modifiedEntry)
+            if (entry.State is EntityState.Modified && entry.Entity is IHasDateUpdated modifiedEntry)
             {
-                modifiedEntry.DateModified = currentDateTimeProvider.Now;
+                modifiedEntry.DateUpdated = currentDateTimeProvider.UtcNow;
             }
 
             if (entry is { State: EntityState.Deleted, Entity: IHasDateDeleted deletedEntry })
             {
-                deletedEntry.DateDeleted = currentDateTimeProvider.Now;
+                deletedEntry.DateDeleted = currentDateTimeProvider.UtcNow;
                 entry.EntityEntry.State = EntityState.Modified;
             }
         }

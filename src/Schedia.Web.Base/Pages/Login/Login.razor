@@ -2,6 +2,7 @@
 @layout AnonymousLayout
 @attribute [AllowAnonymous]
 @inherits MediatorComponentBase
+@using Avemepls.Auth.Domain.ViaPassword
 @using Avemepls.Blazor.Common
 @using Avemepls.Blazor.Components
 @using Microsoft.AspNetCore.Authorization
@@ -72,13 +73,13 @@
 </AuthorizeView>
 
 @code {
-    private readonly Auth.Domain.ViaPassword.Login.Command _model = new();
+    private readonly Avemepls.Auth.Domain.ViaPassword.Login.Command _model = new();
     private bool _isLoading;
 
     [SupplyParameterFromQuery(Name = "returnUrl")]
     public string? ReturnUrl { get; set; }
 
-    private readonly Auth.Domain.ViaPassword.Login.Validator _authValidator = new();
+    private readonly Avemepls.Auth.Domain.ViaPassword.Login.Validator _authValidator = new();
 
     private MudForm _form = null!;
 
@@ -103,7 +104,7 @@
         }
 
         ErrorMessage = "";
-        var tokenInformation = await Send(new Auth.Domain.ViaPassword.Login.Command
+        var tokenInformation = await Send(new Register.Command()
         {
             Username = _model.Username,
             Password = _model.Password,

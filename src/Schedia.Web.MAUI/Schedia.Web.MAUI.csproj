@@ -69,8 +69,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Schedia.Web.Base\Schedia.Web.Base.csproj" />
-        <ProjectReference Include="..\modules\auth\Schedia.Auth.Domain\Schedia.Auth.Domain.csproj" />
-        <ProjectReference Include="..\modules\identity\Schedia.Identity.Domain\Schedia.Identity.Domain.csproj" />
+        <ProjectReference Include="..\Avemepls.Shared\Avemepls.Auth\Avemepls.Auth.Domain\Avemepls.Auth.Domain.csproj" />
         <ProjectReference Include="..\Avemepls.Shared\Avemepls.Infrastructure\Avemepls.Infrastructure.csproj" />
         <ProjectReference Include="..\Avemepls.Shared\Avemepls.Identity\Avemepls.Identity.DataAccess\Avemepls.Identity.DataAccess.csproj" />
     </ItemGroup>

@@ -1,5 +1,7 @@
 ﻿using Avemepls.Core.Models;
 
+using EntityFrameworkCore.Projectables;
+
 namespace Avemepls.Core.DataAccess.Extensions;
 
 /// <summary>
@@ -19,6 +21,7 @@ public static partial class QueryableExtensions
         return query.Where(e => e.IsActive);
     }
 
+    [Projectable]
     public static bool Active<TEntity>(this TEntity entity)
         where TEntity : IHasIsActive =>
         entity.IsActive;
@@ -27,6 +30,7 @@ public static partial class QueryableExtensions
         where TEntity : IHasIsActive, IHasDateDeleted =>
         collection.Where(x => x.IsActive && x.DateDeleted == null);
 
+    [Projectable]
     public static bool Available<TEntity>(this TEntity entity)
         where TEntity : IHasIsActive, IHasDateDeleted =>
         entity.DateDeleted == null && entity.IsActive;

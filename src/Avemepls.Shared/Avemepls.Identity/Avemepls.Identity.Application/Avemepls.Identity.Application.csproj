@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+      <PackageReference Include="MassTransit.Abstractions" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Avemepls.ServiceBus\Avemepls.ServiceBus.csproj" />
+      <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Identity\Avemepls.Identity.DataAccess\Avemepls.Identity.DataAccess.csproj" />
+      <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Identity\Avemepls.Identity.Domain\Avemepls.Identity.Domain.csproj" />
+      <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Infrastructure\Avemepls.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\..\core\Schedia.Core\Schedia.Core.csproj" />
+      <ProjectReference Include="..\..\Avemepls.Auth\Avemepls.Auth.Abstractions\Avemepls.Auth.Abstractions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="NotificationPublishers\" />
+    </ItemGroup>
+
+</Project>

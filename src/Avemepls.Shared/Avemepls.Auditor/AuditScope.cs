@@ -42,7 +42,7 @@ public class AuditScope : IAsyncDisposable
 
     internal AuditScope AddEvent(AuditEvent auditEvent)
     {
-        auditEvent.DateTime = _dateTimeProvider.Now;
+        auditEvent.DateTime = _dateTimeProvider.UtcNow;
         _events.Add(auditEvent);
 
         return this;

@@ -29,7 +29,7 @@ public abstract class BaseConfiguration<TEntity, TIdType> : IEntityTypeConfigura
     [
         nameof(IHasDateCreated.DateCreated),
         nameof(IHasUserCreated.UserCreatedId),
-        nameof(IHasDateModified.DateModified),
+        nameof(IHasDateUpdated.DateUpdated),
         nameof(IHasDateDeleted.DateDeleted),
         nameof(IHasUserDeleted.UserDeletedId)
     ];

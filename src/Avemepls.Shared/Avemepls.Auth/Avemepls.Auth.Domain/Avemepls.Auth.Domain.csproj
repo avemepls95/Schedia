@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+            <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\10.0.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="EntityFrameworkCore.Projectables.Abstractions"/>
+        <PackageReference Include="ServiceScan.SourceGenerator"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\..\Avemepls.Domain\Avemepls.Domain.csproj" />
+      <ProjectReference Include="..\..\Avemepls.Mapster\Avemepls.Mapster.csproj" />
+      <ProjectReference Include="..\..\..\core\Schedia.Core\Schedia.Core.csproj" />
+      <ProjectReference Include="..\..\Avemepls.Identity\Avemepls.Identity.DataAccess\Avemepls.Identity.DataAccess.csproj" />
+      <ProjectReference Include="..\Avemepls.Auth.Abstractions\Avemepls.Auth.Abstractions.csproj" />
+      <ProjectReference Include="..\Avemepls.Auth.Bearer\Avemepls.Auth.Bearer.csproj" />
+    </ItemGroup>
+
+</Project>

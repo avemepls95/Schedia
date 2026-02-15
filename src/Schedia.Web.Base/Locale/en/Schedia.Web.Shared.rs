@@ -27,8 +27,8 @@ msgstr "Reset password"
 msgid "Пароль успешно сброшен"
 msgstr "Password reset successful"
 
-msgid "Ваш пароль изменен. Теперь вы можете войти с новым паролем"
-msgstr "Your password has been changed. You can now sign in with your new password"
+msgid "Готово! Теперь вы можете войти с новым паролем"
+msgstr "Done! You can now log in with your new password."
 
 msgid "Подтверждение Вашего электронного адреса"
 msgstr "Confirm your email address"

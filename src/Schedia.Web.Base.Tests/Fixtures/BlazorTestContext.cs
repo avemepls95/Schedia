@@ -8,7 +8,7 @@ using Avemepls.Identity.DataAccess;
 
 using Microsoft.Extensions.Localization;
 
-using Schedia.Auth.Domain.ViaPassword;
+using Avemepls.Auth.Domain.ViaPassword;
 using Schedia.Web.Base.Services;
 
 namespace Schedia.Web.Base.Tests.Fixtures;

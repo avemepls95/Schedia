@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="EntityFrameworkCore.Projectables" />
         <PackageReference Include="EntityFrameworkCore.Projectables.Abstractions" />
         <PackageReference Include="MediatR" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" />

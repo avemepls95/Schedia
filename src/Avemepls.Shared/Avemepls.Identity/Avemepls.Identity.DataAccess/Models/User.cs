@@ -2,7 +2,7 @@ using Avemepls.Core.Models;
 
 namespace Avemepls.Identity.DataAccess.Models;
 
-public class User : IHasId<int>, IHasIsActive, IHasDateDeleted
+public class User : IHasId<int>, IHasDateCreated, IHasDateUpdated, IHasIsActive, IHasDateDeleted
 {
     public int Id { get; set; }
 
@@ -21,12 +21,4 @@ public class User : IHasId<int>, IHasIsActive, IHasDateDeleted
     public DateTimeOffset? DateDeleted { get; set; }
 
     public bool EmailConfirmed { get; set; }
-
-    public string? EmailConfirmationToken { get; set; }
-
-    public DateTimeOffset? EmailConfirmationTokenExpiry { get; set; }
-
-    public string? PasswordResetToken { get; set; }
-
-    public DateTimeOffset? PasswordResetTokenExpiry { get; set; }
 }

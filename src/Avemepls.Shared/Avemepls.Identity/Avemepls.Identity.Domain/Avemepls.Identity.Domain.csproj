@@ -1,5 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <Folder Include="Services\" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="MediatR.Contracts" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Schedia.Core\Schedia.Core.csproj" />
+    <ProjectReference Include="..\..\Avemepls.Auditor\Avemepls.Auditor.csproj" />
+    <ProjectReference Include="..\..\Avemepls.Infrastructure\Avemepls.Infrastructure.csproj" />
+    <ProjectReference Include="..\Avemepls.Identity.Abstraction\Avemepls.Identity.Abstraction.csproj" />
+    <ProjectReference Include="..\Avemepls.Identity.DataAccess\Avemepls.Identity.DataAccess.csproj" />
+  </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ServiceScan.SourceGenerator"/>
+    </ItemGroup>
 </Project>

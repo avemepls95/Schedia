@@ -39,7 +39,11 @@
       "mcp__chrome-devtools__take_screenshot",
       "mcp__chrome-devtools__get_console_message",
       "WebFetch(domain:mikaberglund.com)",
-      "WebFetch(domain:aryehsilver.co.uk)"
+      "WebFetch(domain:aryehsilver.co.uk)",
+      "WebFetch(domain:www.nuget.org)",
+      "Bash(python3:*)",
+      "Bash(node -e:*)",
+      "Bash(dotnet clean:*)"
     ]
   }
 }

@@ -1,5 +1,5 @@
 using Avemepls.Auth.Bearer;
-using Schedia.Auth.Domain.ViaPassword;
+using Avemepls.Auth.Domain.ViaPassword;
 
 namespace Schedia.Web.Base.Tests.Pages;
 

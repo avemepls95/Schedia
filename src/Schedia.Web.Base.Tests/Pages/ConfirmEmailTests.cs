@@ -1,4 +1,4 @@
-using Schedia.Identity.Domain.User;
+using Avemepls.Identity.Domain.User.Commands;
 
 namespace Schedia.Web.Base.Tests.Pages;
 

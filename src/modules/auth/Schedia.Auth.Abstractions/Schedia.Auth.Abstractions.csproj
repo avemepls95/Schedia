@@ -1,8 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <PackageReference Include="MediatR.Contracts" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Core\Avemepls.Core.csproj" />
-  </ItemGroup>
-</Project>

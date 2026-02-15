@@ -17,12 +17,80 @@ namespace Avemepls.Identity.DataAccess.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.0")
+                .HasAnnotation("ProductVersion", "10.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "citext");
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "uuid-ossp");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Avemepls.Identity.DataAccess.Models.ConfirmEmailRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasColumnOrder(1);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EmailConfirmationToken")
+                        .HasColumnType("text")
+                        .HasColumnName("email_confirmation_token")
+                        .HasColumnOrder(5);
+
+                    b.Property<DateTimeOffset?>("EmailConfirmationTokenExpiry")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("email_confirmation_token_expiry")
+                        .HasColumnOrder(6);
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id")
+                        .HasColumnOrder(3);
+
+                    b.HasKey("Id")
+                        .HasName("pk_confirm_email_record");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_confirm_email_record_user_id");
+
+                    b.ToTable("confirm_email_record", "identity");
+                });
+
+            modelBuilder.Entity("Avemepls.Identity.DataAccess.Models.RequestResetPasswordRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasColumnOrder(1);
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Token")
+                        .HasColumnType("text")
+                        .HasColumnName("token")
+                        .HasColumnOrder(5);
+
+                    b.Property<DateTimeOffset?>("TokenExpiry")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("token_expiry")
+                        .HasColumnOrder(6);
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id")
+                        .HasColumnOrder(3);
+
+                    b.HasKey("Id")
+                        .HasName("pk_request_reset_password_record");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_request_reset_password_record_user_id");
+
+                    b.ToTable("request_reset_password_record", "identity");
+                });
 
             modelBuilder.Entity("Avemepls.Identity.DataAccess.Models.User", b =>
                 {
@@ -36,8 +104,7 @@ namespace Avemepls.Identity.DataAccess.Migrations
 
                     b.Property<DateTimeOffset>("DateCreated")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date_created")
-                        .HasColumnOrder(13);
+                        .HasColumnName("date_created");
 
                     b.Property<DateTimeOffset?>("DateDeleted")
                         .HasColumnType("timestamp with time zone")
@@ -45,28 +112,17 @@ namespace Avemepls.Identity.DataAccess.Migrations
 
                     b.Property<DateTimeOffset?>("DateUpdated")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("date_updated")
-                        .HasColumnOrder(7);
+                        .HasColumnName("date_updated");
 
                     b.Property<string>("Email")
                         .HasColumnType("text")
                         .HasColumnName("email")
                         .HasColumnOrder(5);
 
-                    b.Property<string>("EmailConfirmationToken")
-                        .HasColumnType("text")
-                        .HasColumnName("email_confirmation_token")
-                        .HasColumnOrder(9);
-
-                    b.Property<DateTimeOffset?>("EmailConfirmationTokenExpiry")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("email_confirmation_token_expiry")
-                        .HasColumnOrder(10);
-
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean")
                         .HasColumnName("email_confirmed")
-                        .HasColumnOrder(8);
+                        .HasColumnOrder(7);
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean")
@@ -78,16 +134,6 @@ namespace Avemepls.Identity.DataAccess.Migrations
                         .HasColumnName("password_hash")
                         .HasColumnOrder(6);
 
-                    b.Property<string>("PasswordResetToken")
-                        .HasColumnType("text")
-                        .HasColumnName("password_reset_token")
-                        .HasColumnOrder(11);
-
-                    b.Property<DateTimeOffset?>("PasswordResetTokenExpiry")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("password_reset_token_expiry")
-                        .HasColumnOrder(12);
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("text")
@@ -98,6 +144,30 @@ namespace Avemepls.Identity.DataAccess.Migrations
                         .HasName("pk_user");
 
                     b.ToTable("user", "identity");
+                });
+
+            modelBuilder.Entity("Avemepls.Identity.DataAccess.Models.ConfirmEmailRecord", b =>
+                {
+                    b.HasOne("Avemepls.Identity.DataAccess.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_confirm_email_record_users_user_id");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Avemepls.Identity.DataAccess.Models.RequestResetPasswordRecord", b =>
+                {
+                    b.HasOne("Avemepls.Identity.DataAccess.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_request_reset_password_record_users_user_id");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

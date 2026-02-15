@@ -8,9 +8,9 @@
 @using Avemepls.Identity.DataAccess
 @using Microsoft.EntityFrameworkCore
 @using Schedia.Web.Base.Layouts
-@using FluentValidation
 @using Microsoft.Extensions.Localization
-@using Schedia.Auth.Domain.Validators
+@using Avemepls.Auth.Domain.Validators
+@using FluentValidation
 @using Severity = MudBlazor.Severity
 @inject IAuthenticationService AuthService
 @inject IDbContextFactory<IdentityDbContext> DbContextFactory
@@ -114,7 +114,7 @@
         }
 
         ErrorMessage = "";
-        var tokenInformation = await Send(new Auth.Domain.ViaPassword.Register.Command
+        var tokenInformation = await Send(new Avemepls.Auth.Domain.ViaPassword.Register.Command
         {
             Username = _model.Username,
             Email = _model.Email,
@@ -129,16 +129,16 @@
         await AuthService.LoginAsync(tokenInformation);
     }
 
-    public class Command : Auth.Domain.ViaPassword.Register.Command
+    public class Command : Avemepls.Auth.Domain.ViaPassword.Register.Command
     {
         public string? ConfirmPassword { get; set; }
     }
 
-    public class Validator : Auth.Domain.ViaPassword.Register.Validator<Command>
+    public class Validator : Avemepls.Auth.Domain.ViaPassword.Register.Validator<Command>
     {
         public Validator(
             IDbContextFactory<IdentityDbContext> dbContextFactory,
-            IStringLocalizer<Auth.Domain.ViaPassword.Register.Validator<Command>> loc,
+            IStringLocalizer<Avemepls.Auth.Domain.ViaPassword.Register.Validator<Command>> loc,
             IStringLocalizer<PasswordValidator> passwordLoc)
             : base(dbContextFactory, loc, passwordLoc)
         {

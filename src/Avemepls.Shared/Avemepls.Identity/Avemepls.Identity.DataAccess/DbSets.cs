@@ -7,4 +7,6 @@ namespace Avemepls.Identity.DataAccess;
 public partial class IdentityDbContext
 {
     public DbSet<User> Users { get; set; }
+    public DbSet<ConfirmEmailRecord> ConfirmEmailRecords { get; set; }
+    public DbSet<RequestResetPasswordRecord> RequestResetPasswordRecords { get; set; }
 }

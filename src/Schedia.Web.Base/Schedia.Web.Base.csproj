@@ -13,11 +13,13 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Avemepls.Shared\Avemepls.Auditor\Avemepls.Auditor.csproj" />
+        <ProjectReference Include="..\Avemepls.Shared\Avemepls.Auth\Avemepls.Auth.Application\Avemepls.Auth.Application.csproj" />
         <ProjectReference Include="..\Avemepls.Shared\Avemepls.Blazor\Avemepls.Blazor.csproj" />
         <ProjectReference Include="..\Avemepls.ServiceBus\Avemepls.ServiceBus.csproj" />
-        <ProjectReference Include="..\Avemepls.Shared\Avemepls.Auth.Bearer\Avemepls.Auth.Bearer.csproj" />
-        <ProjectReference Include="..\modules\auth\Schedia.Auth.Application\Schedia.Auth.Application.csproj" />
-        <ProjectReference Include="..\modules\identity\Schedia.Identity.Domain\Schedia.Identity.Domain.csproj" />
+        <ProjectReference Include="..\Avemepls.Shared\Avemepls.Auth\Avemepls.Auth.Bearer\Avemepls.Auth.Bearer.csproj" />
+        <ProjectReference Include="..\Avemepls.Shared\Avemepls.Identity\Avemepls.Identity.Application\Avemepls.Identity.Application.csproj" />
+        <ProjectReference Include="..\core\Schedia.Core\Schedia.Core.csproj" />
         <ProjectReference Include="..\Schedia.DataAccess\Schedia.DataAccess.csproj" />
         <ProjectReference Include="..\core\Schedia.Domain.Core\Schedia.Domain.Core.csproj" />
         <ProjectReference Include="..\core\Schedia.Web.Core.Blazor\Schedia.Web.Core.Blazor.csproj" />

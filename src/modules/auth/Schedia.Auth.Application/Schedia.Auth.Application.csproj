@@ -1,8 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-      <ProjectReference Include="..\..\..\Avemepls.ServiceBus\Avemepls.ServiceBus.csproj" />
-      <ProjectReference Include="..\..\..\core\Schedia.Application.Core\Schedia.Application.Core.csproj" />
-      <ProjectReference Include="..\Schedia.Auth.Abstractions\Schedia.Auth.Abstractions.csproj" />
-      <ProjectReference Include="..\Schedia.Auth.Domain\Schedia.Auth.Domain.csproj" />
-  </ItemGroup>
-</Project>

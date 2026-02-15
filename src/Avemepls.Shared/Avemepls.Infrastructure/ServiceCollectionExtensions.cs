@@ -7,7 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
-        services.AddScoped<IEmailService, ConsoleEmailService>();
+        services.AddScoped<IEmailService, FakeEmailService>();
 
         return services;
     }

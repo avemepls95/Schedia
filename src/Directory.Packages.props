@@ -78,8 +78,8 @@
         <PackageVersion Include="DateOnlyTimeOnly.AspNet" Version="2.1.1"/>
         <PackageVersion Include="DateOnlyTimeOnly.AspNet.Swashbuckle" Version="2.1.1"/>
         <PackageVersion Include="EFCore.NamingConventions" Version="$(EntityFrameworkCoreVersion)"/>
-        <PackageVersion Include="EntityFrameworkCore.Projectables" Version="4.0.0"/>
-        <PackageVersion Include="EntityFrameworkCore.Projectables.Abstractions" Version="4.0.0"/>
+        <PackageVersion Include="EntityFrameworkCore.Projectables" Version="5.0.2"/>
+        <PackageVersion Include="EntityFrameworkCore.Projectables.Abstractions" Version="5.0.2"/>
         <PackageVersion Include="MassTransit.TestFramework" Version="$(MassTransit)"/>
         <PackageVersion Include="FluentAssertions" Version="7.2.0"/>
         <PackageVersion Include="FluentAssertions.Analyzers" Version="0.34.1"/>

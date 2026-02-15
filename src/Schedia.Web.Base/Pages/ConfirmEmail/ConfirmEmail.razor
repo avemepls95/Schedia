@@ -57,7 +57,7 @@
             return;
         }
 
-        await Send(new Schedia.Identity.Domain.User.ConfirmEmail.Command { Token = Token });
+        await Send(new Avemepls.Identity.Domain.User.Commands.ConfirmEmail.Command { Token = Token });
 
         _isLoading = false;
 
