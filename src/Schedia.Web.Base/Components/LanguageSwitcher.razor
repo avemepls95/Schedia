@@ -1,7 +1,10 @@
-@using System.Globalization
+﻿@using System.Globalization
+@using Avemepls.Blazor.Components
+@using Microsoft.Extensions.Localization
 @using Microsoft.JSInterop
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
+@inject IStringLocalizer<LanguageSwitcher> Loc
 
 <MudMenu AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight">
     <ActivatorContent>
@@ -19,7 +22,7 @@
         <MudMenuItem OnClick="@(() => SetCultureAsync("ru"))" Icon="@GetCheckIcon("ru")">
             <div class="d-flex align-center gap-2">
                 <img src="@FlagRuSrc" width="24" height="16" alt="RU" style="border-radius: 2px;" />
-                <span>Русский</span>
+                <span>@("Русский".Loc(Loc))</span>
             </div>
         </MudMenuItem>
     </ChildContent>

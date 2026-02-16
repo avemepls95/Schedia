@@ -1,34 +1,31 @@
 "RS-Revision-Date: 16.02.2026\n"
 
-msgid "Загрузка"
-msgstr "Loading"
+msgid "Русский"
+msgstr "Русский"
+
+msgid "Настройки"
+msgstr "Settings"
+
+msgid "Выйти"
+msgstr "Log out"
 
 msgid "Войти"
 msgstr "Sign in"
 
-msgid "Еще не зарегистрированы?"
-msgstr "Not registered yet?"
-
 msgid "Регистрация"
 msgstr "Sign up"
 
-msgid "Забыли пароль?"
-msgstr "Forgot password?"
+msgid "Добро пожаловать в Schedia!"
+msgstr "Welcome to Schedia!"
 
-msgid "Пароли не совпадают"
-msgstr "Passwords do not match"
+msgid "Поиск"
+msgstr "Search"
 
-msgid "Уже зарегистрированы?"
-msgstr "Already registered?"
+msgid "Администрирование"
+msgstr "Administration"
 
-msgid "Сбросить пароль"
-msgstr "Reset password"
-
-msgid "Пароль успешно сброшен"
-msgstr "Password reset successful"
-
-msgid "Готово! Теперь вы можете войти с новым паролем"
-msgstr "Done! You can now log in with your new password."
+msgid "Панель администрирования"
+msgstr "Administration panel"
 
 msgid "Подтверждение Вашего электронного адреса"
 msgstr "Confirm your email address"
@@ -48,6 +45,12 @@ msgstr "Confirmation error"
 msgid "Введите свой email и мы вышлем Вам ссылку для сброса пароля"
 msgstr "Enter your email and we will send you a password reset link"
 
+msgid "Электронная почта"
+msgstr "Email"
+
+msgid "Загрузка"
+msgstr "Loading"
+
 msgid "Отправить ссылку для сброса пароля"
 msgstr "Send password reset link"
 
@@ -57,26 +60,29 @@ msgstr "Check your inbox ({0})"
 msgid "Мы выслали на него инструкцию для сброса пароля"
 msgstr "We have sent you password reset instructions"
 
-msgid "Настройки"
-msgstr "Settings"
-
-msgid "Выйти"
-msgstr "Log out"
+msgid "Вход"
+msgstr "Sign in"
 
 msgid "Имя пользователя"
 msgstr "Username"
 
-msgid "Электронная почта"
-msgstr "Email"
-
 msgid "Пароль"
 msgstr "Password"
+
+msgid "Еще не зарегистрированы?"
+msgstr "Not registered yet?"
+
+msgid "Забыли пароль?"
+msgstr "Forgot password?"
+
+msgid "Пароли не совпадают"
+msgstr "Passwords do not match"
 
 msgid "Подтвердите пароль"
 msgstr "Confirm password"
 
-msgid "Вход"
-msgstr "Sign in"
+msgid "Уже зарегистрированы?"
+msgstr "Already registered?"
 
 msgid "Установить новый пароль"
 msgstr "Set new password"
@@ -84,17 +90,11 @@ msgstr "Set new password"
 msgid "Новый пароль"
 msgstr "New password"
 
-msgid "Добро пожаловать в Schedia!"
-msgstr "Welcome to Schedia!"
+msgid "Сбросить пароль"
+msgstr "Reset password"
 
-msgid "Администрирование"
-msgstr "Administration"
+msgid "Пароль успешно сброшен"
+msgstr "Password reset successful"
 
-msgid "Панель администрирования"
-msgstr "Administration panel"
-
-msgid "Поиск"
-msgstr "Search"
-
-msgid "Русский"
-msgstr "Русский"
+msgid "Готово! Теперь вы можете войти с новым паролем"
+msgstr "Done! You can now log in with your new password."
