@@ -6,7 +6,7 @@
         <OptimizeImplicitlyTriggeredBuild>True</OptimizeImplicitlyTriggeredBuild>
         <AntDesign>1.5.1</AntDesign>
         <MauiVersion>10.0.20</MauiVersion>
-        <RsLocalizer>1.0.3</RsLocalizer>
+        <RsLocalizer>1.0.6</RsLocalizer>
         <MassTransit>8.4.1</MassTransit>
     </PropertyGroup>
     <ItemGroup>
