@@ -7,6 +7,13 @@
         <PackageReference Include="Microsoft.AspNetCore.Components"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.Web"/>
         <PackageReference Include="MudBlazor"/>
+        <PackageReference Include="Npgsql.OpenTelemetry"/>
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol"/>
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.Http"/>
+        <PackageReference Include="OpenTelemetry.Instrumentation.Runtime"/>
         <PackageReference Include="Serilog.AspNetCore"/>
         <PackageReference Include="Serilog.Enrichers.CorrelationId"/>
         <PackageReference Include="Serilog.Enrichers.Environment"/>

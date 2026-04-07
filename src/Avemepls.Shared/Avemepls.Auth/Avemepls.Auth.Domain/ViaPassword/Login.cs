@@ -31,7 +31,7 @@ public static class Login
         {
             var user = await dbContext.Users.Available().FirstOrDefaultAsync(u => u.Username == command.Username, cancellationToken);
 
-            if (user == null || !PasswordHasher.VerifyPassword(command.Password, user.PasswordHash))
+            if (user?.PasswordHash is null || !PasswordHasher.VerifyPassword(command.Password, user.PasswordHash))
             {
                 throw new ValidationException(loc["Неверные логин или пароль"]);
             }

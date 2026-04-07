@@ -42,6 +42,7 @@ try
 
     builder.Services.AddSchediaBase(configuration);
     builder.AddBlazor();
+    builder.AddSchediaOpenTelemetry();
 
     var app = builder
         .Build()

@@ -42,10 +42,14 @@
         <PackageVersion Include="Microsoft.Extensions.Localization.Abstractions" Version="10.0.1"/>
         <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="8.15.0"/>
         <PackageVersion Include="Namotion.Reflection" Version="3.4.2"/>
+        <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0"/>
         <PackageVersion Include="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.12.0-beta.1"/>
         <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.12.0"/>
+        <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.12.0"/>
         <PackageVersion Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.12.0-beta.2"/>
+        <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.12.0"/>
         <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.12.0"/>
+        <PackageVersion Include="Npgsql.OpenTelemetry" Version="10.0.0"/>
         <PackageVersion Include="Serilog.Sinks.XUnit" Version="3.0.19"/>
         <PackageVersion Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="3.116.0"/>
         <PackageVersion Include="Soenneker.Utils.AutoBogus" Version="4.0.811"/>
