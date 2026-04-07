@@ -115,6 +115,7 @@
         <PackageVersion Include="EasyCaching.InMemory" Version="$(EasyCaching)"/>
         <PackageVersion Include="EasyCaching.Redis" Version="$(EasyCaching)"/>
         <PackageVersion Include="EasyCaching.Serialization.MessagePack" Version="$(EasyCaching)"/>
+        <PackageVersion Include="Microsoft.AspNetCore.Authentication.Google" Version="$(AspNetCoreVersion)"/>
         <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="$(AspNetCoreVersion)"/>
         <PackageVersion Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.3.0"/>
         <PackageVersion Include="Microsoft.AspNetCore.Authorization" Version="$(AspNetCoreVersion)"/>

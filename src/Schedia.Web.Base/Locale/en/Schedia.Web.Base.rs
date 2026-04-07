@@ -1,4 +1,4 @@
-"RS-Revision-Date: 16.02.2026\n"
+"RS-Revision-Date: 24.02.2026\n"
 
 msgid "Русский"
 msgstr "Русский"
@@ -98,3 +98,9 @@ msgstr "Password reset successful"
 
 msgid "Готово! Теперь вы можете войти с новым паролем"
 msgstr "Done! You can now log in with your new password."
+
+msgid "или"
+msgstr "or"
+
+msgid "Войти через Google"
+msgstr "Sign in with Google"

@@ -6,6 +6,7 @@ using Avemepls.Auth.Domain.Validators;
 using Avemepls.Core.DataAccess.Behaviors;
 using Avemepls.Core.DataAccess.Extensions;
 using Avemepls.Core.Extensions;
+using Avemepls.Core.Localization;
 using Avemepls.Domain.Validators;
 using Avemepls.Identity.DataAccess;
 using Avemepls.Identity.DataAccess.Models;
@@ -21,10 +22,13 @@ public static class Register
 {
     public class Command : IRequest<TokenInformation>
     {
+        [DisplayNameLoc("Имя пользователя")]
         public string? Username { get; set; }
 
+        [DisplayNameLoc("Электронная почта")]
         public string Email { get; set; }
 
+        [DisplayNameLoc("Пароль")]
         public string Password { get; set; }
     }
 

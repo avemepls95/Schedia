@@ -1,3 +1,4 @@
+using Avemepls.Auth.Abstractions;
 using Avemepls.Blazor;
 using Avemepls.Security.Principal;
 
@@ -25,8 +26,8 @@ public static class ProgramExtensions
             BaseAddress = new Uri(sp.GetRequiredService<NavigationManager>().BaseUri)
         });
 
-        // Register Cookie Authentication
-        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        // Register Cookie + Google Authentication
+        var authBuilder = builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
             {
                 options.Cookie.Name = "Schedia.Auth";
@@ -38,6 +39,17 @@ public static class ProgramExtensions
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
                 options.Cookie.SameSite = SameSiteMode.Lax;
             });
+
+        var googleOptions = builder.Configuration.GetSection("Auth:Google").Get<GoogleAuthOptions>();
+        if (googleOptions is { ClientId.Length: > 0 })
+        {
+            authBuilder.AddGoogle(options =>
+            {
+                options.ClientId = googleOptions.ClientId;
+                options.ClientSecret = googleOptions.ClientSecret;
+                options.CallbackPath = "/api/auth/google-callback";
+            });
+        }
 
         // Register custom authentication state provider for Bearer tokens
         builder.Services.AddScoped<TokenAuthenticationStateProvider>();
