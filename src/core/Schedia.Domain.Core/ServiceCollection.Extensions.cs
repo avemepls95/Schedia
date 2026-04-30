@@ -14,6 +14,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddDomainCore(this IServiceCollection services)
     {
         services.AddMapsterAdapter(typeof(ServiceCollectionExtensions).Assembly);
+        services.TryAddEnumerable(new ServiceDescriptor(typeof(IPipelineBehavior<,>), typeof(RequestMetricsWritingPipelineBehaviour<,>), ServiceLifetime.Scoped));
         services.TryAddEnumerable(new ServiceDescriptor(typeof(IPipelineBehavior<,>), typeof(TransactionPipelineBehavior<,>), ServiceLifetime.Scoped));
         services.TryAddEnumerable(new ServiceDescriptor(typeof(IPipelineBehavior<,>), typeof(FluentValidationPipelineBehavior<,>), ServiceLifetime.Scoped));
 

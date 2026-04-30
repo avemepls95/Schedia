@@ -32,6 +32,7 @@ internal static class ProgramExtensionsOpenTelemetry
                 .AddAspNetCoreInstrumentation()
                 .AddHttpClientInstrumentation()
                 .AddRuntimeInstrumentation()
+                .AddMeter("Avemepls.Domain")
                 .AddMeter("Npgsql")
                 .AddMeter("MassTransit")
                 .AddOtlpExporter(options =>

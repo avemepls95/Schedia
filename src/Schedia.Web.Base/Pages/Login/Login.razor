@@ -2,7 +2,6 @@
 @layout AnonymousLayout
 @attribute [AllowAnonymous]
 @inherits MediatorComponentBase
-@using Avemepls.Auth.Domain.ViaPassword
 @using Avemepls.Blazor.Common
 @using Avemepls.Blazor.Components
 @using Microsoft.AspNetCore.Authorization
@@ -104,7 +103,7 @@
         }
 
         ErrorMessage = "";
-        var tokenInformation = await Send(new Register.Command()
+        var tokenInformation = await Send(new Avemepls.Auth.Domain.ViaPassword.Login.Command()
         {
             Username = _model.Username,
             Password = _model.Password,
