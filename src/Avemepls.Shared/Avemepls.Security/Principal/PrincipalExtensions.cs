@@ -99,6 +99,17 @@ public static class PrincipalExtensions
     {
         var claimsPrincipal = principal as ClaimsPrincipal;
 
+        return claimsPrincipal?.FindFirstValue(Constants.ClaimTypes.Login) ?? claimsPrincipal?.FindFirstValue(ClaimTypes.Email);
+    }
+
+    /// <summary>
+    /// Returns user's username
+    /// </summary>
+    /// <param name="principal">Principal.</param>
+    public static string? GetUserName(this IPrincipal principal)
+    {
+        var claimsPrincipal = principal as ClaimsPrincipal;
+
         return claimsPrincipal?.FindFirstValue("email") ?? claimsPrincipal?.FindFirstValue(ClaimTypes.Email);
     }
 
@@ -152,5 +163,17 @@ public static class PrincipalExtensions
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Возвращает идентификатор пользователя из claims
+    /// </summary>
+    public static string? GetFullName(this ClaimsPrincipal claimsPrincipal)
+    {
+        var fullName = claimsPrincipal.FindAll(c => c.Type == Constants.ClaimTypes.FullName).FirstOrDefault()?.Value;
+
+        return string.IsNullOrWhiteSpace(fullName)
+            ? null
+            : fullName;
     }
 }

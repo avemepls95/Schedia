@@ -12,5 +12,9 @@ public class UserConfiguration : BaseConfiguration<User, int>
         builder.HasIndex(u => u.GoogleId)
             .IsUnique()
             .HasFilter("google_id IS NOT NULL");
+
+        builder.HasIndex(u => u.Email)
+            .IsUnique()
+            .HasFilter("email IS NOT NULL");
     }
 }

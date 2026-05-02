@@ -1,6 +1,7 @@
 ﻿using Avemepls.Auth.Abstractions.Models;
 using Avemepls.Auth.Bearer;
 using Avemepls.Auth.Bearer.Abstractions;
+using Avemepls.Auth.Domain.Extensions;
 using Avemepls.Auth.Domain.Services;
 using Avemepls.Auth.Domain.Validators;
 using Avemepls.Core.DataAccess.Behaviors;
@@ -57,7 +58,14 @@ public static class Register
 
             await publisher.Publish(new UserRegisteredViaPasswordNotification(user.Id), cancellationToken);
 
-            var token = tokenGenerator.Create(user.Id);
+            var token = tokenGenerator.Create(
+                new UserData<int>
+                {
+                    Id = user.Id,
+                    UserName = user.Username,
+                    FullName = user.GetFullName(),
+                    Email = user.Email
+                });
 
             return token;
         }

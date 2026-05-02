@@ -6,5 +6,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Avemepls.Core\Avemepls.Core.csproj" />
       <ProjectReference Include="..\..\Avemepls.Identity\Avemepls.Identity.DataAccess\Avemepls.Identity.DataAccess.csproj" />
+      <ProjectReference Include="..\..\Avemepls.Security\Avemepls.Security.csproj" />
     </ItemGroup>
 </Project>

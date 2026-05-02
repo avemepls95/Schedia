@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 
 using Avemepls.Core.DataAccess.Extensions;
+using Avemepls.Core.Extensions;
 using Avemepls.Core.Models;
 using Avemepls.Identity.Abstraction;
 using Avemepls.Identity.DataAccess;
@@ -40,7 +41,7 @@ public static class ResendEmailConfirmation
             var userId = (await principalAccessor.GetPrincipal()).GetId()!.Value;
             var user = await dbContext.Users.Available().FirstAsync(u => u.Id == new Id<UserEntity>(userId), cancellationToken);
 
-            if (string.IsNullOrWhiteSpace(user.Email))
+            if (user.Email.IsNullOrWhiteSpace())
             {
                 throw new InvalidOperationException("Can not send confirmation mail because email not specified");
             }
