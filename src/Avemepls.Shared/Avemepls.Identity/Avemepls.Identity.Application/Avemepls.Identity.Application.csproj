@@ -5,7 +5,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Avemepls.ServiceBus\Avemepls.ServiceBus.csproj" />
+      <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.ServiceBus\Avemepls.ServiceBus.csproj" />
       <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Identity\Avemepls.Identity.DataAccess\Avemepls.Identity.DataAccess.csproj" />
       <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Identity\Avemepls.Identity.Domain\Avemepls.Identity.Domain.csproj" />
       <ProjectReference Include="..\..\..\Avemepls.Shared\Avemepls.Infrastructure\Avemepls.Infrastructure.csproj" />

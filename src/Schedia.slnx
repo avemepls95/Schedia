@@ -24,7 +24,7 @@
         <Project Path="Avemepls.Shared/Avemepls.Auth/Avemepls.Auth.Domain/Avemepls.Auth.Domain.csproj" />
     </Folder>
     <Folder Name="/shared/core/">
-        <Project Path="Avemepls.ServiceBus/Avemepls.ServiceBus.csproj" />
+        <Project Path="Avemepls.Shared/Avemepls.ServiceBus/Avemepls.ServiceBus.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Auditor/Avemepls.Auditor.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Blazor/Avemepls.Blazor.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Domain/Avemepls.Domain.csproj" />

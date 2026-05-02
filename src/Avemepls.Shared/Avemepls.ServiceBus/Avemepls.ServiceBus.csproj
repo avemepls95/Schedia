@@ -11,8 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Avemepls.Shared\Avemepls.Core\Avemepls.Core.csproj" />
-      <ProjectReference Include="..\Avemepls.Shared\Avemepls.Domain\Avemepls.Domain.csproj" />
+      <ProjectReference Include="..\Avemepls.Core\Avemepls.Core.csproj" />
+      <ProjectReference Include="..\Avemepls.Domain\Avemepls.Domain.csproj" />
     </ItemGroup>
 
 </Project>
