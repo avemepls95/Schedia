@@ -1,5 +1,7 @@
 using System.Text.Json;
 
+using Avemepls.Core.Extensions;
+
 namespace Avemepls.Auditor.Core.Models;
 
 public static class AuditEventModelExtensions
@@ -9,7 +11,7 @@ public static class AuditEventModelExtensions
     /// </summary>
     public static TObject? GetJsonPayload<TObject>(this AuditEventModel model)
     {
-        if (string.IsNullOrWhiteSpace(model.Payload))
+        if (model.Payload.IsNullOrWhiteSpace())
         {
             return default;
         }

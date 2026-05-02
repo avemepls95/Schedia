@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Avemepls.Auth.Bearer;
 
-public sealed class OAuthOptions1
+public sealed class OAuthOptions
 {
     public string SecretKey { get; set; }
 
@@ -11,7 +11,7 @@ public sealed class OAuthOptions1
 
     public int AccessTokenLifetimeInMinutes { get; set; }
 
-    public OAuthOptions1()
+    public OAuthOptions()
     {
     }
 

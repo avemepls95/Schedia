@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+
+        <NoWarn>$(NoWarn);CA1816;CA1826;CA2201;S1481;S3881;S6608;SA1000;SA1009;SA1028;SA1101;SA1118;SA1122;SA1124;SA1133;SA1200;SA1201;SA1208;SA1210;SA1309;SA1400;SA1402;SA1500;SA1501;SA1502;SA1503;SA1512;SA1513;SA1516;SA1518;SA1600;SA1601;SA1602;SA1633</NoWarn>
+        <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
+        <PackageReference Include="xunit" />
+        <PackageReference Include="xunit.runner.visualstudio">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="FluentAssertions" />
+        <PackageReference Include="NSubstitute" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Avemepls.Auth.Domain\Avemepls.Auth.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

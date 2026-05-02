@@ -10,7 +10,7 @@ public static class ServicesCollectionExtensions
 {
     public static IServiceCollection AddJwtBearerTokenAuth(
         this IServiceCollection servicesCollection,
-        OAuthOptions1 authOptions)
+        OAuthOptions authOptions)
     {
         servicesCollection.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

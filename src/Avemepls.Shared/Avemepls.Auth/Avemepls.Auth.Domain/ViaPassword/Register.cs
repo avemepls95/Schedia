@@ -1,11 +1,13 @@
 ﻿using Avemepls.Auth.Abstractions.Models;
 using Avemepls.Auth.Bearer;
 using Avemepls.Auth.Bearer.Abstractions;
+using Avemepls.Auth.Domain.Extensions;
 using Avemepls.Auth.Domain.Services;
 using Avemepls.Auth.Domain.Validators;
 using Avemepls.Core.DataAccess.Behaviors;
 using Avemepls.Core.DataAccess.Extensions;
 using Avemepls.Core.Extensions;
+using Avemepls.Core.Localization;
 using Avemepls.Domain.Validators;
 using Avemepls.Identity.DataAccess;
 using Avemepls.Identity.DataAccess.Models;
@@ -21,10 +23,13 @@ public static class Register
 {
     public class Command : IRequest<TokenInformation>
     {
+        [DisplayNameLoc("Имя пользователя")]
         public string? Username { get; set; }
 
+        [DisplayNameLoc("Электронная почта")]
         public string Email { get; set; }
 
+        [DisplayNameLoc("Пароль")]
         public string Password { get; set; }
     }
 
@@ -53,7 +58,14 @@ public static class Register
 
             await publisher.Publish(new UserRegisteredViaPasswordNotification(user.Id), cancellationToken);
 
-            var token = tokenGenerator.Create(user.Id);
+            var token = tokenGenerator.Create(
+                new UserData<int>
+                {
+                    Id = user.Id,
+                    UserName = user.Username,
+                    FullName = user.GetFullName(),
+                    Email = user.Email
+                });
 
             return token;
         }

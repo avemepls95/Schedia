@@ -1,6 +1,7 @@
 ﻿using Avemepls.Auditor.Core.Models;
 using Avemepls.Auditor.DataAccess;
 using Avemepls.Auditor.DataAccess.Models;
+using Avemepls.Core.Extensions;
 using Avemepls.Core.Mapping;
 using Avemepls.Domain.Filters;
 using Avemepls.Domain.Queries;
@@ -56,7 +57,7 @@ public class SearchAuditEventsQueryHandler(
         if (request.DateTo is not null)
             query = query.Where(q => q.DateTime < request.DateTo);
 
-        if (!string.IsNullOrWhiteSpace(request.Query))
+        if (!request.Query.IsNullOrWhiteSpace())
             query = query.Where(q => q.Message!.ToUpper().Contains(request.Query.ToUpper()));
 
         return query.OrderByDescending(q => q.DateTime);

@@ -7,24 +7,27 @@
         <File Path="localizer.json" />
         <File Path="nuget.config" />
     </Folder>
-    <Folder Name="/core/">
+    <Folder Name="/schedia-core/">
         <Project Path="core/Schedia.Application.Core/Schedia.Application.Core.csproj" />
         <Project Path="core/Schedia.Core/Schedia.Core.csproj" />
         <Project Path="core/Schedia.Domain.Core/Schedia.Domain.Core.csproj" />
         <Project Path="core/Schedia.Web.Core.Blazor/Schedia.Web.Core.Blazor.csproj" />
     </Folder>
-    <Folder Name="/modules/" />
-    <Folder Name="/modules/auth/" />
-    <Folder Name="/modules/identity/" />
+    <Folder Name="/schedia-tests/">
+        <Project Path="Schedia.Web.Base.Tests/Schedia.Web.Base.Tests.csproj" />
+        <Project Path="Schedia.Web.Blazor.Tests/Schedia.Web.Blazor.Tests.csproj" />
+        <Project Path="Tests/Tests.csproj" />
+    </Folder>
     <Folder Name="/shared/" />
     <Folder Name="/Shared/auth/">
         <Project Path="Avemepls.Shared/Avemepls.Auth/Avemepls.Auth.Bearer/Avemepls.Auth.Bearer.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Auth/Avemepls.Auth.Abstractions/Avemepls.Auth.Abstractions.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Auth/Avemepls.Auth.Application/Avemepls.Auth.Application.csproj" />
+        <Project Path="Avemepls.Shared/Avemepls.Auth/Avemepls.Auth.Domain.Tests/Avemepls.Auth.Domain.Tests.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Auth/Avemepls.Auth.Domain/Avemepls.Auth.Domain.csproj" />
     </Folder>
     <Folder Name="/shared/core/">
-        <Project Path="Avemepls.ServiceBus/Avemepls.ServiceBus.csproj" />
+        <Project Path="Avemepls.Shared/Avemepls.ServiceBus/Avemepls.ServiceBus.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Auditor/Avemepls.Auditor.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Blazor/Avemepls.Blazor.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Domain/Avemepls.Domain.csproj" />
@@ -42,12 +45,13 @@
         <Project Path="Avemepls.Shared/Avemepls.Identity/Avemepls.Identity.Domain/Avemepls.Identity.Domain.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Identity/Avemepls.Identity.Application/Avemepls.Identity.Application.csproj" />
     </Folder>
+    <Folder Name="/shedia-modules/" />
+    <Folder Name="/shedia-modules/auth/" />
+    <Folder Name="/shedia-modules/identity/" />
     <Project Path="Schedia.DataAccess/Schedia.DataAccess.csproj" />
     <Project Path="Schedia.Web.Blazor/Schedia.Web.Blazor.csproj" />
     <Project Path="Schedia.Web.MAUI/Schedia.Web.MAUI.csproj">
         <Deploy />
     </Project>
-    <Project Path="Schedia.Web.Base.Tests/Schedia.Web.Base.Tests.csproj" />
     <Project Path="Schedia.Web.Base/Schedia.Web.Base.csproj" />
-    <Project Path="Tests/Tests.csproj" />
 </Solution>

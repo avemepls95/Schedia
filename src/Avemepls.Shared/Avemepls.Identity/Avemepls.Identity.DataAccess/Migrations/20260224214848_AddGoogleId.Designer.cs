@@ -3,6 +3,7 @@ using System;
 using Avemepls.Identity.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Avemepls.Identity.DataAccess.Migrations
 {
     [DbContext(typeof(IdentityDbContext))]
-    partial class IdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260224214848_AddGoogleId")]
+    partial class AddGoogleId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,41 +120,26 @@ namespace Avemepls.Identity.DataAccess.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text")
                         .HasColumnName("email")
-                        .HasColumnOrder(8);
+                        .HasColumnOrder(5);
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean")
                         .HasColumnName("email_confirmed")
-                        .HasColumnOrder(11);
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text")
-                        .HasColumnName("first_name")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(8);
 
                     b.Property<string>("GoogleId")
                         .HasColumnType("text")
                         .HasColumnName("google_id")
-                        .HasColumnOrder(10);
+                        .HasColumnOrder(7);
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean")
                         .HasColumnName("is_active");
 
-                    b.Property<string>("LastName")
-                        .HasColumnType("text")
-                        .HasColumnName("last_name")
-                        .HasColumnOrder(6);
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text")
                         .HasColumnName("password_hash")
-                        .HasColumnOrder(9);
-
-                    b.Property<string>("Patronymic")
-                        .HasColumnType("text")
-                        .HasColumnName("patronymic")
-                        .HasColumnOrder(7);
+                        .HasColumnOrder(6);
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -161,11 +149,6 @@ namespace Avemepls.Identity.DataAccess.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_user");
-
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasDatabaseName("ix_user_email")
-                        .HasFilter("email IS NOT NULL");
 
                     b.HasIndex("GoogleId")
                         .IsUnique()

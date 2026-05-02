@@ -1,6 +1,33 @@
 @page "/"
+@using System.Security.Claims
 @using Avemepls.Blazor.Components
+@using Avemepls.Core.Extensions
+@using Avemepls.Security.Principal
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<Index> Loc
+@inject IPrincipalAccessor PrincipalAccessor
 
-<h1>@("Добро пожаловать в Schedia!".Loc(Loc))</h1>
+<h1>@("Добро пожаловать в Schedia, ".Loc(Loc) + _name)</h1>
+
+@code
+{
+    private string _name;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        _name = await GetName();
+    }
+
+    private async Task<string> GetName()
+    {
+        var principal = await PrincipalAccessor.GetPrincipal();
+
+        var fullName = (principal as ClaimsPrincipal)!.GetFullName();
+
+        return !fullName.IsNullOrWhiteSpace()
+            ? fullName!
+            : principal.GetEmail()!;
+    }
+}

@@ -3,17 +3,20 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 
 using Avemepls.Auth.Bearer.Abstractions;
+using Avemepls.Core.Extensions;
+using Avemepls.Security.Principal;
+
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Avemepls.Auth.Bearer;
 
-internal sealed class TokenGenerator(OAuthOptions1 authOptions, IMemoryCache cachingService) : ITokenGenerator
+internal sealed class TokenGenerator(OAuthOptions authOptions, IMemoryCache cachingService) : ITokenGenerator
 {
-    public TokenInformation Create<T>(T id)
+    public TokenInformation Create<T>(UserData<T> userData)
         where T : struct
     {
-        var claims = GetClaims(id);
+        var claims = GetClaims(userData);
 
         var credentials = new SigningCredentials(
             authOptions.GetSymmetricSecurityKey(),
@@ -32,7 +35,7 @@ internal sealed class TokenGenerator(OAuthOptions1 authOptions, IMemoryCache cac
         var accessToken = tokenHandler.CreateToken(tokenDescriptor);
         var refreshToken = GenerateRefreshToken();
 
-        cachingService.Set(id.ToString(), refreshToken);
+        cachingService.Set(userData.Id.ToString(), refreshToken);
 
         var result = new TokenInformation
         {
@@ -44,12 +47,12 @@ internal sealed class TokenGenerator(OAuthOptions1 authOptions, IMemoryCache cac
         return result;
     }
 
-    public TokenInformation Refresh<T>(string refreshToken, T id)
+    public TokenInformation Refresh<T>(string refreshToken, UserData<T> userData)
         where T : struct
     {
-        EnsureRefreshTokenIsValidAsync(id.ToString()!, refreshToken);
+        EnsureRefreshTokenIsValidAsync(userData.Id.ToString()!, refreshToken);
 
-        var newTokenInformation = Create(id);
+        var newTokenInformation = Create(userData);
         return newTokenInformation;
     }
 
@@ -72,14 +75,24 @@ internal sealed class TokenGenerator(OAuthOptions1 authOptions, IMemoryCache cac
         return Convert.ToBase64String(randomNumber);
     }
 
-    private static Claim[] GetClaims<T>(T id)
+    private static IEnumerable<Claim> GetClaims<T>(UserData<T> userData)
         where T : struct
     {
-        var claims = new Claim[]
-        {
-            new("Id", id.ToString() ?? string.Empty)
-        };
+        yield return new Claim(Constants.ClaimTypes.UserId, userData.Id.ToString());
 
-        return claims;
+        if (!userData.UserName.IsNullOrWhiteSpace())
+        {
+            yield return new Claim(Constants.ClaimTypes.Login, userData.UserName);
+        }
+
+        if (!userData.FullName.IsNullOrWhiteSpace())
+        {
+            yield return new Claim(Constants.ClaimTypes.FullName, userData.FullName!);
+        }
+
+        if (!userData.Email.IsNullOrWhiteSpace())
+        {
+            yield return new Claim(ClaimTypes.Email, userData.Email!);
+        }
     }
 }

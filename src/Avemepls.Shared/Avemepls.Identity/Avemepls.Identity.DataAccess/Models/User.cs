@@ -8,9 +8,17 @@ public class User : IHasId<int>, IHasDateCreated, IHasDateUpdated, IHasIsActive,
 
     public string Username { get; set; }
 
+    public string? FirstName { get; set; }
+
+    public string? LastName { get; set; }
+
+    public string? Patronymic { get; set; }
+
     public string? Email { get; set; }
 
-    public string PasswordHash { get; set; }
+    public string? PasswordHash { get; set; }
+
+    public string? GoogleId { get; set; }
 
     public bool IsActive { get; set; } = true;
 

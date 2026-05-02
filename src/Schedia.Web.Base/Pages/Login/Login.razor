@@ -6,8 +6,8 @@
 @using Avemepls.Blazor.Components
 @using Microsoft.AspNetCore.Authorization
 @using Schedia.Web.Base.Layouts
-@inject ISnackbar Snackbar
 @inject IAuthenticationService AuthService
+@inject Schedia.Web.Base.Services.IPlatformService PlatformService
 
 <AuthorizeView>
     <Authorized>
@@ -60,6 +60,27 @@
                     }
                 </MudButton>
 
+                @if (PlatformService.IsWeb)
+                {
+                    <div class="d-flex align-center my-2" style="gap: 8px;">
+                        <hr style="flex: 1; border: none; border-top: 1px solid var(--mud-palette-lines-default);" />
+                        <MudText Typo="Typo.body2" Style="white-space: nowrap; color: var(--mud-palette-text-secondary);">
+                            @("или".Loc(Loc))
+                        </MudText>
+                        <hr style="flex: 1; border: none; border-top: 1px solid var(--mud-palette-lines-default);" />
+                    </div>
+
+                    <MudButton Href="@GetGoogleLoginUrl()"
+                               Variant="Variant.Outlined"
+                               FullWidth="true"
+                               Class="mb-4">
+                        <div class="d-flex align-center" style="gap: 8px;">
+                            <img src="@GoogleIconSrc" width="20" height="20" alt="Google" />
+                            <span>@("Войти через Google".Loc(Loc))</span>
+                        </div>
+                    </MudButton>
+                }
+
                 <MudStack AlignItems="AlignItems.Center" Spacing="2">
                     <div>@("Еще не зарегистрированы?".Loc(Loc))
                         <MudLink Href="/register" Color="Color.Primary">@("Регистрация".Loc(Loc))</MudLink>
@@ -72,23 +93,35 @@
 </AuthorizeView>
 
 @code {
+    private const string GoogleIconSrc = "_content/Schedia.Web.Base/images/google.svg";
+
     private readonly Avemepls.Auth.Domain.ViaPassword.Login.Command _model = new();
     private bool _isLoading;
 
     [SupplyParameterFromQuery(Name = "returnUrl")]
     public string? ReturnUrl { get; set; }
 
+    [SupplyParameterFromQuery(Name = "error")]
+    public string? Error { get; set; }
+
     private readonly Avemepls.Auth.Domain.ViaPassword.Login.Validator _authValidator = new();
 
     private MudForm _form = null!;
 
-    protected override Task OnInitializedAsync()
+    protected override void OnParametersSet()
     {
-        base.OnInitializedAsync();
+        if (string.IsNullOrEmpty(Error))
+        {
+            return;
+        }
 
-        ErrorRaised += () => Snackbar.Add("Simple Snackbar");
-
-        return Task.CompletedTask;
+        ErrorMessage = Error switch
+        {
+            "google_auth_failed" => "Не удалось войти через Google".Loc(Loc),
+            "google_claims_missing" => "Google не предоставил необходимые данные".Loc(Loc),
+            "google_email_unverified" => "Email в Google не подтверждён".Loc(Loc),
+            _ => ErrorMessage
+        };
     }
 
     private async Task HandleLogin()
@@ -106,7 +139,7 @@
         var tokenInformation = await Send(new Avemepls.Auth.Domain.ViaPassword.Login.Command()
         {
             Username = _model.Username,
-            Password = _model.Password,
+            Password = _model.Password
         });
 
         if (tokenInformation is null)
@@ -115,5 +148,13 @@
         }
 
         await AuthService.LoginAsync(tokenInformation, ReturnUrl);
+    }
+
+    private string GetGoogleLoginUrl()
+    {
+        return Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(
+            "/api/auth/google-login",
+            "returnUrl",
+            ReturnUrl ?? "/");
     }
 }

@@ -1,4 +1,4 @@
-"RS-Revision-Date: 16.02.2026\n"
+"RS-Revision-Date: 02.05.2026\n"
 
 msgid "Русский"
 msgstr "Русский"
@@ -98,3 +98,21 @@ msgstr "Password reset successful"
 
 msgid "Готово! Теперь вы можете войти с новым паролем"
 msgstr "Done! You can now log in with your new password."
+
+msgid "или"
+msgstr "or"
+
+msgid "Войти через Google"
+msgstr "Sign in with Google"
+
+msgid "Добро пожаловать в Schedia, "
+msgstr "Welcome to Schedia, "
+
+msgid "Не удалось войти через Google"
+msgstr "Failed to sign in with Google"
+
+msgid "Google не предоставил необходимые данные"
+msgstr "Google did not provide the required information"
+
+msgid "Email в Google не подтверждён"
+msgstr "Google email is not verified"

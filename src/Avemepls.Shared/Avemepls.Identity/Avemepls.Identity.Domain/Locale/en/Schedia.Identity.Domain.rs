@@ -1,4 +1,4 @@
-"RS-Revision-Date: 14.02.2026\n"
+"RS-Revision-Date: 02.05.2026\n"
 
 msgid "Не удалось найти пользователя. Пройдите процедуру подтверждения почты повторно"
 msgstr "User not found. Please verify your email again"

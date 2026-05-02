@@ -1,6 +1,7 @@
 ﻿using Avemepls.Auth.Abstractions.Models;
 using Avemepls.Auth.Bearer;
 using Avemepls.Auth.Bearer.Abstractions;
+using Avemepls.Auth.Domain.Extensions;
 using Avemepls.Auth.Domain.Services;
 using Avemepls.Core.DataAccess.Extensions;
 using Avemepls.Core.Localization;
@@ -36,7 +37,14 @@ public static class Login
                 throw new ValidationException(loc["Неверные логин или пароль"]);
             }
 
-            var token = tokenGenerator.Create(user.Id);
+            var token = tokenGenerator.Create(
+                new UserData<int>
+                {
+                    Id = user.Id,
+                    UserName = user.Username,
+                    FullName = user.GetFullName(),
+                    Email = user.Email
+                });
 
             await publisher.Publish(
                 new UserLoginNotification
