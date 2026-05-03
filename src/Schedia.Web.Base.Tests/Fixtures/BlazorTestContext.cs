@@ -27,10 +27,12 @@ public class BlazorTestContext<TPage> : BlazorTestContext
     where TPage : IComponent
 {
     public Mock<IStringLocalizer<TPage>> Loc { get; }
+    public Mock<IStringLocalizerFactory> LocFactory { get; }
 
     public BlazorTestContext() : base()
     {
         Loc = new Mock<IStringLocalizer<TPage>>();
+        LocFactory = new Mock<IStringLocalizerFactory>();
 
         // Configure mock to return key as value (same as MockStringLocalizer)
         Loc.Setup(l => l[It.IsAny<string>()])
@@ -38,7 +40,12 @@ public class BlazorTestContext<TPage> : BlazorTestContext
         Loc.Setup(l => l[It.IsAny<string>(), It.IsAny<object[]>()])
             .Returns((string key, object[] args) => new LocalizedString(key, string.Format(key, args)));
 
+        LocFactory
+            .Setup(x => x.Create(It.IsAny<Type>()))
+            .Returns(Loc.Object);
+
         Services.AddSingleton(Loc.Object);
+        Services.AddSingleton(LocFactory.Object);
     }
 }
 
@@ -92,10 +99,7 @@ public class BlazorTestContext : TestContext
 
         // Real validator for RequestPasswordReset.Command used by ForgotPassword page
         // (ForgotPassword.razor casts IValidator to concrete Validator type)
-        Services.AddSingleton<IValidator<RequestPasswordReset.Command>>(sp =>
-            new RequestPasswordReset.Validator(
-                sp.GetRequiredService<IDbContextFactory<IdentityDbContext>>(),
-                new MockStringLocalizer<RequestPasswordReset.Validator>()));
+        Services.AddSingleton<IValidator<RequestPasswordReset.Command>>(_ => new RequestPasswordReset.Validator());
 
         // Setup default authorization state (not authorized)
         _authContext = this.AddTestAuthorization();
