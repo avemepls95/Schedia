@@ -32,6 +32,7 @@
         <Project Path="Avemepls.Shared/Avemepls.Blazor/Avemepls.Blazor.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Domain/Avemepls.Domain.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Infrastructure/Avemepls.Infrastructure.csproj" />
+        <Project Path="Avemepls.Shared/Avemepls.Infrastructure.Tests/Avemepls.Infrastructure.Tests.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Mapster/Avemepls.Mapster.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Mvc/Avemepls.Mvc.csproj" />
         <Project Path="Avemepls.Shared/Avemepls.Security/Avemepls.Security.csproj" />

@@ -3,19 +3,18 @@
 using Avemepls.Auth.Abstractions;
 using Avemepls.Core.DataAccess.Extensions;
 using Avemepls.Core.Models;
-using Avemepls.Domain.Exceptions;
 using Avemepls.Domain.Validators;
 using Avemepls.Identity.DataAccess;
 using Avemepls.Identity.DataAccess.Models;
 using Avemepls.Infrastructure.DateTime;
 using Avemepls.Infrastructure.Email;
+using Avemepls.Infrastructure.RateLimit;
 
 using FluentValidation;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Localization;
 
 using Schedia.Core;
@@ -33,19 +32,34 @@ public static class RequestPasswordReset
         IEmailService emailService,
         IDbContextFactory<IdentityDbContext> dbContextFactory,
         ICurrentDateTimeProvider currentDateTimeProvider,
+        IRateLimiter rateLimiter,
+        IStringLocalizer<Handler> loc,
         AppOptions appOptions,
         AuthOptions authOptions) : IRequestHandler<Command>
     {
         public async Task Handle(Command command, CancellationToken cancellationToken)
         {
+            var rateLimitKey = $"pwd-reset:email:{command.Email.Trim().ToLowerInvariant()}";
+            var rateLimitResult = await rateLimiter.Acquire(
+                rateLimitKey,
+                authOptions.PasswordResetRateLimit,
+                cancellationToken);
+
+            if (!rateLimitResult.Allowed)
+            {
+                var minutes = RateLimitFormatter.ToUserFriendlyMinutes(rateLimitResult.RetryAfter!.Value);
+                var template = loc["Слишком много запросов на сброс пароля. Попробуйте через {0} мин."].Value;
+                throw new ValidationException(string.Format(template, minutes));
+            }
+
             await using var dbContext = await dbContextFactory.CreateDbContextAsync(cancellationToken);
             var user = await dbContext.Users.AsTracking()
                 .Available()
-                .FirstAsync(u => u.Email == command.Email, cancellationToken);
+                .FirstOrDefaultAsync(u => u.Email == command.Email, cancellationToken);
 
             if (user is null)
             {
-                throw new ObjectNotFoundException(typeof(User), $"Email {command.Email} is invalid");
+                return;
             }
 
             var resetToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
@@ -69,19 +83,11 @@ public static class RequestPasswordReset
 
     public class Validator : ExtendedAbstractValidator<Command>
     {
-        public Validator(IDbContextFactory<IdentityDbContext> dbContextFactory, IStringLocalizer<Validator> loc)
+        public Validator()
         {
             RuleFor(r => r.Email)
-                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
-                .MustAsync(async (value, cancellationToken) =>
-                {
-                    await using var dbContext = await dbContextFactory.CreateDbContextAsync(cancellationToken);
-                    return await dbContext.Users
-                        .Available()
-                        .AnyAsync(u => u.Email == value, cancellationToken);
-                })
-                .WithMessage(loc["Пользователь с указанным email'ом не найден"]);
+                .EmailAddress();
         }
     }
 }

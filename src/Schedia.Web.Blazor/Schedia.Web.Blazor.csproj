@@ -2,6 +2,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.Google"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"/>
         <PackageReference Include="Blazorade.Core"/>
         <PackageReference Include="Elastic.Serilog.Sinks"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>

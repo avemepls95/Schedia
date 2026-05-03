@@ -1,4 +1,4 @@
-"RS-Revision-Date: 25.02.2026\n"
+"RS-Revision-Date: 03.05.2026\n"
 
 msgid "Неверные логин или пароль"
 msgstr "Invalid username or password"
@@ -44,3 +44,6 @@ msgstr "Old password is incorrect"
 
 msgid "Электронная почта"
 msgstr "Email"
+
+msgid "Слишком много запросов на сброс пароля. Попробуйте через {0} мин."
+msgstr "Too many password reset requests. Try again in {0} min."

@@ -59,6 +59,7 @@ public static class MauiProgram
         // Infrastructure services
         builder.Services
             .AddMemoryCache()
+            .AddDistributedMemoryCache()
             .AddSingleton<ICurrentDateTimeProvider, CurrentSystemDateTimeProvider>()
             .AddScoped<IPrincipalAccessor, MauiPrincipalAccessor>();
 

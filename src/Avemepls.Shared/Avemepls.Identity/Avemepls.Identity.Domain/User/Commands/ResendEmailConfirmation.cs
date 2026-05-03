@@ -8,6 +8,7 @@ using Avemepls.Identity.DataAccess;
 using Avemepls.Identity.DataAccess.Models;
 using Avemepls.Infrastructure.DateTime;
 using Avemepls.Infrastructure.Email;
+using Avemepls.Infrastructure.RateLimit;
 using Avemepls.Security.Principal;
 
 using FluentValidation;
@@ -33,7 +34,9 @@ public static class ResendEmailConfirmation
         IPrincipalAccessor principalAccessor,
         IdentityOptions options,
         AppOptions appOptions,
-        ICurrentDateTimeProvider currentDateTimeProvider)
+        ICurrentDateTimeProvider currentDateTimeProvider,
+        IRateLimiter rateLimiter,
+        IStringLocalizer<Handler> loc)
         : IRequestHandler<Command>
     {
         public async Task Handle(Command request, CancellationToken cancellationToken)
@@ -44,6 +47,19 @@ public static class ResendEmailConfirmation
             if (user.Email.IsNullOrWhiteSpace())
             {
                 throw new InvalidOperationException("Can not send confirmation mail because email not specified");
+            }
+
+            var rateLimitKey = $"email-confirm-send:user:{userId}";
+            var rateLimitResult = await rateLimiter.Acquire(
+                rateLimitKey,
+                options.EmailConfirmationSendRateLimit,
+                cancellationToken);
+
+            if (!rateLimitResult.Allowed)
+            {
+                var minutes = RateLimitFormatter.ToUserFriendlyMinutes(rateLimitResult.RetryAfter!.Value);
+                var template = loc["Слишком много запросов на подтверждение почты. Попробуйте через {0} мин."].Value;
+                throw new ValidationException(string.Format(template, minutes));
             }
 
             var confirmRecord = await dbContext.ConfirmEmailRecords.FirstOrDefaultAsync(x => x.UserId == userId, cancellationToken);

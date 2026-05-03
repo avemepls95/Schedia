@@ -4,6 +4,7 @@ volumes:
   prometheus_data:
   tempo_data:
   grafana_data:
+  redis_data:
 
 services:
 
@@ -14,6 +15,19 @@ services:
       - "15672:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq/
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
 
   elasticsearch:
     image: elasticsearch:8.17.0

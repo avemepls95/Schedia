@@ -4,6 +4,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Avemepls.Core\Avemepls.Core.csproj" />
+    <ProjectReference Include="..\..\Avemepls.Infrastructure\Avemepls.Infrastructure.csproj" />
     <ProjectReference Include="..\Avemepls.Auth.Bearer\Avemepls.Auth.Bearer.csproj" />
   </ItemGroup>
 </Project>

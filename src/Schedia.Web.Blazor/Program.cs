@@ -38,6 +38,11 @@ try
 
     services
         .AddMemoryCache()
+        .AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration.GetConnectionString("Redis");
+            options.InstanceName = "schedia:";
+        })
         .AddInfrastructureServices();
 
     builder.Services.AddSchediaBase(configuration);
